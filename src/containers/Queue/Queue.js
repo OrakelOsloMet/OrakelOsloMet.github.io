@@ -89,7 +89,6 @@ export class Queue extends Component {
 
 
         //Refresh the queue data once a minute
-        //TODO Add an on-screen timer showing when the table was last updated
         /* setInterval(() => {
             this.getQueueData();
         }, 60000); */
@@ -114,14 +113,12 @@ export class Queue extends Component {
         })
     };
 
-    //TODO Add confirmation before deleting!
     deleteQueueEntry = (queueEntity) => {
         QueueService.deleteQueueEntryById(queueEntity.id).then(() => {
             this.getQueueData();
         })
     };
 
-    //TODO Add confirmation before posting!
     confirmDoneQueueEntry = (queueEntity) => {
         QueueService.confirmDone(queueEntity.id).then(() => {
             this.getQueueData();

@@ -21,15 +21,6 @@ class AuthService {
         localStorage.removeItem(LOCAL_STORAGE_USER);
     };
 
-    //TODO Add response handling for confirming successfull signup
-    register = (username, email, password) => {
-        return axios.post(SIGNUP_PATH, {
-            username,
-            email,
-            password
-        });
-    };
-
     isUserTokenValid = () => {
         const user = this.getCurrentUser();
 

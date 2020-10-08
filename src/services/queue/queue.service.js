@@ -50,7 +50,6 @@ class QueueService {
         if (error.response.data.message) {
 
             //This solution is by no means elegant, but the application needs to be published soon.
-            //TODO implement Redux to keep track of global state, then redirect the user to login when any error is found
             AuthService.logout();
             swal({
                     title: "Invalid login token",

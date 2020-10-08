@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import Button from "../../Button/Button";
 import Container from "react-bootstrap/Container";
 
-//Todo Parameterize this so it can be used a general puprose form-modal
 const FormModal = (props) => {
 
     return (
