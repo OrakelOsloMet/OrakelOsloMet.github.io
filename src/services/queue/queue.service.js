@@ -19,9 +19,7 @@ class QueueService {
 
     postQueueEntry = (queueEntity) => {
         return axios.post(QUEUE_PATH, queueEntity)
-            .then(response => {
-                console.log(response);
-            }).catch(error => {
+            .catch(error => {
                 this.errorHandler(error);
             });
     };
