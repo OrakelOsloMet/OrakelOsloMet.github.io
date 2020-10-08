@@ -21,9 +21,9 @@ const table = (props) => {
 
     const tableHead =
         <thead key={"tableHead"} className="thead-dark">
-            <tr>
-                {columns}
-            </tr>
+        <tr>
+            {columns}
+        </tr>
         </thead>;
 
     /* ----- Create Table Body ----- */
@@ -36,7 +36,8 @@ const table = (props) => {
         cells.push(<td key={"entry" + i} id={"entry" + i}>{i + 1}</td>);
         cells.push(<td key={"name" + i} id={"name" + i}>{props.entities[i].name}</td>);
         cells.push(<td key={"subject" + i} id={"subject" + i}>{props.entities[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.entities[i].digitalConsultation ? "Nei" : "Ja"}</td>);
+        cells.push(<td key={"discord" + i}
+                       id={"discord" + i}>{props.entities[i].digitalConsultation === false ? "Nei" : "Ja"}</td>);
 
         let actionButtons =
             <>

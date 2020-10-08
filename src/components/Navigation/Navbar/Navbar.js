@@ -1,11 +1,34 @@
 import React from "react";
 import {Navbar} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
+import swal from "sweetalert";
 
 const navbar = (props) => {
 
-    const loggedInText = (username) => {
-        return <p style={{color: "white", width: "150px", height: "20px", fontWeight: "bold"}}>Welcome {username}</p>
+    const showInfoMessage = () => {
+        const hyperlink = document.createElement("div");
+        hyperlink.innerHTML = "<a href='https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues' target='_blank'>GitHub Repo</a>";
+
+        swal({
+                title: "Feil eller Mangel rapportering",
+                text: "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor " +
+                    "en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller " +
+                    "ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :) ",
+                content: hyperlink,
+                icon: "info",
+                button: "Ok"
+            }
+        );
+    };
+
+    const showAboutMessage = () => {
+        swal({
+                title: "Om Orakels Køsystem",
+                text: "Comming Soon!",
+                icon: "info",
+                button: "Ok"
+            }
+        );
     };
 
     const loginButton =
@@ -13,7 +36,7 @@ const navbar = (props) => {
             <button
                 style={{background: "none", border: "none", color: "white", width: "100px", height: "40px"}}
                 onClick={props.handleLoginClick}>
-                <strong>Logg Inn</strong>
+                <strong>Admin</strong>
             </button>
         </Nav.Link>;
 
@@ -26,31 +49,25 @@ const navbar = (props) => {
             </button>
         </Nav.Link>;
 
+    let navbarProps = props.user ? {bg: "warning"} : {bg: "primary"}
     let loginPrompt = props.user ? logoutButton : loginButton;
-    let welcomeText = props.user ? loggedInText(props.user.username) : null;
-
 
     return (
-        <Navbar bg="primary" variant="dark">
+        <Navbar {...navbarProps}>
             <Nav className="container-fluid">
-                <Nav.Item>
-                    <Navbar.Brand href="#home">
-                        <img
-                            alt=""
-                            src={require("../../../assets/images/oslomethvit.png")}
-                            width="150"
-                            height="100"
-                            className="d-inline-block align-top"
-                        />{' '}
-                    </Navbar.Brand>
-                </Nav.Item>
-                <Nav.Item>
-                    <h2 style={{color: "white"}}><strong>Orakel - Køsystem</strong></h2>
-                </Nav.Item>
-                <Nav.Item className="ml-auto">
-                    {welcomeText}
-                    {loginPrompt}
-                </Nav.Item>
+                <Navbar.Brand>
+                    <img
+                        alt=""
+                        src={require("../../../assets/images/oslomethvit.png")}
+                        width="140"
+                        height="90"
+                        className="d-inline-block align-top"
+                    />
+                </Navbar.Brand>
+                <Nav.Item><h2 style={{color: "white"}}><strong>Orakel</strong></h2></Nav.Item>
+                <Nav.Link className="ml-5" style={{color: "white"}} onClick={showInfoMessage}><strong>Feilrapportering</strong></Nav.Link>
+                <Nav.Link className="ml-5" style={{color: "white"}} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
+                <Nav.Item className="ml-auto">{loginPrompt}</Nav.Item>
             </Nav>
         </Navbar>
     );

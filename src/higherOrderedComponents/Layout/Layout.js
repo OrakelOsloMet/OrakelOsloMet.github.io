@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import Navbar from "../../components/Navigation/Navbar/Navbar";
-import Footer from "../../components/Navigation/Footer/Footer";
 import Login from "../../containers/Login/Login";
 
 class Layout extends Component {
     state = {
-        showModal: false,
+        showModal: false
     };
 
     closeModalHandler = () => {
@@ -20,7 +19,6 @@ class Layout extends Component {
                     <Login show={this.state.showModal} onHide={this.closeModalHandler} loginHandler={this.props.loginHandler}/>
                     {this.props.children}
                 </main>
-                <Footer versionNumber={this.props.versionNumber}/>
             </>
         );
     }
