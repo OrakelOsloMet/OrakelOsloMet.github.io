@@ -14,7 +14,6 @@ export const SUBJECTS_PATH = "subjects/";
 //Auth
 export const AUTH_PATH = "auth/";
 export const LOGIN_PATH = AUTH_PATH + "signin";
-export const SIGNUP_PATH = AUTH_PATH + "signup";
 export const CHECK_TOKEN_PATH = AUTH_PATH + "isTokenValid";
 
 /* ----- Routing ----- */

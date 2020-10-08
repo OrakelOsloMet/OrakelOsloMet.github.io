@@ -1,5 +1,5 @@
 import axios from "../../axios-api";
-import {LOCAL_STORAGE_USER, LOGIN_PATH, SIGNUP_PATH, CHECK_TOKEN_PATH} from "../../constants/constants";
+import {LOCAL_STORAGE_USER, LOGIN_PATH, CHECK_TOKEN_PATH} from "../../constants/constants";
 
 
 class AuthService {
