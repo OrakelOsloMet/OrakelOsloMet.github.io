@@ -97,7 +97,6 @@ export class Queue extends Component {
 
     getQueueData = () => {
         QueueService.getQueueData().then(data => {
-            console.log(data);
             this.setState({queueData: data, loading: false})
         });
     };
@@ -180,7 +179,7 @@ export class Queue extends Component {
         return (
             <>
                 {table}
-                <h1 className="text-left ml-2 mr-2 mt-5">Kø registrering: </h1>
+                <h1 className="text-left ml-2 mr-2 mt-5">Køregistrering: </h1>
                 {form}
             </>
         );
