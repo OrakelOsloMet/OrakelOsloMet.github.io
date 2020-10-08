@@ -61,8 +61,8 @@ export class Queue extends Component {
                 inputType: "select",
                 inputConfig: {
                     options: [
-                        {value: 0, displayValue: "Fysisk Veiledning (Datatorget)"},
-                        {value: 1, displayValue: "Digital Veiledning (Discord)"},
+                        {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
+                        {value: true, displayValue: "Digital Veiledning (Discord)"},
                     ]
                 },
                 value: 0,
