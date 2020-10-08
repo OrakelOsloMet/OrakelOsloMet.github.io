@@ -4,6 +4,7 @@ import './App.css';
 import Layout from "./higherOrderedComponents/Layout/Layout";
 import Queue from "./containers/Queue/Queue";
 import AuthService from "./services/auth/auth.service";
+import {INDEX_ROUTE} from "./constants/constants";
 
 class App extends Component {
 
@@ -35,11 +36,11 @@ class App extends Component {
     };
 
     render() {
-
+        
         let routes = (
             <Switch>
-                <Route path="/" exact render={() => (<Queue user={this.state.user}/>)}/>
-                <Redirect to="/"/>
+                <Route path={INDEX_ROUTE} exact render={() => (<Queue user={this.state.user}/>)}/>
+                <Redirect to={INDEX_ROUTE}/>
             </Switch>
         );
 
