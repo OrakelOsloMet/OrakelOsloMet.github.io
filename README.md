@@ -17,4 +17,4 @@ Planned features and functionalities of the base application:
 The last feature involving pulling the data is for us to be able to better determine when we have the most traffic, something we have never been able to accurately measure before.
 
 
-### The API being called from this client application is also developed by me. Due to security reasons that repository will remain private. Any issues regarding it's functionality should be added in this repository.
+### The API being called from this client application is also developed by me and is found [here](https://github.com/FredrikPedersen/Orakel_Queue_System_Server)
