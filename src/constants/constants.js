@@ -17,6 +17,6 @@ export const LOGIN_PATH = AUTH_PATH + "signin";
 export const CHECK_TOKEN_PATH = AUTH_PATH + "isTokenValid";
 
 /* ----- Routing ----- */
-export const INDEX_ROUTE = "/Orakel_Queue_System/"
+export const INDEX_ROUTE = "/Orakel_Queue_Client/"
 
 //TODO Add all hardcoded string values to this file
