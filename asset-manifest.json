@@ -1,26 +1,27 @@
 {
   "files": {
     "main.css": "/Orakel_Queue_Client/static/css/main.e74facf6.chunk.css",
-    "main.js": "/Orakel_Queue_Client/static/js/main.91f2e793.chunk.js",
-    "main.js.map": "/Orakel_Queue_Client/static/js/main.91f2e793.chunk.js.map",
+    "main.js": "/Orakel_Queue_Client/static/js/main.3ea81d6a.chunk.js",
+    "main.js.map": "/Orakel_Queue_Client/static/js/main.3ea81d6a.chunk.js.map",
     "runtime-main.js": "/Orakel_Queue_Client/static/js/runtime-main.938f9b4a.js",
     "runtime-main.js.map": "/Orakel_Queue_Client/static/js/runtime-main.938f9b4a.js.map",
     "static/css/2.d9ad5f5c.chunk.css": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.34b4738b.chunk.js": "/Orakel_Queue_Client/static/js/2.34b4738b.chunk.js",
-    "static/js/2.34b4738b.chunk.js.map": "/Orakel_Queue_Client/static/js/2.34b4738b.chunk.js.map",
+    "static/js/2.0cf1e5aa.chunk.js": "/Orakel_Queue_Client/static/js/2.0cf1e5aa.chunk.js",
+    "static/js/2.0cf1e5aa.chunk.js.map": "/Orakel_Queue_Client/static/js/2.0cf1e5aa.chunk.js.map",
     "index.html": "/Orakel_Queue_Client/index.html",
-    "precache-manifest.14feaa1045fb3f6571e63b073586a467.js": "/Orakel_Queue_Client/precache-manifest.14feaa1045fb3f6571e63b073586a467.js",
+    "precache-manifest.8bdcca3ffeb44f647cbdb8c24051e00f.js": "/Orakel_Queue_Client/precache-manifest.8bdcca3ffeb44f647cbdb8c24051e00f.js",
     "service-worker.js": "/Orakel_Queue_Client/service-worker.js",
     "static/css/2.d9ad5f5c.chunk.css.map": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css.map",
     "static/css/main.e74facf6.chunk.css.map": "/Orakel_Queue_Client/static/css/main.e74facf6.chunk.css.map",
-    "static/js/2.34b4738b.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.34b4738b.chunk.js.LICENSE.txt",
-    "static/media/oslomethvit.png": "/Orakel_Queue_Client/static/media/oslomethvit.2c306d99.png"
+    "static/js/2.0cf1e5aa.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.0cf1e5aa.chunk.js.LICENSE.txt",
+    "static/media/oslomethvit.png": "/Orakel_Queue_Client/static/media/oslomethvit.2c306d99.png",
+    "static/media/oslometsvart.png": "/Orakel_Queue_Client/static/media/oslometsvart.3b9b0cc3.png"
   },
   "entrypoints": [
     "static/js/runtime-main.938f9b4a.js",
     "static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.34b4738b.chunk.js",
+    "static/js/2.0cf1e5aa.chunk.js",
     "static/css/main.e74facf6.chunk.css",
-    "static/js/main.91f2e793.chunk.js"
+    "static/js/main.3ea81d6a.chunk.js"
   ]
 }
