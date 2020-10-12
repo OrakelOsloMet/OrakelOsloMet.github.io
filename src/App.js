@@ -9,8 +9,7 @@ import {INDEX_ROUTE} from "./constants/constants";
 class App extends Component {
 
     state = {
-        user: null,
-        applicationVersionNumber: "BETA: 0.1.0"
+        user: null
     };
 
      async componentDidMount() {
@@ -46,7 +45,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Layout user={this.state.user} loginHandler={this.loginHandler} logoutHandler={this.logOutHandler}  versionNumber={this.state.applicationVersionNumber} >
+                <Layout user={this.state.user} loginHandler={this.loginHandler} logoutHandler={this.logOutHandler}>
                     {routes}
                 </Layout>
             </div>
