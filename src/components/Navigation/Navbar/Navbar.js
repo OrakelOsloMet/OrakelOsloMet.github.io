@@ -31,10 +31,14 @@ const navbar = (props) => {
         );
     };
 
+    let fontStyle = props.user ? {color: "black"} : {color: "white"}
+    let buttonStyle = props.user ? {background: "none", border: "none", color: "black", width: "100px", height: "40px"} :
+        {background: "none", border: "none", color: "white", width: "100px", height: "40px"}
+
     const loginButton =
         <Nav.Link>
             <button
-                style={{background: "none", border: "none", color: "white", width: "100px", height: "40px"}}
+                style={buttonStyle}
                 onClick={props.handleLoginClick}>
                 <strong>Admin</strong>
             </button>
@@ -43,14 +47,15 @@ const navbar = (props) => {
     const logoutButton =
         <Nav.Link>
             <button
-                style={{background: "none", border: "none", color: "white", width: "100px", height: "40px"}}
+                style={buttonStyle}
                 onClick={props.handleLogoutClick}>
                 <strong>Logg Ut</strong>
             </button>
         </Nav.Link>;
 
-    let navbarProps = props.user ? {bg: "warning"} : {bg: "primary"}
+
     let loginPrompt = props.user ? logoutButton : loginButton;
+    let navbarProps = props.user ? {bg: "warning"} : {bg: "primary"}
 
     return (
         <Navbar {...navbarProps}>
@@ -58,15 +63,15 @@ const navbar = (props) => {
                 <Navbar.Brand>
                     <img
                         alt=""
-                        src={require("../../../assets/images/oslomethvit.png")}
+                        src={require(props.user ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
                         width="140"
                         height="90"
                         className="d-inline-block align-top"
                     />
                 </Navbar.Brand>
-                <Nav.Item><h2 style={{color: "white"}}><strong>Orakel</strong></h2></Nav.Item>
-                <Nav.Link className="ml-5" style={{color: "white"}} onClick={showInfoMessage}><strong>Feilrapportering</strong></Nav.Link>
-                <Nav.Link className="ml-5" style={{color: "white"}} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
+                <Nav.Item><h2 style={fontStyle}><strong>Orakel</strong></h2></Nav.Item>
+                <Nav.Link className="ml-5" style={fontStyle} onClick={showInfoMessage}><strong>Feilrapportering</strong></Nav.Link>
+                <Nav.Link className="ml-5" style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
                 <Nav.Item className="ml-auto">{loginPrompt}</Nav.Item>
             </Nav>
         </Navbar>
