@@ -74,21 +74,18 @@ export class Queue extends Component {
     };
 
     componentDidMount() {
-        this.props.getQueueData();
-        this.props.getSubjectData();
-
         const subjectListUpdated = {...this.state.form};
 
         this.props.subjects.forEach(subject => {
             subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject})
         });
 
-        this.setState({form: subjectListUpdated})
+        this.setState({form: subjectListUpdated});
 
 
         //Refresh the queue data once a minute
         /* setInterval(() => {
-            //Get queue data here
+            this.props.getQueueData();
         }, 60000); */
     }
 
@@ -169,7 +166,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getQueueData: () => dispatch(actions.fetchQueue()),
-        getSubjectData: () => dispatch(actions.fetchSubjects()),
         addQueueEntity: (queueEntity) => dispatch(actions.addToQueue(queueEntity)),
     }
 };
