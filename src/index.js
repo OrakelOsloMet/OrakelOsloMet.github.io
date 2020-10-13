@@ -2,10 +2,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
 import App from './App';
+import {objectConditionalByEnvironment} from "./utilities/objectUtilities";
 import './index.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+const rootReducer = combineReducers({
+
+});
+
+//Logger for debugging purposes, not enabled in production
+const logger = objectConditionalByEnvironment(store => {
+    return next => {
+        return action => {
+            console.log("[Middleware] Dispatching: ", action);
+            const result = next(action);
+            console.log("[Middleware] next state: ", store.getState());
+            return result;
+        };
+    };
+}, null);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 const app = (
     <BrowserRouter>
@@ -13,7 +36,7 @@ const app = (
     </BrowserRouter>
 );
 
-ReactDOM.render(app, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}>{app}</Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
