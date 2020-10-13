@@ -1,17 +1,16 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
+import * as actions from "../../store/actions/actionIndex";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
-import Table from "../../components/UI/Table/Table";
+import Table from "../../components/UI/Table/QueueTable";
 import Input from "../../components/UI/Input/Input";
 import {inputChangedHandler} from "../../utilities/formUtilities";
 import Button from "../../components/UI/Button/Button";
-import QueueService from "../../services/queue/queue.service";
 
 export class Queue extends Component {
 
     state = {
-        queueData: [],
-        loading: true,
         form: {
             name: {
                 inputType: "input",
@@ -75,14 +74,13 @@ export class Queue extends Component {
     };
 
     componentDidMount() {
-        this.getQueueData();
+        this.props.getQueueData();
+        this.props.getSubjectData();
 
         const subjectListUpdated = {...this.state.form};
 
-        QueueService.getSubjects().then(subjects => {
-            subjects.forEach(subject => {
-                subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject})
-            })
+        this.props.subjects.forEach(subject => {
+            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject})
         });
 
         this.setState({form: subjectListUpdated})
@@ -90,40 +88,9 @@ export class Queue extends Component {
 
         //Refresh the queue data once a minute
         /* setInterval(() => {
-            this.getQueueData();
+            //Get queue data here
         }, 60000); */
     }
-
-    getQueueData = () => {
-        QueueService.getQueueData().then(data => {
-            this.setState({queueData: data, loading: false})
-        });
-    };
-
-    postNewQueueEntry = (formData) => {
-        const queueEntity = {
-            name: formData.name,
-            subject: formData.subject,
-            digitalConsultation: formData.discord,
-            studyYear: formData.year
-        };
-
-        QueueService.postQueueEntry(queueEntity).then(() => {
-            this.getQueueData();
-        })
-    };
-
-    deleteQueueEntry = (queueEntity) => {
-        QueueService.deleteQueueEntryById(queueEntity.id).then(() => {
-            this.getQueueData();
-        })
-    };
-
-    confirmDoneQueueEntry = (queueEntity) => {
-        QueueService.confirmDone(queueEntity.id).then(() => {
-            this.getQueueData();
-        });
-    };
 
     inputChangedHandler = (event, inputIdentifier) => {
         this.setState(inputChangedHandler(event, inputIdentifier, this.state.form));
@@ -140,12 +107,20 @@ export class Queue extends Component {
         this.postNewQueueEntry(formData);
     };
 
+    postNewQueueEntry = (formData) => {
+        const queueEntity = {
+            name: formData.name,
+            subject: formData.subject,
+            digitalConsultation: formData.discord,
+            studyYear: formData.year
+        };
+
+        this.props.addQueueEntity(queueEntity);
+    };
+
 
     render() {
-        let table = this.state.loading ? <LoadingSpinner/> : <Table
-            entities={this.state.queueData}
-            deleteOnClick={this.deleteQueueEntry}
-            confirmDoneOnClick={this.confirmDoneQueueEntry}/>;
+        const table = this.props.loading ? <LoadingSpinner/> : <Table/>;
 
         const formElements = [];
         for (let key in this.state.form) {
@@ -155,7 +130,7 @@ export class Queue extends Component {
             });
         }
 
-        let form = <form onSubmit={this.registrationHandler} className="form-inline mt-3">
+        const form = <form onSubmit={this.registrationHandler} className="form-inline mt-3">
             {formElements.map(formElement => (
                 <Input
                     key={formElement.id}
@@ -183,4 +158,20 @@ export class Queue extends Component {
 
 }
 
-export default Queue; //withErrorHandler(Queue, axios);
+const mapStateToProps = state => {
+    return {
+        subjects: state.queue.subjectData,
+        loading: state.queue.loading,
+        error: state.queue.error
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getQueueData: () => dispatch(actions.fetchQueue()),
+        getSubjectData: () => dispatch(actions.fetchSubjects()),
+        addQueueEntity: (queueEntity) => dispatch(actions.addToQueue(queueEntity)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Queue);

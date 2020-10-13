@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import * as actions from "../../../store/actions/actionIndex";
 
-const table = (props) => {
+const queueTable = (props) => {
 
     /* ----- Create Table Head ----- */
 
@@ -32,19 +32,19 @@ const table = (props) => {
     /* ----- Create Table Body ----- */
 
     let rows = [];
-    for (let i = 0; i < props.entities.length; i++) {
+    for (let i = 0; i < props.queueData.length; i++) {
         let rowId = "row" + i;
 
         let cells = [];
         cells.push(<td key={"entry" + i} id={"entry" + i}>{i + 1}</td>);
-        cells.push(<td key={"name" + i} id={"name" + i}>{props.entities[i].name}</td>);
-        cells.push(<td key={"subject" + i} id={"subject" + i}>{props.entities[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.entities[i].digitalConsultation === false ? "Nei" : "Ja"}</td>);
+        cells.push(<td key={"name" + i} id={"name" + i}>{props.queueData[i].name}</td>);
+        cells.push(<td key={"subject" + i} id={"subject" + i}>{props.queueData[i].subject}</td>);
+        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.queueData[i].digitalConsultation === false ? "Nei" : "Ja"}</td>);
 
         let actionButtons =
             <>
-                <button className="btn btn-success" onClick={() => props.confirmDoneOnClick(props.entities[i])}>Ferdig</button>
-                <button className="btn btn-danger ml-2" onClick={() => props.deleteOnClick(props.entities[i])}>Slett</button>
+                <button className="btn btn-success" onClick={() => props.confirmDoneEntity(props.queueData[i].id)}>Ferdig</button>
+                <button className="btn btn-danger ml-2" onClick={() => props.deleteQueueEntity(props.queueData[i].id)}>Slett</button>
             </>;
 
         if (props.isAuthenticated) {
@@ -67,13 +67,16 @@ const table = (props) => {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.token != null,
-        userRoles: state.auth.userRoles
+        userRoles: state.auth.userRoles,
+        queueData: state.queue.queueData
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        deleteQueueEntity: (id) => dispatch(actions.deleteFromQueue(id)),
+        confirmDoneEntity: (id) => dispatch(actions.doneInQueue(id))
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(table);
+export default connect(mapStateToProps, mapDispatchToProps)(queueTable);
