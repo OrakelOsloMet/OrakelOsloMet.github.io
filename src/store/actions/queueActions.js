@@ -1,7 +1,7 @@
 import axios from "../../axios-api";
 import * as actionTypes from "./actionTypes";
 import {CONFIRM_DONE_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
-import authHeader from "../../services/auth-header";
+import authHeader from "../../headers/auth-header";
 
 /* ----- Fetch Queue Data ----- */
 
