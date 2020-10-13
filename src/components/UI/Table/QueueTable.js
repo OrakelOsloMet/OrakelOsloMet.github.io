@@ -10,10 +10,10 @@ const queueTable = (props) => {
     let columns = [];
     const defaultColumns =
         <>
-            <th key={"queueNumberHeader"} scope="col"># I kø</th>
+            <th key={"queueNumberHeader"} scope="col">Plassering</th>
             <th key={"nameHeader"} scope="col">Navn</th>
             <th key={"subjectHeader"} scope="col">Emne</th>
-            <th key={"discordHeader"} scope="col">Discord</th>
+            <th key={"discordHeader"} scope="col">Arena</th>
         </>;
 
     //The actions column is only visible to logged in users
@@ -39,7 +39,7 @@ const queueTable = (props) => {
         cells.push(<td key={"entry" + i} id={"entry" + i}>{i + 1}</td>);
         cells.push(<td key={"name" + i} id={"name" + i}>{props.queueData[i].name}</td>);
         cells.push(<td key={"subject" + i} id={"subject" + i}>{props.queueData[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.queueData[i].digitalConsultation === false ? "Nei" : "Ja"}</td>);
+        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.queueData[i].digitalConsultation === false ? "Datatorget" : "Discord"}</td>);
 
         let actionButtons =
             <>
