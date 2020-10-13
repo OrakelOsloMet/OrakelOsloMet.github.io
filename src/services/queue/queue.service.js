@@ -1,5 +1,4 @@
 import axios from "../../axios-api";
-import AuthService from "../auth/auth.service";
 import swal from "sweetalert";
 import {CONFIRM_DONE_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
 import authHeader from "../auth-header";
@@ -48,9 +47,6 @@ class QueueService {
 
     errorHandler = (error) => {
         if (error.response.data.message) {
-
-            //This solution is by no means elegant, but the application needs to be published soon.
-            AuthService.logout();
             swal({
                     title: "Invalid login token",
                     text: "Your login session has expired, or something else went wrong. Please refresh the page and login again. " +
