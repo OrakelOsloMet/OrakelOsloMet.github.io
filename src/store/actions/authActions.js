@@ -2,13 +2,13 @@ import axios from "../../axios-api";
 import * as actionTypes from "./actionTypes";
 import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/constants";
 
-export const authStart = () => {
+const authStart = () => {
     return {
         type: actionTypes.AUTH_START
     }
 };
 
-export const authSuccess = (user) => {
+const authSuccess = (user) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: user.token,
@@ -17,11 +17,15 @@ export const authSuccess = (user) => {
     }
 };
 
-export const authFail = (error) => {
+const authFail = (error) => {
     return {
         type: actionTypes.AUTH_FAIL,
         error: error
     }
+};
+
+const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
 };
 
 export const logout = () => {
@@ -64,10 +68,6 @@ export const auth = (username, password) => {
                 dispatch(authFail(error.response.data.message))
         });
     }
-};
-
-export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
 };
 
 export const toggleLoginModal = (visible) => {

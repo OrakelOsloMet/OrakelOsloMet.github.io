@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 
 import App from './App';
 import authReducer from "./store/reducers/authReducer";
+import queueReducer from "./store/reducers/queueReducer";
 import {objectConditionalByEnvironment} from "./utilities/objectUtilities";
 import './index.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -25,7 +26,8 @@ const logger = store => {
 };
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    queue: queueReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
