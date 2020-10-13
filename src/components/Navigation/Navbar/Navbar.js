@@ -1,5 +1,8 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Navbar} from "react-bootstrap";
+
+import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
 import swal from "sweetalert";
 
@@ -31,15 +34,15 @@ const navbar = (props) => {
         );
     };
 
-    let fontStyle = props.user ? {color: "black"} : {color: "white"}
-    let buttonStyle = props.user ? {background: "none", border: "none", color: "black", width: "100px", height: "40px"} :
-        {background: "none", border: "none", color: "white", width: "100px", height: "40px"}
+    let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
+    let buttonStyle = props.isAuthenticated ? {background: "none", border: "none", color: "black", width: "100px", height: "40px"} :
+        {background: "none", border: "none", color: "white", width: "100px", height: "40px"};
 
     const loginButton =
         <Nav.Link>
             <button
                 style={buttonStyle}
-                onClick={props.handleLoginClick}>
+                onClick={props.showLoginModal}>
                 <strong>Admin</strong>
             </button>
         </Nav.Link>;
@@ -48,14 +51,14 @@ const navbar = (props) => {
         <Nav.Link>
             <button
                 style={buttonStyle}
-                onClick={props.handleLogoutClick}>
+                onClick={props.logoutHandler}>
                 <strong>Logg Ut</strong>
             </button>
         </Nav.Link>;
 
 
-    let loginPrompt = props.user ? logoutButton : loginButton;
-    let navbarProps = props.user ? {bg: "warning"} : {bg: "primary"}
+    let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
+    let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary"};
 
     return (
         <Navbar {...navbarProps}>
@@ -63,7 +66,7 @@ const navbar = (props) => {
                 <Navbar.Brand>
                     <img
                         alt=""
-                        src={require(props.user ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
+                        src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
                         width="140"
                         height="90"
                         className="d-inline-block align-top"
@@ -78,4 +81,17 @@ const navbar = (props) => {
     );
 };
 
-export default navbar;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        showLoginModal: () => dispatch(actions.toggleLoginModal(false)),
+        logoutHandler: () => dispatch(actions.logout())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(navbar);

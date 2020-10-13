@@ -1,6 +1,6 @@
 import axios from "../../axios-api";
 import * as actionTypes from "./actionTypes";
-import {LOCAL_STORAGE_USER_ID, LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_TOKEN} from "../../constants/constants";
+import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/constants";
 
 export const authStart = () => {
     return {
@@ -8,11 +8,12 @@ export const authStart = () => {
     }
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (user) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        token: token,
-        userId: userId
+        token: user.token,
+        userId: user.userId,
+        userRoles: user.roles
     }
 };
 
@@ -24,8 +25,7 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_USER_ID);
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_USER);
 
     return {
         type: actionTypes.AUTH_LOGOUT
@@ -34,12 +34,12 @@ export const logout = () => {
 
 export const checkValidAuth = () => {
     return dispatch => {
-        const token = this.getCurrentToken();
+        const user = getCurrentUser();
 
-        if (token) {
-            axios.post(CHECK_TOKEN_PATH, token).then(response => {
+        if (user && user.token) {
+            axios.post(CHECK_TOKEN_PATH, user.token).then(response => {
                 if (response.data === true) {
-                    dispatch(authSuccess(token, localStorage.getItem(LOCAL_STORAGE_USER_ID)))
+                    dispatch(authSuccess(user))
                 } else {
                     dispatch(logout())
                 }
@@ -57,17 +57,22 @@ export const auth = (username, password) => {
         axios.post(LOGIN_PATH, {username, password})
             .then(response => {
                 if (response.data.token) {
-                    localStorage.setItem(LOCAL_STORAGE_USER_ID, JSON.stringify(response.data.id));
-                    localStorage.setItem(LOCAL_STORAGE_TOKEN, JSON.stringify(response.data.token));
-                    dispatch(authSuccess(response.data.token, response.data.id));
+                    localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(response.data));
+                    dispatch(authSuccess(response.data));
                 }
             }).catch(error => {
-            //TODO make sure the correct attribute is being passed to authFail. I.e, test this later.
-            dispatch(authFail(error))
+                dispatch(authFail(error.response.data.message))
         });
     }
 };
 
-export const getCurrentToken = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN));
+export const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
+};
+
+export const toggleLoginModal = (visible) => {
+    return {
+        type: actionTypes.TOGGLE_LOGIN_MODAL,
+        visible: visible
+    }
 };

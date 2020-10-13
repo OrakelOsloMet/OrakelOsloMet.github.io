@@ -1,4 +1,7 @@
 import React from "react";
+import {connect} from "react-redux";
+
+import * as actions from "../../../store/actions/actionIndex";
 
 const table = (props) => {
 
@@ -14,7 +17,7 @@ const table = (props) => {
         </>;
 
     //The actions column is only visible to logged in users
-    let loggedInColumns = props.user ? <th key={"actionsHeader"} scope="col">Handlinger</th> : null;
+    let loggedInColumns = props.isAuthenticated ? <th key={"actionsHeader"} scope="col">Handlinger</th> : null;
 
     columns.push(defaultColumns);
     columns.push(loggedInColumns);
@@ -44,10 +47,10 @@ const table = (props) => {
                 <button className="btn btn-danger ml-2" onClick={() => props.deleteOnClick(props.entities[i])}>Slett</button>
             </>;
 
-        if (props.user) {
+        if (props.isAuthenticated) {
             //The current action buttons, Done and Delete, are only available to admins. If regular users are implemented and
             //are getting the opportunity to edit their queue entries, there will have to be some changes here.
-            actionButtons = props.user.roles.includes("ROLE_ADMIN") ? actionButtons : null;
+            actionButtons = props.userRoles.includes("ROLE_ADMIN") ? actionButtons : null;
             cells.push(<td key={"actions" + i} id={"action" + i}>{actionButtons}</td>);
         }
 
@@ -61,4 +64,16 @@ const table = (props) => {
     );
 };
 
-export default table;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token != null,
+        userRoles: state.auth.userRoles
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(table);

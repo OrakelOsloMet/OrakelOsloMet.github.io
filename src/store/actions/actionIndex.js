@@ -1,5 +1,6 @@
 export {
     auth,
     logout,
-    checkValidAuth
+    checkValidAuth,
+    toggleLoginModal
 } from "./authActions"

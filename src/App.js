@@ -1,51 +1,31 @@
 import React, {Component} from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+
 import './App.css';
+import * as actions from "./store/actions/actionIndex";
 import Layout from "./higherOrderedComponents/Layout/Layout";
 import Queue from "./containers/Queue/Queue";
-import AuthService from "./services/auth/auth.service";
 import {INDEX_ROUTE} from "./constants/constants";
 
 class App extends Component {
 
-    state = {
-        user: null
-    };
-
-     async componentDidMount() {
-        const validToken = await AuthService.isUserTokenValid();
-
-        if (validToken === true) {
-            this.loginHandler();
-        } else {
-            this.logOutHandler();
-        }
+     componentDidMount() {
+        this.props.autoSignIn();
     }
-
-    loginHandler = () => {
-        const user = AuthService.getCurrentUser();
-        if (user) {
-            this.setState({user: user});
-        }
-    };
-
-    logOutHandler = () => {
-        AuthService.logout();
-        this.setState({user: null})
-    };
 
     render() {
         
         let routes = (
             <Switch>
-                <Route path={INDEX_ROUTE} exact render={() => (<Queue user={this.state.user}/>)}/>
+                <Route path={INDEX_ROUTE} exact render={() => (<Queue/>)}/>
                 <Redirect to={INDEX_ROUTE}/>
             </Switch>
         );
 
         return (
             <div className="App">
-                <Layout user={this.state.user} loginHandler={this.loginHandler} logoutHandler={this.logOutHandler}>
+                <Layout>
                     {routes}
                 </Layout>
             </div>
@@ -53,4 +33,12 @@ class App extends Component {
     }
 }
 
-export default withRouter(App);
+const mapDispatchToProps = dispatch => {
+    return {
+        autoSignIn: () => dispatch(actions.checkValidAuth())
+    };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(App));
+
+

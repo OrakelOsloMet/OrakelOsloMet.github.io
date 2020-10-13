@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import * as actions from "../../store/actions/actionIndex";
 import {inputChangedHandler} from "../../utilities/formUtilities";
 import Input from "../../components/UI/Input/Input";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import FormModal from "../../components/UI/Modals/FormModal/FormModal";
-import AuthService from "../../services/auth/auth.service";
 
 class Login extends Component {
     state = {
@@ -42,31 +42,10 @@ class Login extends Component {
             }
         },
         formIsValid: false,
-        loginFailed: false,
-        loginErrorMessage: "",
     };
 
-    loginHandler = (event) => {
-        const formData = {};
-        for(let formElementIdentifier in this.state.form) {
-            formData[formElementIdentifier] = this.state.form[formElementIdentifier].value;
-        }
-
-        this.postLoginData(formData);
-    };
-
-    postLoginData = (formData) => {
-        AuthService.login(formData.username, formData.password).then(() => {
-            this.props.onHide();
-            let clearedLoginForm = {...this.state.form};
-            clearedLoginForm.username.value = "";
-            clearedLoginForm.password.value = "";
-
-            this.setState({loginForm: clearedLoginForm});
-            this.props.loginHandler();
-        }, error => {
-            console.log(error);
-        })
+    submitHandler = () => {
+        this.props.onLoginSubmit(this.state.form.username.value, this.state.form.password.value);
     };
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -82,7 +61,7 @@ class Login extends Component {
             });
         }
 
-        let form =
+        let form = this.props.loading ? <LoadingSpinner/> :
             <form className="form-inline">
                 {formElements.map(formElement => (
                     <Input
@@ -97,16 +76,16 @@ class Login extends Component {
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
                 ))}
-                {this.state.loginFailed ? <p className="mt-4" style={{color: "red"}}><strong>{this.state.loginErrorMessage}</strong></p> : null}
+                {this.props.error ? <p className="mt-4" style={{color: "red"}}><strong>{this.props.error}</strong></p> : null}
             </form>;
 
         return (
             <FormModal
                 form={form}
                 formIsValid={this.state.formIsValid}
-                loginHandler={this.loginHandler}
-                show={this.props.show}
-                onHide={this.props.onHide}/>
+                loginHandler={this.submitHandler}
+                show={this.props.showModal}
+                onHide={this.props.hideLoginModal}/>
         );
     }
 }
@@ -115,13 +94,14 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
-        isAuthenticated: state.auth.token !== null,
+        showModal: state.auth.showModal
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.auth(username, password))
+        onLoginSubmit: (username, password) => dispatch(actions.auth(username, password)),
+        hideLoginModal: () => dispatch(actions.toggleLoginModal(true))
     }
 };
 

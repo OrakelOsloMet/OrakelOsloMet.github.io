@@ -144,7 +144,6 @@ export class Queue extends Component {
     render() {
         let table = this.state.loading ? <LoadingSpinner/> : <Table
             entities={this.state.queueData}
-            user={this.props.user}
             deleteOnClick={this.deleteQueueEntry}
             confirmDoneOnClick={this.confirmDoneQueueEntry}/>;
 
