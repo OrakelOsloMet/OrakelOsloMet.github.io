@@ -4,7 +4,8 @@ import {Navbar} from "react-bootstrap";
 
 import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
-import swal from "sweetalert";
+
+import {swalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
 
 const navbar = (props) => {
 
@@ -12,42 +13,22 @@ const navbar = (props) => {
         const hyperlink = document.createElement("div");
         hyperlink.innerHTML = "<strong><a href='https://discord.gg/jgzqYpX' target='_blank'>Orakels Discord</a></strong>";
 
-        swal({
-                title: "Discord",
-                text: "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren " +
-                    "setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste " +
-                    "ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.",
-                content: hyperlink,
-                icon: "info",
-                button: "Ok"
-            }
-        );
+        swalInfoModal("Discord", "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren " +
+            "setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste " +
+            "ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.", hyperlink);
     };
 
     const showErrorReportingMessage = () => {
         const hyperlink = document.createElement("div");
         hyperlink.innerHTML = "<strong><a href='https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues' target='_blank'>GitHub Repo</a></strong>";
 
-        swal({
-                title: "Feil eller Mangel rapportering",
-                text: "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor " +
-                    "en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller " +
-                    "ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :) ",
-                content: hyperlink,
-                icon: "info",
-                button: "Ok"
-            }
-        );
+        swalInfoModal("Feilrapportering", "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor " +
+            "en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller " +
+            "ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :) ", hyperlink);
     };
 
     const showAboutMessage = () => {
-        swal({
-                title: "Om Orakels Køsystem",
-                text: "Comming Soon!",
-                icon: "info",
-                button: "Ok"
-            }
-        );
+        swalInfoModal("Om Orakels Køsystem", "Coming Soon!");
     };
 
     let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
@@ -71,7 +52,6 @@ const navbar = (props) => {
                 <strong>Logg Ut</strong>
             </button>
         </Nav.Link>;
-
 
     let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
     let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary"};
