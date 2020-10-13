@@ -18,7 +18,7 @@ export const mediaMatches = () => {
         } else {
             matches[media] = false;
         }
-    })
+    });
 
     return matches
-}
+};

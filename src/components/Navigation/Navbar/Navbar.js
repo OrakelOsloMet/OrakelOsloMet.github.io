@@ -8,9 +8,25 @@ import swal from "sweetalert";
 
 const navbar = (props) => {
 
-    const showInfoMessage = () => {
+    const showDiscordMessage = () => {
         const hyperlink = document.createElement("div");
-        hyperlink.innerHTML = "<a href='https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues' target='_blank'>GitHub Repo</a>";
+        hyperlink.innerHTML = "<strong><a href='https://discord.gg/jgzqYpX' target='_blank'>Orakels Discord</a></strong>";
+
+        swal({
+                title: "Discord",
+                text: "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren " +
+                    "setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste " +
+                    "ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.",
+                content: hyperlink,
+                icon: "info",
+                button: "Ok"
+            }
+        );
+    };
+
+    const showErrorReportingMessage = () => {
+        const hyperlink = document.createElement("div");
+        hyperlink.innerHTML = "<strong><a href='https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues' target='_blank'>GitHub Repo</a></strong>";
 
         swal({
                 title: "Feil eller Mangel rapportering",
@@ -73,7 +89,8 @@ const navbar = (props) => {
                     />
                 </Navbar.Brand>
                 <Nav.Item><h2 style={fontStyle}><strong>Orakel</strong></h2></Nav.Item>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showInfoMessage}><strong>Feilrapportering</strong></Nav.Link>
+                <Nav.Link className="ml-5" style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
+                <Nav.Link className="ml-5" style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
                 <Nav.Link className="ml-5" style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
                 <Nav.Item className="ml-auto">{loginPrompt}</Nav.Item>
             </Nav>
