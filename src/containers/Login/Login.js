@@ -1,4 +1,7 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+
+import * as actions from "../../store/actions/actionIndex";
 import {inputChangedHandler} from "../../utilities/formUtilities";
 import Input from "../../components/UI/Input/Input";
 import FormModal from "../../components/UI/Modals/FormModal/FormModal";
@@ -108,4 +111,18 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (username, password) => dispatch(actions.auth(username, password))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
