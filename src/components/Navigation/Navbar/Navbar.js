@@ -6,7 +6,10 @@ import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
 
 import {swalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
+import {objectConditionalByEnvironment} from "../../../utilities/objectUtilities";
 
+//TODO Find out how to use variables inside the innerHTML's anchor tag's href-attribute. Then move the whole declaration
+// TODO of hyperlink inside swalInfoModal. This is starting to get cumbersome.
 const navbar = (props) => {
 
     const showDiscordMessage = () => {
@@ -28,7 +31,10 @@ const navbar = (props) => {
     };
 
     const showAboutMessage = () => {
-        swalInfoModal("Om Orakels Køsystem", "Coming Soon!");
+        const hyperlink = document.createElement("div");
+        hyperlink.innerHTML = objectConditionalByEnvironment("<strong><a href='localhost:8080/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>", "<strong><a href='https://orakelqueueservice.herokuapp.com/api/' target='_blank'>Brukerveiledning</a></strong>");
+
+        swalInfoModal("Om Orakels Køsystem", "Coming Soon!", hyperlink);
     };
 
     let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
