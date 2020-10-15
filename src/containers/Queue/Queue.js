@@ -74,6 +74,19 @@ export class Queue extends Component {
     };
 
     componentDidMount() {
+
+        //TODO This is NOT a good way to make sure data is being filled into the selector. Look into Redux-forms.
+        setTimeout(() => {
+            this.fillSubjectSelector();
+        }, 1000);
+
+        //Refresh the queue data once a minute
+        /* setInterval(() => {
+            this.props.getQueueData();
+        }, 60000); */
+    }
+
+    fillSubjectSelector = () => {
         const subjectListUpdated = {...this.state.form};
 
         this.props.subjects.forEach(subject => {
@@ -81,13 +94,7 @@ export class Queue extends Component {
         });
 
         this.setState({form: subjectListUpdated});
-
-
-        //Refresh the queue data once a minute
-        /* setInterval(() => {
-            this.props.getQueueData();
-        }, 60000); */
-    }
+    };
 
     inputChangedHandler = (event, inputIdentifier) => {
         this.setState(inputChangedHandler(event, inputIdentifier, this.state.form));
