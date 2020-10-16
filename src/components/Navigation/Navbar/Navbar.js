@@ -32,7 +32,7 @@ const navbar = (props) => {
 
     const showAboutMessage = () => {
         const hyperlink = document.createElement("div");
-        hyperlink.innerHTML = objectConditionalByEnvironment("<strong><a href='localhost:8080/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>", "<strong><a href='https://orakelqueueservice.herokuapp.com/api/' target='_blank'>Brukerveiledning</a></strong>");
+        hyperlink.innerHTML = objectConditionalByEnvironment("<strong><a href='localhost:8080/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>", "<strong><a href='https://orakelqueueservice.herokuapp.com/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>");
 
         swalInfoModal("Om Orakels Køsystem", "Coming Soon!", hyperlink);
     };
