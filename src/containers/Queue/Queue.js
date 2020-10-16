@@ -83,7 +83,6 @@ export class Queue extends Component {
         //Refresh the queue data once every 30 seconds
         setInterval(() => {
             this.props.getQueueData();
-            console.log("Updating QueueData");
         }, 30000);
     }
 
