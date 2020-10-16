@@ -74,7 +74,6 @@ export class Queue extends Component {
     };
 
     componentDidMount() {
-
         //TODO This is NOT a good way to make sure data is being filled into the selector. Look into Redux-forms.
         setTimeout(() => {
             this.fillSubjectSelector();
@@ -104,7 +103,14 @@ export class Queue extends Component {
         }
 
         this.postNewQueueEntry(formData);
+        this.clearRegistrationForm();
     };
+
+    clearRegistrationForm = () => {
+        const clearedForm = {...this.state.form};
+        clearedForm.name.value = "";
+        this.setState({form: clearedForm});
+    }
 
     postNewQueueEntry = (formData) => {
         const queueEntity = {
