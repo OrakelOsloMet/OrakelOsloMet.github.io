@@ -39,3 +39,16 @@ const checkFormElementValidity = (value, rules) => {
 
     return isValid;
 };
+
+export const clearFormInputs = (form) => {
+    const clearedForm = {...form};
+
+    for (let formElementIdentifier in clearedForm) {
+        if (Object.prototype.hasOwnProperty.call(clearedForm, formElementIdentifier)) {
+            if (clearedForm[formElementIdentifier].inputType === "input") {
+                clearedForm[formElementIdentifier].value = ""
+            }
+        }
+    }
+    return clearedForm;
+}
