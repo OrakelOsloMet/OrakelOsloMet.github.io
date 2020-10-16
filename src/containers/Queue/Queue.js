@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import * as actions from "../../store/actions/actionIndex";
 import Table from "../../components/UI/Table/QueueTable";
 import Input from "../../components/UI/Input/Input";
-import {inputChangedHandler} from "../../utilities/formUtilities";
+import {inputChangedHandler, clearFormInputs} from "../../utilities/formUtilities";
 import Button from "../../components/UI/Button/Button";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
@@ -103,14 +103,9 @@ export class Queue extends Component {
         }
 
         this.postNewQueueEntry(formData);
-        this.clearRegistrationForm();
-    };
-
-    clearRegistrationForm = () => {
-        const clearedForm = {...this.state.form};
-        clearedForm.name.value = "";
+        const clearedForm = clearFormInputs(this.state.form);
         this.setState({form: clearedForm});
-    }
+    };
 
     postNewQueueEntry = (formData) => {
         const queueEntity = {

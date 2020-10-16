@@ -12,6 +12,7 @@ class App extends Component {
 
      componentDidMount() {
         this.props.autoSignIn();
+        this.props.getSubjectData();
     }
 
     render() {
@@ -36,6 +37,7 @@ class App extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         autoSignIn: () => dispatch(actions.checkValidAuth()),
+        getSubjectData: () => dispatch(actions.fetchSubjects())
     };
 };
 
