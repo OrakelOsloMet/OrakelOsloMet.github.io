@@ -80,10 +80,11 @@ export class Queue extends Component {
             this.fillSubjectSelector();
         }, 1000);
 
-        //Refresh the queue data once a minute
-        /* setInterval(() => {
+        //Refresh the queue data once every 30 seconds
+        setInterval(() => {
             this.props.getQueueData();
-        }, 60000); */
+            console.log("Updating QueueData");
+        }, 30000);
     }
 
     fillSubjectSelector = () => {
