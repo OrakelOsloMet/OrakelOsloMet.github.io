@@ -2,11 +2,11 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 import * as actions from "../../store/actions/actionIndex";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import Table from "../../components/UI/Table/QueueTable";
 import Input from "../../components/UI/Input/Input";
 import {inputChangedHandler} from "../../utilities/formUtilities";
 import Button from "../../components/UI/Button/Button";
+import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
 export class Queue extends Component {
 
@@ -79,11 +79,6 @@ export class Queue extends Component {
         setTimeout(() => {
             this.fillSubjectSelector();
         }, 1000);
-
-        //Refresh the queue data once every 30 seconds
-        setInterval(() => {
-            this.props.getQueueData();
-        }, 30000);
     }
 
     fillSubjectSelector = () => {
@@ -124,8 +119,6 @@ export class Queue extends Component {
 
 
     render() {
-        const table = this.props.loading ? <LoadingSpinner/> : <Table/>;
-
         const formElements = [];
         for (let key in this.state.form) {
             formElements.push({
@@ -153,7 +146,7 @@ export class Queue extends Component {
 
         return (
             <>
-                {table}
+                <Table/>
                 <h1 className="text-left ml-2 mr-2 mt-5">Køregistrering: </h1>
                 {form}
             </>
@@ -172,9 +165,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getQueueData: () => dispatch(actions.fetchQueue()),
         addQueueEntity: (queueEntity) => dispatch(actions.addToQueue(queueEntity)),
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Queue);
+export default
+withPolling(actions.fetchQueue())
+(connect(mapStateToProps, mapDispatchToProps)(Queue));

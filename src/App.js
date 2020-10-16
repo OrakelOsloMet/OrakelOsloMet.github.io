@@ -12,8 +12,6 @@ class App extends Component {
 
      componentDidMount() {
         this.props.autoSignIn();
-        this.props.getQueueData();
-        this.props.getSubjectData();
     }
 
     render() {
