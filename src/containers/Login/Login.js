@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 import * as actions from "../../store/actions/actionIndex";
-import {inputChangedHandler} from "../../utilities/formUtilities";
+import {clearFormInputs, inputChangedHandler} from "../../utilities/formUtilities";
 import Input from "../../components/UI/Input/Input";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import FormModal from "../../components/UI/Modals/FormModal/FormModal";
@@ -46,6 +46,8 @@ class Login extends Component {
 
     submitHandler = () => {
         this.props.onLoginSubmit(this.state.form.username.value, this.state.form.password.value);
+        const clearedForm = clearFormInputs(this.state.form);
+        this.setState({form: clearedForm});
     };
 
     inputChangedHandler = (event, inputIdentifier) => {
