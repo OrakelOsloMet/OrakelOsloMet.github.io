@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8a5f654d94c98d7ca579b2b9714c039d",
+    "revision": "3f49928b29eab28bfe12aa5528206680",
     "url": "/Orakel_Queue_Client/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css"
   },
   {
-    "revision": "cc95a645fa52be3d9e86",
+    "revision": "4b0078138c0c87599df5",
     "url": "/Orakel_Queue_Client/static/css/main.e74facf6.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Orakel_Queue_Client/static/js/2.ea77fb76.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "cc95a645fa52be3d9e86",
-    "url": "/Orakel_Queue_Client/static/js/main.92c05820.chunk.js"
+    "revision": "4b0078138c0c87599df5",
+    "url": "/Orakel_Queue_Client/static/js/main.09e911ba.chunk.js"
   },
   {
     "revision": "f10ea6ed42d18defce2c",
