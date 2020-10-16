@@ -79,6 +79,11 @@ export class Queue extends Component {
         setTimeout(() => {
             this.fillSubjectSelector();
         }, 1000);
+
+        //Refresh the queue data once a minute
+       setInterval(() => {
+            this.props.getQueueData();
+        }, 30000);
     }
 
     fillSubjectSelector = () => {
