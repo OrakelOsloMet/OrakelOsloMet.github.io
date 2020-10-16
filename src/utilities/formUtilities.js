@@ -50,6 +50,5 @@ export const clearFormInputs = (form) => {
             }
         }
     }
-
     return clearedForm;
 }
