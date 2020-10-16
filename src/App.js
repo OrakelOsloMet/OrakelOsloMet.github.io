@@ -36,8 +36,6 @@ class App extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         autoSignIn: () => dispatch(actions.checkValidAuth()),
-        getQueueData: () => dispatch(actions.fetchQueue()),
-        getSubjectData: () => dispatch(actions.fetchSubjects())
     };
 };
 
