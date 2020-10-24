@@ -2,6 +2,8 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 
+import {SubmitButton, CancelButton} from "../../Buttons/Buttons";
+
 const FormModal = (props) => {
 
     return (
@@ -23,10 +25,8 @@ const FormModal = (props) => {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-danger" onClick={props.onHide}>Lukk</button>
-                <button type="Success" className="btn btn-primary" disabled={!props.formIsValid}
-                        onClick={props.loginHandler}>Logg
-                    Inn</button>
+                <CancelButton onClick={props.onHide}>Lukk</CancelButton>
+                <SubmitButton disabled={!props.formIsValid} onClick={props.loginHandler}>Logg Inn</SubmitButton>
             </Modal.Footer>
         </Modal>
     );

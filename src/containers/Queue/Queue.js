@@ -5,6 +5,7 @@ import styles from "./Queue.module.css";
 import * as actions from "../../store/actions/actionIndex";
 import Table from "../../components/UI/Table/QueueTable";
 import Input from "../../components/UI/Input/Input";
+import {SubmitButton} from "../../components/UI/Buttons/Buttons";
 import {inputChangedHandler, clearFormInputs} from "../../utilities/formUtilities";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
@@ -142,7 +143,7 @@ export class Queue extends Component {
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
             ))}
-            <button type="Success" className={"ml-2 mr-2 mt-2 btn btn-primary"} disabled={!this.state.formIsValid}>Registrer</button>
+            <SubmitButton type="Success" className={"ml-2 mr-2 mt-2"} disabled={!this.state.formIsValid}>Registrer</SubmitButton>
         </form>;
 
         return (
