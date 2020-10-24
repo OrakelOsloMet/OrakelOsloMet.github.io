@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import styles from "./Queue.module.css";
 
 import * as actions from "../../store/actions/actionIndex";
 import Table from "../../components/UI/Table/QueueTable";
 import Input from "../../components/UI/Input/Input";
 import {inputChangedHandler, clearFormInputs} from "../../utilities/formUtilities";
-import Button from "../../components/UI/Button/Button";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
 export class Queue extends Component {
@@ -142,13 +142,13 @@ export class Queue extends Component {
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
             ))}
-            <Button btnType="Success" styling="ml-2 mr-2 mt-2 btn btn-primary" disabled={!this.state.formIsValid}>Registrer</Button>
+            <button type="Success" className={"ml-2 mr-2 mt-2 btn btn-primary"} disabled={!this.state.formIsValid}>Registrer</button>
         </form>;
 
         return (
             <>
                 <Table/>
-                <h1 className="text-left ml-2 mr-2 mt-5">Køregistrering: </h1>
+                <h1 className={"text-left ml-2 mr-2 mt-5"}>Køregistrering: </h1>
                 {form}
             </>
         );

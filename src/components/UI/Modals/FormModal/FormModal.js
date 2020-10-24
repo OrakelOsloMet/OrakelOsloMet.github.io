@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "../../Button/Button";
 import Container from "react-bootstrap/Container";
 
 const FormModal = (props) => {
@@ -24,13 +23,13 @@ const FormModal = (props) => {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button styling="btn btn-danger" clicked={props.onHide}>Lukk</Button>
-                <Button btnType="Success" styling="btn btn-primary" disabled={!props.formIsValid}
-                        clicked={props.loginHandler}>Logg
-                    Inn</Button>
+                <button className="btn btn-danger" onClick={props.onHide}>Lukk</button>
+                <button type="Success" className="btn btn-primary" disabled={!props.formIsValid}
+                        onClick={props.loginHandler}>Logg
+                    Inn</button>
             </Modal.Footer>
         </Modal>
     );
-}
+};
 
 export default FormModal;
