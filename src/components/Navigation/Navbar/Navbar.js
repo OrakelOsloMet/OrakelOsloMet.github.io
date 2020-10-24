@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Navbar} from "react-bootstrap";
-
-import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
 
+import * as actions from "../../../store/actions/actionIndex";
+import styles from "./Navbard.module.css";
 import {USER_GUIDE_PATH} from "../../../constants/constants";
+
 import {SwalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
 
 const navbar = (props) => {
@@ -33,49 +34,34 @@ const navbar = (props) => {
         SwalInfoModal("Om Orakels Køsystem", "Coming Soon!", USER_GUIDE_PATH, "Brukerveiledning");
     };
 
-    let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
-    let buttonStyle = props.isAuthenticated ? {background: "none", border: "none", color: "black", width: "auto"} :
-        {background: "none", border: "none", color: "white", width: "auto"};
+    const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
+    const navbarProps = props.isAuthenticated ? {bg: "warning", expand: "lg"} : {bg: "primary", variant: "dark", expand: "lg"};
 
     const loginButton =
-        <Nav.Link>
-            <button
-                style={buttonStyle}
-                onClick={props.showLoginModal}>
-                <strong>Admin</strong>
-            </button>
+        <Nav.Link
+            className={linkStyle}
+            onClick={props.isAuthenticated ? props.logoutHandler : props.showLoginModal}>
+            {props.isAuthenticated ? "Logg Ut" : "Admin"}
         </Nav.Link>;
 
-    const logoutButton =
-        <Nav.Link>
-            <button
-                style={buttonStyle}
-                onClick={props.logoutHandler}>
-                <strong>Logg Ut</strong>
-            </button>
-        </Nav.Link>;
-
-    let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
-    let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary", variant: "dark"};
-    
     return (
-        <Navbar {...navbarProps} expand="lg">
-            <Navbar.Brand>
+        <Navbar {...navbarProps}>
+            <Navbar.Brand className={styles.invisibleOnMobile}>
                 <img
-                    alt=""
+                    className={styles.brandImage}
+                    alt="OsloMet Logo"
                     src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
-                    width="140"
-                    height="90"
                 />
             </Navbar.Brand>
-            <Navbar.Brand href="#home"><h2 style={fontStyle}><strong>Orakel</strong></h2></Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Brand
+                className={props.isAuthenticated ? styles.authenticatedBrandText : styles.brandText}>Orakel</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
             <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="mr-auto">
-                    <Nav.Link style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
-                    <Nav.Link style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
-                    <Nav.Link style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
-                    {loginPrompt}
+                <Nav>
+                    <Nav.Link className={linkStyle} onClick={showDiscordMessage}>Discord</Nav.Link>
+                    <Nav.Link className={linkStyle} onClick={showErrorReportingMessage}>Feilrapportering</Nav.Link>
+                    <Nav.Link className={linkStyle} onClick={showAboutMessage}>Om</Nav.Link>
+                    {loginButton}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
