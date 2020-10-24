@@ -18,6 +18,9 @@ export const AUTH_PATH = "auth/";
 export const LOGIN_PATH = AUTH_PATH + "signin";
 export const CHECK_TOKEN_PATH = AUTH_PATH + "isTokenValid";
 
+//Resources
+export const USER_GUIDE_PATH = API_BASE_PATH + "resources/userguide";
+
 /* ----- Routing ----- */
 export const INDEX_ROUTE = "/Orakel_Queue_Client/";
 
