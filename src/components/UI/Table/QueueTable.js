@@ -1,4 +1,5 @@
 import React from "react";
+import {Table} from "react-bootstrap";
 import {connect} from "react-redux";
 
 import * as actions from "../../../store/actions/actionIndex";
@@ -48,8 +49,6 @@ const queueTable = (props) => {
             </>;
 
         if (props.isAuthenticated) {
-            //The current action buttons, Done and Delete, are only available to admins. If regular users are implemented and
-            //are getting the opportunity to edit their queue entries, there will have to be some changes here.
             actionButtons = props.userRoles.includes("ROLE_ADMIN") ? actionButtons : null;
             cells.push(<td key={"actions" + i} id={"action" + i}>{actionButtons}</td>);
         }
@@ -60,7 +59,7 @@ const queueTable = (props) => {
     const tableBody = <tbody>{rows}</tbody>;
 
     return (
-        <table className="table table-striped mb-4">{tableHead}{tableBody}</table>
+        <Table striped bordered hover responsive className="mb-4">{tableHead}{tableBody}</Table>
     );
 };
 
