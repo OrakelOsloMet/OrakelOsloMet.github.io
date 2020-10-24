@@ -1,12 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Navbar} from "react-bootstrap";
+import {Form, FormControl, Navbar} from "react-bootstrap";
 
 import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
 
 import {swalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
 import {objectConditionalByEnvironment} from "../../../utilities/objectUtilities";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
 
 //TODO Find out how to use variables inside the innerHTML's anchor tag's href-attribute. Then move the whole declaration
 // TODO of hyperlink inside swalInfoModal. This is starting to get cumbersome.
@@ -38,8 +40,8 @@ const navbar = (props) => {
     };
 
     let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
-    let buttonStyle = props.isAuthenticated ? {background: "none", border: "none", color: "black", width: "100px", height: "40px"} :
-        {background: "none", border: "none", color: "white", width: "100px", height: "40px"};
+    let buttonStyle = props.isAuthenticated ? {background: "none", border: "none", color: "black", width: "auto"} :
+        {background: "none", border: "none", color: "white", width: "auto"};
 
     const loginButton =
         <Nav.Link>
@@ -60,28 +62,55 @@ const navbar = (props) => {
         </Nav.Link>;
 
     let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
-    let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary"};
+    let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary", variant: "dark"};
 
-    return (
-        <Navbar {...navbarProps}>
+    /*return (
+        <Navbar {...navbarProps} expand={"lg"}>
+            <Navbar.Brand>
+                <img
+                    alt=""
+                    src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
+                    width="140"
+                    height="90"
+                />
+            </Navbar.Brand>
+            <Navbar.Brand>
+                <h2 style={fontStyle}><strong>Orakel</strong></h2>
+            </Navbar.Brand>
             <Nav className="container-fluid">
-                <Navbar.Brand>
-                    <img
-                        alt=""
-                        src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
-                        width="140"
-                        height="90"
-                        className="d-inline-block align-top"
-                    />
-                </Navbar.Brand>
-                <Nav.Item><h2 style={fontStyle}><strong>Orakel</strong></h2></Nav.Item>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
-                <Nav.Item className="ml-auto">{loginPrompt}</Nav.Item>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav.Link style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
+                    <Nav.Link style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
+                    <Nav.Link style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
+                    <Nav.Item>{loginPrompt}</Nav.Item>
+                </Navbar.Collapse>
             </Nav>
         </Navbar>
-    );
+    ); */
+
+    return (
+        <Navbar {...navbarProps} expand="lg">
+            <Navbar.Brand>
+                <img
+                    alt=""
+                    src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
+                    width="140"
+                    height="90"
+                />
+            </Navbar.Brand>
+            <Navbar.Brand href="#home"><h2 style={fontStyle}><strong>Orakel</strong></h2></Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
+                    <Nav.Link style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
+                    <Nav.Link style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
+                    <Nav.Item>{loginPrompt}</Nav.Item>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    )
 };
 
 const mapStateToProps = state => {
