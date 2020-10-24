@@ -7,8 +7,6 @@ import Nav from "react-bootstrap/Nav";
 
 import {swalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
 import {objectConditionalByEnvironment} from "../../../utilities/objectUtilities";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Button from "react-bootstrap/Button";
 
 //TODO Find out how to use variables inside the innerHTML's anchor tag's href-attribute. Then move the whole declaration
 // TODO of hyperlink inside swalInfoModal. This is starting to get cumbersome.
@@ -63,32 +61,7 @@ const navbar = (props) => {
 
     let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
     let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary", variant: "dark"};
-
-    /*return (
-        <Navbar {...navbarProps} expand={"lg"}>
-            <Navbar.Brand>
-                <img
-                    alt=""
-                    src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
-                    width="140"
-                    height="90"
-                />
-            </Navbar.Brand>
-            <Navbar.Brand>
-                <h2 style={fontStyle}><strong>Orakel</strong></h2>
-            </Navbar.Brand>
-            <Nav className="container-fluid">
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav.Link style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
-                    <Nav.Link style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
-                    <Nav.Link style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
-                    <Nav.Item>{loginPrompt}</Nav.Item>
-                </Navbar.Collapse>
-            </Nav>
-        </Navbar>
-    ); */
-
+    
     return (
         <Navbar {...navbarProps} expand="lg">
             <Navbar.Brand>
