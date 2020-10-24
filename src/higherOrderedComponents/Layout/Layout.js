@@ -8,7 +8,7 @@ class Layout extends Component {
         return(
             <>
                 <Navbar/>
-                <main>
+                <main className="mb-5">
                     <Login/>
                     {this.props.children}
                 </main>
