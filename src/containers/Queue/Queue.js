@@ -2,10 +2,10 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 import * as actions from "../../store/actions/actionIndex";
-import Table from "../../components/UI/Table/QueueTable";
+import Table from "../../components/UI/Tables/QueueTable";
 import Input from "../../components/UI/Input/Input";
+import {SubmitButton} from "../../components/UI/Buttons/Buttons";
 import {inputChangedHandler, clearFormInputs} from "../../utilities/formUtilities";
-import Button from "../../components/UI/Button/Button";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
 export class Queue extends Component {
@@ -104,7 +104,7 @@ export class Queue extends Component {
 
         this.postNewQueueEntry(formData);
         const clearedForm = clearFormInputs(this.state.form);
-        this.setState({form: clearedForm});
+        this.setState({form: clearedForm, formIsValid: false});
     };
 
     postNewQueueEntry = (formData) => {
@@ -120,6 +120,24 @@ export class Queue extends Component {
 
 
     render() {
+
+        /* ----- Create Table ----- */
+        const defaultColumns = ["Plassering", "Navn", "Emne", "Arena"];
+        const adminColumns = ["Handlinger"];
+
+        const table = <Table
+            defaultColumns={defaultColumns}
+            loggedInColumns={adminColumns}
+            queueData={this.props.queueData}
+            isAuthenticated={this.props.isAuthenticated}
+            userRoles={this.props.userRoles}
+            confirmDoneEntity={this.props.confirmDoneEntity}
+            deleteQueueEntity={this.props.deleteQueueEntity}
+
+        />;
+
+        /* ----- Create Form ----- */
+
         const formElements = [];
         for (let key in this.state.form) {
             formElements.push({
@@ -142,13 +160,13 @@ export class Queue extends Component {
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
             ))}
-            <Button btnType="Success" styling="ml-2 mr-2 mt-2 btn btn-primary" disabled={!this.state.formIsValid}>Registrer</Button>
+            <SubmitButton className={"ml-2 mr-2 mt-2"} disabled={!this.state.formIsValid}>Registrer</SubmitButton>
         </form>;
 
         return (
             <>
-                <Table/>
-                <h1 className="text-left ml-2 mr-2 mt-5">Køregistrering: </h1>
+                {table}
+                <h1 className={"text-left ml-2 mr-2 mt-5"}>Køregistrering: </h1>
                 {form}
             </>
         );
@@ -158,6 +176,9 @@ export class Queue extends Component {
 
 const mapStateToProps = state => {
     return {
+        isAuthenticated: state.auth.token != null,
+        userRoles: state.auth.userRoles,
+        queueData: state.queue.queueData,
         subjects: state.queue.subjectData,
         loading: state.queue.loading,
         error: state.queue.error
@@ -167,9 +188,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addQueueEntity: (queueEntity) => dispatch(actions.addToQueue(queueEntity)),
+        deleteQueueEntity: (id) => dispatch(actions.deleteFromQueue(id)),
+        confirmDoneEntity: (id) => dispatch(actions.doneInQueue(id))
     }
 };
 
-export default
-withPolling(actions.fetchQueue())
-(connect(mapStateToProps, mapDispatchToProps)(Queue));
+export default withPolling(actions.fetchQueue())(connect(mapStateToProps, mapDispatchToProps)(Queue));

@@ -1,8 +1,10 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "../../Button/Button";
 import Container from "react-bootstrap/Container";
 
+import {SubmitButton, CancelButton} from "../../Buttons/Buttons";
+
+//TODO This will soon be deprecated in favour of SweetAlert Modals, don't bother refacturing.
 const FormModal = (props) => {
 
     return (
@@ -24,13 +26,11 @@ const FormModal = (props) => {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button styling="btn btn-danger" clicked={props.onHide}>Lukk</Button>
-                <Button btnType="Success" styling="btn btn-primary" disabled={!props.formIsValid}
-                        clicked={props.loginHandler}>Logg
-                    Inn</Button>
+                <CancelButton onClick={props.onHide}>Lukk</CancelButton>
+                <SubmitButton disabled={!props.formIsValid} onClick={props.loginHandler}>Logg Inn</SubmitButton>
             </Modal.Footer>
         </Modal>
     );
-}
+};
 
 export default FormModal;
