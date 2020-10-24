@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 import * as actions from "../../store/actions/actionIndex";
+import globalStyles from "../../assets/globalStyles/globalStyles.module.css";
 import {clearFormInputs, inputChangedHandler} from "../../utilities/formUtilities";
 import Input from "../../components/UI/Input/Input";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
@@ -78,7 +79,7 @@ class Login extends Component {
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
                 ))}
-                {this.props.error ? <p className="mt-4" style={{color: "red"}}><strong>{this.props.error}</strong></p> : null}
+                {this.props.error ? <p className={`mt-4 ${globalStyles.errorMessage}`}>{this.props.error}</p> : null}
             </form>;
 
         return (

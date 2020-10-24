@@ -1,87 +1,71 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Navbar} from "react-bootstrap";
-
-import * as actions from "../../../store/actions/actionIndex";
 import Nav from "react-bootstrap/Nav";
 
-import {swalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
-import {objectConditionalByEnvironment} from "../../../utilities/objectUtilities";
+import * as actions from "../../../store/actions/actionIndex";
+import styles from "./Navbard.module.css";
+import {USER_GUIDE_PATH} from "../../../constants/constants";
 
-//TODO Find out how to use variables inside the innerHTML's anchor tag's href-attribute. Then move the whole declaration
-// TODO of hyperlink inside swalInfoModal. This is starting to get cumbersome.
+import {SwalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
+
 const navbar = (props) => {
 
     const showDiscordMessage = () => {
-        const hyperlink = document.createElement("div");
-        hyperlink.innerHTML = "<strong><a href='https://discord.gg/jgzqYpX' target='_blank'>Orakels Discord</a></strong>";
-
-        swalInfoModal("Discord", "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren " +
+        SwalInfoModal("Discord",
+            "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren " +
             "setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste " +
-            "ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.", hyperlink);
+            "ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.",
+            "https://discord.gg/jgzqYpX",
+            "Orakel Discord");
     };
 
     const showErrorReportingMessage = () => {
-        const hyperlink = document.createElement("div");
-        hyperlink.innerHTML = "<strong><a href='https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues' target='_blank'>GitHub Repo</a></strong>";
-
-        swalInfoModal("Feilrapportering", "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor " +
+        SwalInfoModal(
+            "Feilrapportering",
+            "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor " +
             "en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller " +
-            "ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :) ", hyperlink);
+            "ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :) ",
+            "https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues",
+            "GitHub Repo");
     };
 
     const showAboutMessage = () => {
-        const hyperlink = document.createElement("div");
-        hyperlink.innerHTML = objectConditionalByEnvironment("<strong><a href='localhost:8080/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>", "<strong><a href='https://orakelqueueservice.herokuapp.com/api/resources/userguide' target='_blank'>Brukerveiledning</a></strong>");
-
-        swalInfoModal("Om Orakels Køsystem", "Coming Soon!", hyperlink);
+        SwalInfoModal("Om Orakels Køsystem", "Coming Soon!", USER_GUIDE_PATH, "Brukerveiledning");
     };
 
-    let fontStyle = props.isAuthenticated ? {color: "black"} : {color: "white"};
-    let buttonStyle = props.isAuthenticated ? {background: "none", border: "none", color: "black", width: "100px", height: "40px"} :
-        {background: "none", border: "none", color: "white", width: "100px", height: "40px"};
+    const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
+    const navbarProps = props.isAuthenticated ? {bg: "warning", expand: "lg"} : {bg: "primary", variant: "dark", expand: "lg"};
 
     const loginButton =
-        <Nav.Link>
-            <button
-                style={buttonStyle}
-                onClick={props.showLoginModal}>
-                <strong>Admin</strong>
-            </button>
+        <Nav.Link
+            className={linkStyle}
+            onClick={props.isAuthenticated ? props.logoutHandler : props.showLoginModal}>
+            {props.isAuthenticated ? "Logg Ut" : "Admin"}
         </Nav.Link>;
-
-    const logoutButton =
-        <Nav.Link>
-            <button
-                style={buttonStyle}
-                onClick={props.logoutHandler}>
-                <strong>Logg Ut</strong>
-            </button>
-        </Nav.Link>;
-
-    let loginPrompt = props.isAuthenticated ? logoutButton : loginButton;
-    let navbarProps = props.isAuthenticated ? {bg: "warning"} : {bg: "primary"};
 
     return (
         <Navbar {...navbarProps}>
-            <Nav className="container-fluid">
-                <Navbar.Brand>
-                    <img
-                        alt=""
-                        src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
-                        width="140"
-                        height="90"
-                        className="d-inline-block align-top"
-                    />
-                </Navbar.Brand>
-                <Nav.Item><h2 style={fontStyle}><strong>Orakel</strong></h2></Nav.Item>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showDiscordMessage}><strong>Discord</strong></Nav.Link>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showErrorReportingMessage}><strong>Feilrapportering</strong></Nav.Link>
-                <Nav.Link className="ml-5" style={fontStyle} onClick={showAboutMessage}><strong>Om</strong></Nav.Link>
-                <Nav.Item className="ml-auto">{loginPrompt}</Nav.Item>
-            </Nav>
+            <Navbar.Brand className={styles.invisibleOnMobile}>
+                <img
+                    className={styles.brandImage}
+                    alt="OsloMet Logo"
+                    src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
+                />
+            </Navbar.Brand>
+            <Navbar.Brand
+                className={props.isAuthenticated ? styles.authenticatedBrandText : styles.brandText}>Orakel</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav>
+                    <Nav.Link className={linkStyle} onClick={showDiscordMessage}>Discord</Nav.Link>
+                    <Nav.Link className={linkStyle} onClick={showErrorReportingMessage}>Feilrapportering</Nav.Link>
+                    <Nav.Link className={linkStyle} onClick={showAboutMessage}>Om</Nav.Link>
+                    {loginButton}
+                </Nav>
+            </Navbar.Collapse>
         </Navbar>
-    );
+    )
 };
 
 const mapStateToProps = state => {
