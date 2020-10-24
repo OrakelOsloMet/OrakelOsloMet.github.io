@@ -22,6 +22,7 @@
 .authenticatedBrandText {
     color: black !important;
     font-weight: bold;
+    font-size: 2em !important;
     margin-left: 1em;
 }
 
@@ -39,8 +40,6 @@
 @media screen and (min-width: 991px) {
     .brandText {
         color: white !important;
-        font-weight: bold;
-        font-size: 2em !important;
         margin: 0;
     }
 
@@ -65,8 +64,6 @@
 
     .authenticatedBrandText {
         color: black !important;
-        font-weight: bold;
-        width: auto;
         margin: 0;
     }
 
