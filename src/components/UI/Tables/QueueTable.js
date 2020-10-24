@@ -1,6 +1,6 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import TableHead from "./TableHead";
+import TableHead from "./TableHead/TableHead";
 import {ConfirmButton, DeleteButton} from "../Buttons/Buttons";
 
 import * as actions from "../../../store/actions/actionIndex";
