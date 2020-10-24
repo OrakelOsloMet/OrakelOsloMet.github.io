@@ -22,12 +22,13 @@
 .authenticatedBrandText {
     color: black !important;
     font-weight: bold;
-    max-width: 30px;
+    margin-left: 1em;
 }
 
 .authenticatedLinkText {
     color: black !important;
     font-weight: bold;
+    max-width: 30px; /* Locks the nav items to the left-side when expanding the Navbar.Toggle */
 }
 
 .invisibleOnMobile {
@@ -66,12 +67,13 @@
         color: black !important;
         font-weight: bold;
         width: auto;
-        max-width: 300px;
+        margin: 0;
     }
 
     .authenticatedLinkText {
         color: rgba(0, 0, 0, 0.7) !important;
         font-weight: bold;
+        max-width: 300px;
     }
 
     .authenticatedLinkText:hover {
