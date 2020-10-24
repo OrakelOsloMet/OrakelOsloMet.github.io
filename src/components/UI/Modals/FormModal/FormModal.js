@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 
 import {SubmitButton, CancelButton} from "../../Buttons/Buttons";
 
+//TODO This will soon be deprecated in favour of SweetAlert Modals, don't bother refacturing.
 const FormModal = (props) => {
 
     return (
