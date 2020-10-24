@@ -14,7 +14,7 @@ const queueTable = (props) => {
         let rowId = "row" + i;
 
         let cells = [];
-        cells.push(<td key={"entry" + i} id={"entry" + i}>{i + 1}</td>);
+        cells.push(<td key={"entry" + i} id={"entry" + i}># {i + 1}</td>);
         cells.push(<td key={"name" + i} id={"name" + i}>{props.queueData[i].name}</td>);
         cells.push(<td key={"subject" + i} id={"subject" + i}>{props.queueData[i].subject}</td>);
         cells.push(<td key={"discord" + i} id={"discord" + i}>{props.queueData[i].digitalConsultation === false ? "Datatorget" : "Discord"}</td>);

@@ -104,7 +104,7 @@ export class Queue extends Component {
 
         this.postNewQueueEntry(formData);
         const clearedForm = clearFormInputs(this.state.form);
-        this.setState({form: clearedForm});
+        this.setState({form: clearedForm, formIsValid: false});
     };
 
     postNewQueueEntry = (formData) => {
@@ -193,6 +193,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default
-withPolling(actions.fetchQueue())
-(connect(mapStateToProps, mapDispatchToProps)(Queue));
+export default withPolling(actions.fetchQueue())(connect(mapStateToProps, mapDispatchToProps)(Queue));
