@@ -1,5 +1,7 @@
 import React from "react";
 
+//TODO Refactor this by using a library or a standard design pattern for creating forms before converting to TypeScript.
+
 const input = (props) => {
     let inputElement = null;
 
@@ -8,7 +10,7 @@ const input = (props) => {
             inputElement = <input
                 className="form-control ml-2 mr-2 mt-2"
                 value={props.value}
-                onChange={props.changed}
+                onChange={props.changeHandler}
                 {...props.inputConfig}/>;
             break;
 
@@ -16,7 +18,7 @@ const input = (props) => {
             inputElement = <select
                 className="form-control ml-2 mr-2 mt-2"
                 value={props.value}
-                onChange={props.changed}>
+                onChange={props.changeHandler}>
                 {props.inputConfig.options.map(option => (
                     <option key={option.value} value={option.value}>
                         {option.displayValue}

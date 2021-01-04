@@ -157,7 +157,7 @@ export class Queue extends Component {
                     shouldValidate={formElement.config.validation}
                     touched={formElement.config.touched}
                     label={formElement.config.label}
-                    changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                    changeHandler={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
             ))}
             <SubmitButton className={"ml-2 mr-2 mt-2"} disabled={!this.state.formIsValid}>Registrer</SubmitButton>
