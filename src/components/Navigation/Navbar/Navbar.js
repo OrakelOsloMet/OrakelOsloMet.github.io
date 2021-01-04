@@ -4,7 +4,7 @@ import {Navbar} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
 import * as actions from "../../../store/actions/actionIndex";
-import styles from "./Navbard.module.css";
+import styles from "./Navbar.module.css";
 import {USER_GUIDE_PATH} from "../../../constants/constants";
 
 import {SwalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
