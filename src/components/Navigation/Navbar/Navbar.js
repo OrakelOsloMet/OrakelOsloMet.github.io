@@ -9,7 +9,6 @@ import {USER_GUIDE_PATH} from "../../../constants/constants";
 
 import SwalInfoModal from "../../UI/Modals/SwalModals/SwalInfoModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/SwalLoginModal";
-import {clearError} from "../../../store/actions/actionIndex";
 
 const navbar = (props) => {
 
