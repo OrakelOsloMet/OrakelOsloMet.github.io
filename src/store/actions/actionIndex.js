@@ -2,7 +2,7 @@ export {
     auth,
     logout,
     checkValidAuth,
-    toggleLoginModal
+    clearError
 } from "./authActions"
 
 export {

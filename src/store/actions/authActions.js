@@ -70,9 +70,8 @@ export const auth = (username, password) => {
     }
 };
 
-export const toggleLoginModal = (visible) => {
+export const clearError = () => {
     return {
-        type: actionTypes.TOGGLE_LOGIN_MODAL,
-        visible: visible
+        type: actionTypes.CLEAR_ERROR
     }
-};
+}

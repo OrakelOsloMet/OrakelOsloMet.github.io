@@ -7,7 +7,9 @@ import * as actions from "../../../store/actions/actionIndex";
 import styles from "./Navbar.module.css";
 import {USER_GUIDE_PATH} from "../../../constants/constants";
 
-import {SwalInfoModal} from "../../UI/Modals/SwalModals/SwalModals";
+import SwalInfoModal from "../../UI/Modals/SwalModals/SwalInfoModal";
+import SwalLoginModal from "../../UI/Modals/SwalModals/SwalLoginModal";
+import {clearError} from "../../../store/actions/actionIndex";
 
 const navbar = (props) => {
 
@@ -32,15 +34,23 @@ const navbar = (props) => {
         url: USER_GUIDE_PATH,
         hyperlinkText: "Brukerveiledning"})
 
+    const swalLogin = () => {
+        SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError, errorMessage: props.logInFailed ? props.logInFailed : null})
+    }
+
     const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
     const navbarProps = props.isAuthenticated ? {bg: "warning", expand: "lg"} : {bg: "primary", variant: "dark", expand: "lg"};
 
     const loginButton =
         <Nav.Link
             className={linkStyle}
-            onClick={props.isAuthenticated ? props.logoutHandler : props.showLoginModal}>
+            onClick={props.isAuthenticated ? props.logoutHandler : swalLogin}>
             {props.isAuthenticated ? "Logg Ut" : "Admin"}
         </Nav.Link>;
+
+    if (props.logInFailed) {
+        swalLogin();
+    }
 
     return (
         <Navbar {...navbarProps}>
@@ -68,13 +78,15 @@ const navbar = (props) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.token !== null,
+        logInFailed: state.auth.error
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        showLoginModal: () => dispatch(actions.toggleLoginModal(false)),
+        onLoginSubmit: (username, password) => dispatch(actions.auth(username, password)),
+        clearLoginError: () => dispatch(actions.clearError()),
         logoutHandler: () => dispatch(actions.logout())
     }
 };
