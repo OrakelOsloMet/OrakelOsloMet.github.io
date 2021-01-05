@@ -2,10 +2,21 @@ import React from "react";
 import {Table} from "react-bootstrap";
 import TableHead from "./TableHead/TableHead";
 import {ConfirmButton, DeleteButton} from "../Buttons/Buttons";
+import {QueueEntity} from "../../../models/QueueEntity";
 
 import * as actions from "../../../store/actions/actionIndex";
 
-const queueTable = (props) => {
+type QueueTableProps = {
+    queueData: QueueEntity[],
+    confirmDoneEntity: Function,
+    deleteQueueEntity: Function,
+    isAuthenticated: boolean,
+    userRoles: string[],
+    defaultColumns: string[],
+    loggedInColumns: string[]
+}
+
+const queueTable = (props: QueueTableProps) => {
 
     /* ----- Create Table Body ----- */
 
@@ -17,19 +28,16 @@ const queueTable = (props) => {
         cells.push(<td key={"entry" + i} id={"entry" + i}># {i + 1}</td>);
         cells.push(<td key={"name" + i} id={"name" + i}>{props.queueData[i].name}</td>);
         cells.push(<td key={"subject" + i} id={"subject" + i}>{props.queueData[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{props.queueData[i].digitalConsultation === false ? "Datatorget" : "Discord"}</td>);
+        cells.push(<td key={"discord" + i} id={"discord" + i}>{!props.queueData[i].digitalConsultation ? "Datatorget" : "Discord"}</td>);
 
-        let actionButtons =
-            <>
-                <ConfirmButton onClick={() => props.confirmDoneEntity(props.queueData[i].id)}>Ferdig</ConfirmButton>
-                <DeleteButton className="ml-2" onClick={() => props.deleteQueueEntity(props.queueData[i].id)}>Slett</DeleteButton>
-            </>;
-
-        if (props.isAuthenticated) {
-            actionButtons = props.userRoles.includes("ROLE_ADMIN") ? actionButtons : null;
-            cells.push(<td key={"actions" + i} id={"action" + i}>{actionButtons}</td>);
+        if (props.isAuthenticated && props.userRoles.includes("ROLE_ADMIN")) {
+                cells.push(<td key={"actions" + i} id={"action" + i}>{
+                    <>
+                        <ConfirmButton onClick={() => props.confirmDoneEntity(props.queueData[i].id)}>Ferdig</ConfirmButton>
+                        <DeleteButton className="ml-2" onClick={() => props.deleteQueueEntity(props.queueData[i].id)}>Slett</DeleteButton>
+                    </>
+                }</td>);
         }
-
         rows.push(<tr key={i} id={rowId}>{cells}</tr>);
     }
 

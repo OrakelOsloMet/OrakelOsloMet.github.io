@@ -77,7 +77,7 @@ export class Queue extends Component {
         //TODO This is NOT a good way to make sure data is being filled into the selector. Look into Redux-forms.
         setTimeout(() => {
             this.fillSubjectSelector();
-        }, 1000);
+        }, 1500);
     }
 
     fillSubjectSelector = () => {
@@ -120,14 +120,12 @@ export class Queue extends Component {
 
 
     render() {
+        console.log("HELLO THERE");
 
         /* ----- Create Table ----- */
-        const defaultColumns = ["Plassering", "Navn", "Emne", "Arena"];
-        const adminColumns = ["Handlinger"];
-
         const table = <Table
-            defaultColumns={defaultColumns}
-            loggedInColumns={adminColumns}
+            defaultColumns={["Plassering", "Navn", "Emne", "Arena"]}
+            loggedInColumns={["Handlinger"]}
             queueData={this.props.queueData}
             isAuthenticated={this.props.isAuthenticated}
             userRoles={this.props.userRoles}
