@@ -1,7 +1,7 @@
 import React, {MouseEventHandler, FunctionComponent} from 'react';
 
 type ButtonProps = {
-    onClick: MouseEventHandler,
+    onClick?: MouseEventHandler,
     className?: string,
     disabled?: boolean,
 }
