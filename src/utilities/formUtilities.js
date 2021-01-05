@@ -1,6 +1,6 @@
 import {updateObject} from "./objectUtilities";
 
-export const inputChangedHandler = (event, inputIdentifier, form) => {
+export const handleInputChange = (event, inputIdentifier, form) => {
     const updatedFormElement = updateObject(form[inputIdentifier], {
         value: event.target.value,
         valid: checkFormElementValidity(event.target.value, form[inputIdentifier].validation),
@@ -16,7 +16,7 @@ export const inputChangedHandler = (event, inputIdentifier, form) => {
         formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
     }
 
-    return {form: updatedForm, formIsValid: formIsValid}
+    return {updatedForm: updatedForm, updatedFormIsValid: formIsValid};
 };
 
 const checkFormElementValidity = (value, rules) => {

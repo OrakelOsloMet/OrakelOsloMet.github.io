@@ -1,17 +1,17 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 
 import * as actions from "../../store/actions/actionIndex";
 import Table from "../../components/UI/Tables/QueueTable";
 import Input from "../../components/UI/Input/Input";
 import {SubmitButton} from "../../components/UI/Buttons/Buttons";
-import {inputChangedHandler, clearFormInputs} from "../../utilities/formUtilities";
+import {handleInputChange, clearFormInputs} from "../../utilities/formUtilities";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 
-export class Queue extends Component {
+const Queue = (props) => {
 
-    state = {
-        form: {
+    const [formIsValidState, setFormIsValidState] = useState(false);
+    const [formState, setFormState] = useState({
             name: {
                 inputType: "input",
                 inputConfig: {
@@ -55,7 +55,6 @@ export class Queue extends Component {
                 valid: true
             },
 
-            //Indicates if the student wants digital consultation or not. In the database 1 is true and 0 is false.
             discord: {
                 inputType: "select",
                 inputConfig: {
@@ -70,44 +69,44 @@ export class Queue extends Component {
                 valid: true
             },
         },
-        formIsValid: false
-    };
+    )
 
-    componentDidMount() {
-        //TODO This is NOT a good way to make sure data is being filled into the selector. Look into Redux-forms.
-        setTimeout(() => {
-            this.fillSubjectSelector();
-        }, 1500);
-    }
 
-    fillSubjectSelector = () => {
-        const subjectListUpdated = {...this.state.form};
+    useEffect(() => {
+        fillSubjectSelector();
+    }, [props.subjects])
 
-        this.props.subjects.forEach(subject => {
-            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject})
+    const fillSubjectSelector = () => {
+        const subjectListUpdated = {...formState};
+
+        props.subjects.forEach(subject => {
+            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject});
         });
 
-        this.setState({form: subjectListUpdated});
+        setFormState(subjectListUpdated);
     };
 
-    inputChangedHandler = (event, inputIdentifier) => {
-        this.setState(inputChangedHandler(event, inputIdentifier, this.state.form));
+    const inputChangeHandler = (event, inputIdentifier) => {
+        const {updatedForm, updatedFormIsValid} =  handleInputChange(event, inputIdentifier, formState);
+        setFormState(updatedForm);
+        setFormIsValidState(updatedFormIsValid);
     };
 
-    registrationHandler = (event) => {
+    const registrationHandler = (event) => {
         event.preventDefault();
 
         const formData = {};
-        for(let formElementIdentifier in this.state.form) {
-            formData[formElementIdentifier] = this.state.form[formElementIdentifier].value;
+        for (let formElementIdentifier in formState) {
+            formData[formElementIdentifier] = formState[formElementIdentifier].value;
         }
 
-        this.postNewQueueEntry(formData);
-        const clearedForm = clearFormInputs(this.state.form);
-        this.setState({form: clearedForm, formIsValid: false});
+        postNewQueueEntry(formData);
+        const clearedForm = clearFormInputs(formState);
+        setFormState(clearedForm);
+        setFormIsValidState(false);
     };
 
-    postNewQueueEntry = (formData) => {
+    const postNewQueueEntry = (formData) => {
         const queueEntity = {
             name: formData.name,
             subject: formData.subject,
@@ -115,60 +114,56 @@ export class Queue extends Component {
             studyYear: formData.year
         };
 
-        this.props.addQueueEntity(queueEntity);
+        props.addQueueEntity(queueEntity);
     };
 
 
-    render() {
-        console.log("HELLO THERE");
+    /* ----- Create Table ----- */
+    const table = <Table
+        defaultColumns={["Plassering", "Navn", "Emne", "Arena"]}
+        loggedInColumns={["Handlinger"]}
+        queueData={props.queueData}
+        isAuthenticated={props.isAuthenticated}
+        userRoles={props.userRoles}
+        confirmDoneEntity={props.confirmDoneEntity}
+        deleteQueueEntity={props.deleteQueueEntity}
 
-        /* ----- Create Table ----- */
-        const table = <Table
-            defaultColumns={["Plassering", "Navn", "Emne", "Arena"]}
-            loggedInColumns={["Handlinger"]}
-            queueData={this.props.queueData}
-            isAuthenticated={this.props.isAuthenticated}
-            userRoles={this.props.userRoles}
-            confirmDoneEntity={this.props.confirmDoneEntity}
-            deleteQueueEntity={this.props.deleteQueueEntity}
+    />;
 
-        />;
+    /* ----- Create Form ----- */
 
-        /* ----- Create Form ----- */
-
-        const formElements = [];
-        for (let key in this.state.form) {
-            formElements.push({
-                id: key,
-                config: this.state.form[key]
-            });
-        }
-
-        const form = <form onSubmit={this.registrationHandler} className="form-inline mt-3">
-            {formElements.map(formElement => (
-                <Input
-                    key={formElement.id}
-                    inputType={formElement.config.inputType}
-                    inputConfig={formElement.config.inputConfig}
-                    value={formElement.config.value}
-                    invalid={!formElement.config.valid}
-                    shouldValidate={formElement.config.validation}
-                    touched={formElement.config.touched}
-                    label={formElement.config.label}
-                    changeHandler={(event) => this.inputChangedHandler(event, formElement.id)}
-                    />
-            ))}
-            <SubmitButton className={"ml-2 mr-2 mt-2"} disabled={!this.state.formIsValid}>Registrer</SubmitButton>
-        </form>;
-
-        return (
-            <>
-                {table}
-                <h1 className={"text-left ml-2 mr-2 mt-5"}>Køregistrering: </h1>
-                {form}
-            </>
-        );
+    const formElements = [];
+    for (let key in formState) {
+        formElements.push({
+            id: key,
+            config: formState[key]
+        });
     }
+
+    const form = <form onSubmit={registrationHandler} className="form-inline mt-3">
+        {formElements.map(formElement => (
+            <Input
+                key={formElement.id}
+                inputType={formElement.config.inputType}
+                inputConfig={formElement.config.inputConfig}
+                value={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
+                label={formElement.config.label}
+                changeHandler={(event) => inputChangeHandler(event, formElement.id)}
+            />
+        ))}
+        <SubmitButton className={"ml-2 mr-2 mt-2"} disabled={!formIsValidState}>Registrer</SubmitButton>
+    </form>;
+
+    return (
+        <>
+            {table}
+            <h1 className={"text-left ml-2 mr-2 mt-5"}>Køregistrering: </h1>
+            {form}
+        </>
+    );
 
 }
 
