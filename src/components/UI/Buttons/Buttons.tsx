@@ -1,9 +1,9 @@
 import React, {MouseEventHandler, FunctionComponent} from 'react';
 
 type ButtonProps = {
-    disabled: boolean,
-    className: string,
-    onClick: MouseEventHandler
+    onClick: MouseEventHandler,
+    className?: string,
+    disabled?: boolean,
 }
 
 export const SubmitButton: FunctionComponent<ButtonProps> = (props) =>
