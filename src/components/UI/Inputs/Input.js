@@ -1,7 +1,7 @@
 import React from "react";
 
 const Input = React.forwardRef((props, ref) => {
-    let inputElement = null;
+    let inputElement;
 
     switch (props.inputType) {
         case("input"):
@@ -9,7 +9,6 @@ const Input = React.forwardRef((props, ref) => {
                 name={props.name}
                 ref={ref({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}})}
                 className="form-control ml-2 mr-2 mt-2"
-                value={props.value}
                 {...props.inputConfig}/>;
             break;
 
@@ -17,8 +16,7 @@ const Input = React.forwardRef((props, ref) => {
             inputElement = <select
                 name={props.name}
                 ref={ref}
-                className="form-control ml-2 mr-2 mt-2"
-                value={props.value}>
+                className="form-control ml-2 mr-2 mt-2">
                 {props.inputConfig.options.map(option => (
                     <option key={option.value} value={option.value}>
                         {option.displayValue}

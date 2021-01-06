@@ -38,6 +38,7 @@ const navbar = (props) => {
     }
 
     const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
+    //TODO Move styling to css module
     const navbarProps = props.isAuthenticated ? {bg: "warning", expand: "lg"} : {bg: "primary", variant: "dark", expand: "lg"};
 
     const loginButton =
