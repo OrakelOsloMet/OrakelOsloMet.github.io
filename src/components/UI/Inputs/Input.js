@@ -8,7 +8,8 @@ const Input = React.forwardRef((props, ref) => {
             inputElement = <input
                 name={props.name}
                 ref={ref({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}})}
-                className="form-control ml-2 mr-2 mt-2"
+                className={"form-control ml-2 mr-2 mt-2"}
+                style={props.error ? {border: "1px solid red"} : {}}
                 {...props.inputConfig}/>;
             break;
 

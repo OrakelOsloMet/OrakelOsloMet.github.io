@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import {useForm} from "react-hook-form";
+import styles from "./Queue.module.css"
 
 import * as actions from "../../store/actions/actionIndex";
 import {INPUT, SELECT} from "../../constants/constants";
@@ -101,7 +102,8 @@ const Queue = (props) => {
         deleteQueueEntity={props.deleteQueueEntity}
     />;
 
-    const form = <form onSubmit={handleSubmit(registrationHandler)} className="form-inline mt-2 mb-3">
+
+    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}  style={{margin: "auto", width: "50%"}}>
         {Object.entries(formElements).map(formElement => (
             <Input
                 key={formElement[0]}
@@ -109,18 +111,14 @@ const Queue = (props) => {
                 ref={register}
                 inputType={formElement[1].inputType}
                 inputConfig={formElement[1].inputConfig}
+                error={errors.firstname}
             />
         ))}
         <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
     </form>
 
-    //TODO: Move styles to CSS module
     return (
         <>
-            <div className={"row mt-3 mb-2 ml-2"}>
-                <h1>Køregistrering: </h1>
-                {errors.firstname && <h4 style={{color: "red", fontWeight: "bold"}} className={"mt-3 col-md-2"}>{errors.firstname.message}</h4>}
-            </div>
             {form}
             {table}
         </>
