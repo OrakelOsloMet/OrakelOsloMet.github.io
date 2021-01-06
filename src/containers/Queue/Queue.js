@@ -1,109 +1,46 @@
 import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
+import {useForm} from "react-hook-form";
 
 import * as actions from "../../store/actions/actionIndex";
 import Table from "../../components/UI/Tables/QueueTable";
 import Input from "../../components/UI/Input/Input";
 import {SubmitButton} from "../../components/UI/Buttons/Buttons";
-import {handleInputChange, clearFormInputs} from "../../utilities/formUtilities";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
+import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
 
 const Queue = (props) => {
+    const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [formIsValidState, setFormIsValidState] = useState(false);
-    const [formState, setFormState] = useState({
-            name: {
-                inputType: "input",
-                inputConfig: {
-                    type: "text",
-                    placeholder: "Fornavn"
-                },
-                value: "",
-                label: "Navn",
-                validation: {
-                    required: true,
-                    minLength: 3,
-                    maxLength: 30
-                },
-                valid: false,
-                touched: false
-            },
-
-            subject: {
-                inputType: "select",
-                inputConfig: {
-                    options: []
-                },
-                value: "Programmering",
-                label: "Velg Emne",
-                validation: {},
-                valid: true
-            },
-
-            year: {
-                inputType: "select",
-                inputConfig: {
-                    options: [
-                        {value: 1, displayValue: "1. år"},
-                        {value: 2, displayValue: "2. år"},
-                        {value: 3, displayValue: "3. år"}
-                    ]
-                },
-                value: 1,
-                label: "Årstrinn",
-                validation: {},
-                valid: true
-            },
-
-            discord: {
-                inputType: "select",
-                inputConfig: {
-                    options: [
-                        {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
-                        {value: true, displayValue: "Digital Veiledning (Discord)"},
-                    ]
-                },
-                value: 0,
-                label: "Veiledningsform",
-                validation: {},
-                valid: true
-            },
-        },
-    )
-
+    const [subjectState, setSubjectState] = useState({
+        subjects: {
+            options: []
+        }
+    })
 
     useEffect(() => {
-        fillSubjectSelector();
-    }, [props.subjects])
-
-    const fillSubjectSelector = () => {
-        const subjectListUpdated = {...formState};
-
-        props.subjects.forEach(subject => {
-            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject});
-        });
-
-        setFormState(subjectListUpdated);
-    };
-
-    const inputChangeHandler = (event, inputIdentifier) => {
-        const {updatedForm, updatedFormIsValid} =  handleInputChange(event, inputIdentifier, formState);
-        setFormState(updatedForm);
-        setFormIsValidState(updatedFormIsValid);
-    };
-
-    const registrationHandler = (event) => {
-        event.preventDefault();
-
-        const formData = {};
-        for (let formElementIdentifier in formState) {
-            formData[formElementIdentifier] = formState[formElementIdentifier].value;
+        if (isSubmitSuccessful) {
+            reset();
         }
 
-        postNewQueueEntry(formData);
-        const clearedForm = clearFormInputs(formState);
-        setFormState(clearedForm);
-        setFormIsValidState(false);
+        fillSubjectSelector();
+
+    }, [props.subjects, isSubmitSuccessful, reset])
+
+    const fillSubjectSelector = () => {
+        const subjectListUpdated = {...subjectState};
+
+        props.subjects.forEach(subject => {
+            subjectListUpdated.subjects.options.push({value: subject, displayValue: subject});
+        });
+
+        setSubjectState(subjectListUpdated);
+        console.log(subjectState);
+    };
+
+    const registrationHandler = (data) => {
+        const queueEntry = convertObjectStringsToPrimitives(data);
+        postNewQueueEntry(queueEntry);
     };
 
     const postNewQueueEntry = (formData) => {
@@ -130,32 +67,23 @@ const Queue = (props) => {
 
     />;
 
-    /* ----- Create Form ----- */
-
-    const formElements = [];
-    for (let key in formState) {
-        formElements.push({
-            id: key,
-            config: formState[key]
-        });
-    }
-
-    const form = <form onSubmit={registrationHandler} className="form-inline mt-3">
-        {formElements.map(formElement => (
-            <Input
-                key={formElement.id}
-                inputType={formElement.config.inputType}
-                inputConfig={formElement.config.inputConfig}
-                value={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched}
-                label={formElement.config.label}
-                changeHandler={(event) => inputChangeHandler(event, formElement.id)}
-            />
-        ))}
-        <SubmitButton className={"ml-2 mr-2 mt-2"} disabled={!formIsValidState}>Registrer</SubmitButton>
-    </form>;
+    const form = <form onSubmit={handleSubmit(registrationHandler)} className="form-inline mt-3">
+        <input className={"form-control ml-2 mr-2 mt-2"} placeholder={"Fornavn"} name={"name"} ref={register({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}})}/>
+        <select className={"form-control ml-2 mr-2 mt-2"} name={"subject"} ref={register}>
+            <option value={"Programmering"}>Programmering</option>
+            <option value={"Diskret Matte"}>Diskret Matte</option>
+        </select>
+        <select className={"form-control ml-2 mr-2 mt-2"} name={"year"} ref={register}>
+            <option value={1}>1. år</option>
+            <option value={2}>2. år</option>
+        </select>
+        <select className={"form-control ml-2 mr-2 mt-2"} name={"discord"} ref={register}>
+            <option value={false}>Fysisk Veiledning (Datatorget)</option>
+            <option value={true}>Digital Veiledning (Discord)</option>
+        </select>
+        {errors.name && <p>{errors.name.message}</p>}
+        <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
+    </form>
 
     return (
         <>
