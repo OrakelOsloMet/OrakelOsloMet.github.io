@@ -99,10 +99,9 @@ const Queue = (props) => {
         userRoles={props.userRoles}
         confirmDoneEntity={props.confirmDoneEntity}
         deleteQueueEntity={props.deleteQueueEntity}
-
     />;
 
-    const form = <form onSubmit={handleSubmit(registrationHandler)} className="form-inline mt-3">
+    const form = <form onSubmit={handleSubmit(registrationHandler)} className="form-inline mt-2 mb-3">
         {Object.entries(formElements).map(formElement => (
             <Input
                 key={formElement[0]}
@@ -112,15 +111,18 @@ const Queue = (props) => {
                 inputConfig={formElement[1].inputConfig}
             />
         ))}
-        {errors.name && <p>{errors.name.message}</p>}
         <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
     </form>
 
+    //TODO: Move styles to CSS module
     return (
         <>
-            {table}
-            <h1 className={"text-left ml-2 mr-2 mt-5"}>Køregistrering: </h1>
+            <div className={"row mt-3 mb-2 ml-2"}>
+                <h1>Køregistrering: </h1>
+                {errors.firstname && <h4 style={{color: "red", fontWeight: "bold"}} className={"mt-3 col-md-2"}>{errors.firstname.message}</h4>}
+            </div>
             {form}
+            {table}
         </>
     );
 
