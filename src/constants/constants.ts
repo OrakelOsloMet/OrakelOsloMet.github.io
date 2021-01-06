@@ -24,4 +24,9 @@ export const USER_GUIDE_PATH = API_BASE_PATH + "resources/userguide";
 /* ----- Routing ----- */
 export const INDEX_ROUTE = "/Orakel_Queue_Client/";
 
+/* ----- Form Elements ----- */
+export const SELECT = "select";
+export const INPUT = "input";
+
+
 //TODO Add all hardcoded string values to this file

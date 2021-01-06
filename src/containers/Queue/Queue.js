@@ -3,39 +3,74 @@ import {connect} from "react-redux";
 import {useForm} from "react-hook-form";
 
 import * as actions from "../../store/actions/actionIndex";
+import {INPUT, SELECT} from "../../constants/constants";
 import Table from "../../components/UI/Tables/QueueTable";
-import Input from "../../components/UI/Input/Input";
 import {SubmitButton} from "../../components/UI/Buttons/Buttons";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
+import Input from "../../components/UI/Inputs/Input"
 
 const Queue = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [subjectState, setSubjectState] = useState({
-        subjects: {
-            options: []
+    const [formElements, setFormElements] = useState({
+        firstname: {
+           inputType: INPUT,
+           inputConfig: {
+               type: "text",
+               placeholder: "Fornavn"
+           }
+        },
+
+        subject: {
+            inputType: SELECT,
+            inputConfig: {
+                options: []
+            }
+        },
+
+        year: {
+            inputType: SELECT,
+            inputConfig: {
+                options: [
+                    {value: 1, displayValue: "1. år"},
+                    {value: 2, displayValue: "2. år"},
+                    {value: 3, displayValue: "3. år"}
+                ]
+            }
+        },
+
+        digitalConsultation: {
+            inputType: SELECT,
+            inputConfig: {
+                options: [
+                    {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
+                    {value: true, displayValue: "Digital Veiledning (Discord)"}
+                ]
+            }
         }
     })
 
+    //Use effect only to be triggered when the component is first rendered.
+    useEffect(() => {
+        fillSubjectSelector();
+    },[props.subjects])
+
+    //Use effect to run whenever the form is submited successfully.
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset();
         }
-
-        fillSubjectSelector();
-
-    }, [props.subjects, isSubmitSuccessful, reset])
+    }, [isSubmitSuccessful, reset])
 
     const fillSubjectSelector = () => {
-        const subjectListUpdated = {...subjectState};
+        const subjectListUpdated = {...formElements};
 
         props.subjects.forEach(subject => {
-            subjectListUpdated.subjects.options.push({value: subject, displayValue: subject});
+            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject});
         });
 
-        setSubjectState(subjectListUpdated);
-        console.log(subjectState);
+        setFormElements(subjectListUpdated);
     };
 
     const registrationHandler = (data) => {
@@ -45,9 +80,9 @@ const Queue = (props) => {
 
     const postNewQueueEntry = (formData) => {
         const queueEntity = {
-            name: formData.name,
+            name: formData.firstname,
             subject: formData.subject,
-            digitalConsultation: formData.discord,
+            digitalConsultation: formData.digitalConsultation,
             studyYear: formData.year
         };
 
@@ -68,19 +103,15 @@ const Queue = (props) => {
     />;
 
     const form = <form onSubmit={handleSubmit(registrationHandler)} className="form-inline mt-3">
-        <input className={"form-control ml-2 mr-2 mt-2"} placeholder={"Fornavn"} name={"name"} ref={register({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}})}/>
-        <select className={"form-control ml-2 mr-2 mt-2"} name={"subject"} ref={register}>
-            <option value={"Programmering"}>Programmering</option>
-            <option value={"Diskret Matte"}>Diskret Matte</option>
-        </select>
-        <select className={"form-control ml-2 mr-2 mt-2"} name={"year"} ref={register}>
-            <option value={1}>1. år</option>
-            <option value={2}>2. år</option>
-        </select>
-        <select className={"form-control ml-2 mr-2 mt-2"} name={"discord"} ref={register}>
-            <option value={false}>Fysisk Veiledning (Datatorget)</option>
-            <option value={true}>Digital Veiledning (Discord)</option>
-        </select>
+        {Object.entries(formElements).map(formElement => (
+            <Input
+                key={formElement[0]}
+                name={formElement[0]}
+                ref={register}
+                inputType={formElement[1].inputType}
+                inputConfig={formElement[1].inputConfig}
+            />
+        ))}
         {errors.name && <p>{errors.name.message}</p>}
         <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
     </form>
