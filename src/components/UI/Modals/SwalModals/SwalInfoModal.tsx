@@ -10,21 +10,21 @@ type SwalInfoProps = {
 }
 
 const SwalInfoModal = (props: SwalInfoProps) => {
+    const {title, contentText, url, hyperlinkText} = props;
     const mySwal = withReactContent(Swal)
     const hyperlinkDiv: HTMLDivElement = document.createElement("div");
 
-    if (props.url && props.hyperlinkText) {
-        hyperlinkDiv.innerHTML = `<strong><a href="${props.url}" target="_blank">${props.hyperlinkText}</a></strong>`;
+    if (url && hyperlinkText) {
+        hyperlinkDiv.innerHTML = `<strong><a href="${url}" target="_blank">${hyperlinkText}</a></strong>`;
     }
 
-    return (
-        mySwal.fire({
-            title: props.title,
-            html: props.contentText,
-            footer: props.url && props.hyperlinkText ? hyperlinkDiv : null,
+    return mySwal.fire({
+            title: title,
+            html: contentText,
+            footer: url && hyperlinkText ? hyperlinkDiv : null,
             icon: "info",
             confirmButtonText: "Lukk"
-        }));
+    });
 };
 
 export default SwalInfoModal

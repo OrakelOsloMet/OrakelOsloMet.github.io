@@ -8,8 +8,10 @@ type SwalLoginProps = {
 }
 
 const SwalLoginModal = (props: SwalLoginProps) => {
+    const {onLoginSubmit, clearLoginError, errorMessage} = props;
     const mySwal = withReactContent(Swal)
-    mySwal.fire({
+
+    return mySwal.fire({
         title: "Orakel Innlogging",
         html: `<input type="text" id="login" class="swal2-input" placeholder="Brukernavn">
                         <input type="password" id="password" class="swal2-input" placeholder="Passord">`,
@@ -20,7 +22,7 @@ const SwalLoginModal = (props: SwalLoginProps) => {
         cancelButtonText: "Avbryt",
         allowOutsideClick: () => !mySwal.isLoading(),
         didOpen: () => {
-            if (props.errorMessage) {
+            if (errorMessage) {
                 mySwal.showValidationMessage("Ugyldig brukernavn eller passord!")
             }
         },
@@ -34,13 +36,13 @@ const SwalLoginModal = (props: SwalLoginProps) => {
             if (!username || !password) {
                 mySwal.showValidationMessage("Oppgi brukernavn og passord!")
             } else {
-                props.onLoginSubmit(username, password)
+                onLoginSubmit(username, password)
                 return {username: username, password: password}
             }
         }
     }).then((result) => {
         if (result.isDismissed) {
-            props.clearLoginError()
+            clearLoginError()
         }
     })
 };
