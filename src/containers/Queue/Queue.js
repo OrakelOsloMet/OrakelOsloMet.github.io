@@ -16,14 +16,16 @@ const Queue = (props) => {
 
     const [formElements, setFormElements] = useState({
         firstname: {
-           inputType: INPUT,
-           inputConfig: {
-               type: "text",
-               placeholder: "Fornavn"
-           }
+            name: "firstname",
+            inputType: INPUT,
+            inputConfig: {
+                type: "text",
+                placeholder: "Fornavn"
+            }
         },
 
         subject: {
+            name: "subject",
             inputType: SELECT,
             inputConfig: {
                 options: []
@@ -31,6 +33,7 @@ const Queue = (props) => {
         },
 
         year: {
+            name: "year",
             inputType: SELECT,
             inputConfig: {
                 options: [
@@ -42,6 +45,7 @@ const Queue = (props) => {
         },
 
         digitalConsultation: {
+            name: "digitalConsultation",
             inputType: SELECT,
             inputConfig: {
                 options: [
@@ -55,7 +59,7 @@ const Queue = (props) => {
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
         fillSubjectSelector();
-    },[props.subjects])
+    }, [props.subjects])
 
     //Use effect to run whenever the form is submited successfully.
     useEffect(() => {
@@ -74,17 +78,13 @@ const Queue = (props) => {
         setFormElements(subjectListUpdated);
     };
 
-    const registrationHandler = (data) => {
-        const queueEntry = convertObjectStringsToPrimitives(data);
-        postNewQueueEntry(queueEntry);
-    };
-
-    const postNewQueueEntry = (formData) => {
+    const registrationHandler = (formData) => {
+        const primitiveFormData = convertObjectStringsToPrimitives(formData);
         const queueEntity = {
-            name: formData.firstname,
-            subject: formData.subject,
-            digitalConsultation: formData.digitalConsultation,
-            studyYear: formData.year
+            name: primitiveFormData.firstname,
+            subject: primitiveFormData.subject,
+            digitalConsultation: primitiveFormData.digitalConsultation,
+            studyYear: primitiveFormData.year
         };
 
         props.addQueueEntity(queueEntity);
@@ -102,18 +102,20 @@ const Queue = (props) => {
         deleteQueueEntity={props.deleteQueueEntity}
     />;
 
+    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
+        {Object.values(formElements).map(formElement => {
+            //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added
+            const forwardRef = formElement.name === "firstname" ? register({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}}) : register
 
-    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}  style={{margin: "auto", width: "50%"}}>
-        {Object.entries(formElements).map(formElement => (
-            <Input
-                key={formElement[0]}
-                name={formElement[0]}
-                ref={register}
-                inputType={formElement[1].inputType}
-                inputConfig={formElement[1].inputConfig}
-                error={errors.firstname}
-            />
-        ))}
+            return (
+                <Input
+                    key={formElement.name}
+                    formElement={formElement}
+                    ref={forwardRef}
+                    error={errors.firstname}
+                />
+            )
+        })}
         <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
     </form>
 
