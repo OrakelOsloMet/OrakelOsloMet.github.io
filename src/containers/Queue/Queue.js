@@ -104,7 +104,7 @@ const Queue = (props) => {
 
     const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
         {Object.values(formElements).map(formElement => {
-            //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added
+            //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added. Do this once this file is converted to Typescript.
             const forwardRef = formElement.name === "firstname" ? register({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}}) : register
 
             return (
@@ -112,7 +112,7 @@ const Queue = (props) => {
                     key={formElement.name}
                     formElement={formElement}
                     ref={forwardRef}
-                    error={errors.firstname}
+                    error={errors.firtname}
                 />
             )
         })}
