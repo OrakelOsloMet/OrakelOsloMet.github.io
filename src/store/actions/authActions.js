@@ -1,16 +1,16 @@
 import axios from "../../AxiosAPI";
-import {AuthenticationActions} from "./ActionTypes";
+import * as actionTypes from "./ActionTypes";
 import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/Constants";
 
 const authStart = () => {
     return {
-        type: AuthenticationActions.AUTH_START
+        type: actionTypes.AUTH_START
     }
 };
 
 const authSuccess = (user) => {
     return {
-        type: AuthenticationActions.AUTH_SUCCESS,
+        type: actionTypes.AUTH_SUCCESS,
         token: user.token,
         userId: user.userId,
         userRoles: user.roles
@@ -19,7 +19,7 @@ const authSuccess = (user) => {
 
 const authFail = (error) => {
     return {
-        type: AuthenticationActions.AUTH_FAIL,
+        type: actionTypes.AUTH_FAIL,
         error: error
     }
 };
@@ -32,7 +32,7 @@ export const logout = () => {
     localStorage.removeItem(LOCAL_STORAGE_USER);
 
     return {
-        type: AuthenticationActions.AUTH_LOGOUT
+        type: actionTypes.AUTH_LOGOUT
     }
 };
 
@@ -72,6 +72,6 @@ export const auth = (username, password) => {
 
 export const clearError = () => {
     return {
-        type: AuthenticationActions.CLEAR_ERROR
+        type: actionTypes.CLEAR_ERROR
     }
 }
