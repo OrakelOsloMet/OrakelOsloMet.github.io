@@ -128,6 +128,7 @@ const Queue = (props) => {
 
 }
 
+//TODO Going to have to do a cleanup here once the file has been converted to TypeScript. Currently the admin-buttons won't show in the table due to auth.userRoles and auth.token don't exist anymore.
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.token != null,
