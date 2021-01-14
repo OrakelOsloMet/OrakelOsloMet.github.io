@@ -1,40 +1,23 @@
 import React, {MouseEventHandler} from "react";
-import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
-import {Navbar, NavbarProps as BootstrapNavProps} from "react-bootstrap";
+import {Navbar as BootsrapNav, NavbarProps as BootstrapNavProps} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
-import * as actions from "../../../store/actions/actionIndex";
 import styles from "./navbar.module.css";
+
 import {USER_GUIDE_PATH} from "../../../constants/constants";
 
 import SwalInfoModal from "../../UI/Modals/SwalModals/swalInfoModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/swalLoginModal";
 
-/* type NavbarProps = {
+type Props = {
     onLoginSubmit: Function;
     clearLoginError: Function;
     logoutHandler: MouseEventHandler;
     loginFailed: string | null;
     isAuthenticated: boolean;
-} */
+}
 
-const mapStateToProps = (state) => {
-    return {
-        isAuthenticated: state.auth.token !== null,
-        loginFailed: state.auth.error
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onLoginSubmit: (username, password) => dispatch(actions.auth(username, password)),
-        clearLoginError: () => dispatch(actions.clearError()),
-        logoutHandler: () => dispatch(actions.logout())
-    }
-};
-
-const navbar = (props) => {
+const Navbar: React.FC<Props> = (props) => {
 
     const showDiscordMessage = () =>
         SwalInfoModal({
@@ -62,7 +45,7 @@ const navbar = (props) => {
     }
 
     const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
-    const navbarProps = props.isAuthenticated ? {expand: "lg", bg: "warning"} : {variant: "dark", expand: "lg", bg: "primary"};
+    const navbarProps: BootstrapNavProps = props.isAuthenticated ? {expand: "lg", bg: "warning"} : {variant: "dark", expand: "lg", bg: "primary"};
 
     const loginButton =
         <Nav.Link
@@ -76,27 +59,27 @@ const navbar = (props) => {
     }
 
     return (
-        <Navbar {...navbarProps}>
-            <Navbar.Brand className={styles.invisibleOnMobile}>
+        <BootsrapNav {...navbarProps}>
+            <BootsrapNav.Brand className={styles.invisibleOnMobile}>
                 <img
                     className={styles.brandImage}
                     alt="OsloMet Logo"
                     src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
                 />
-            </Navbar.Brand>
-            <Navbar.Brand
-                className={props.isAuthenticated ? styles.authenticatedBrandText : styles.brandText}>Orakel</Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-            <Navbar.Collapse id="responsive-navbar-nav">
+            </BootsrapNav.Brand>
+            <BootsrapNav.Brand
+                className={props.isAuthenticated ? styles.authenticatedBrandText : styles.brandText}>Orakel</BootsrapNav.Brand>
+            <BootsrapNav.Toggle aria-controls="responsive-navbar-nav"/>
+            <BootsrapNav.Collapse id="responsive-navbar-nav">
                 <Nav>
                     <Nav.Link className={linkStyle} onClick={showDiscordMessage}>Discord</Nav.Link>
                     <Nav.Link className={linkStyle} onClick={showErrorReportingMessage}>Feilrapportering</Nav.Link>
                     <Nav.Link className={linkStyle} onClick={showAboutMessage}>Om</Nav.Link>
                     {loginButton}
                 </Nav>
-            </Navbar.Collapse>
-        </Navbar>
-    )
+            </BootsrapNav.Collapse>
+        </BootsrapNav>
+    );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(navbar);
+export default Navbar;

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import Navbar from "../../components/Navigation/Navbar/navbar";
+import {NavbarConnected} from "../../components/Navigation/Navbar/navbarConnected";
 
 class Layout extends Component {
 
     render() {
         return(
             <>
-                <Navbar/>
+                <NavbarConnected/>
                 <main className="mb-5">
                     {this.props.children}
                 </main>
