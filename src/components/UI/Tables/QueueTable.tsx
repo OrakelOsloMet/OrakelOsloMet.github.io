@@ -2,12 +2,11 @@ import React from "react";
 import {Table} from "react-bootstrap";
 import TableHead from "./TableHead/TableHead";
 import {ConfirmButton, DeleteButton} from "../Buttons/Buttons";
-import {QueueEntity} from "../../../models/QueueEntity";
 
 import * as actions from "../../../store/actions/ActionIndex";
 
 type QueueTableProps = {
-    queueData: QueueEntity[],
+    queueData: IQueueEntity[],
     confirmDoneEntity: Function,
     deleteQueueEntity: Function,
     isAuthenticated: boolean,
