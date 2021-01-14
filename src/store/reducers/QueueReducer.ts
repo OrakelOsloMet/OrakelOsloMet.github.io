@@ -1,19 +1,18 @@
 import * as actionTypes from "../actions/ActionTypes";
 import {updateObject} from "../../utilities/objectUtilities";
 
-const initialState = {
+const initialState: QueueState = {
     queueData: [],
     subjectData: [],
     error: null,
     loading: false
 };
 
-
-const initAction = (state, action) => {
+const initAction = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {error: null, loading: true});
 };
 
-const failedAction = (state, action) => {
+const failedAction = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {
         error: action.error,
         loading: false
@@ -22,7 +21,7 @@ const failedAction = (state, action) => {
 
 /* ----- Fetch Queue Data ----- */
 
-const fetchQueueSuccess = (state, action) => {
+const fetchQueueSuccess = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {
         queueData: action.queueData,
         error: null,
@@ -33,7 +32,7 @@ const fetchQueueSuccess = (state, action) => {
 
 /* ----- Add, Delete and Remove in Queue ----- */
 
-const addRemoveSuccess = (state, action) => {
+const addRemoveSuccess = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {
         error: null,
         loading: false
@@ -42,7 +41,7 @@ const addRemoveSuccess = (state, action) => {
 
 /* ----- Fetch Subject Data ----- */
 
-const fetchSubjectsSuccess = (state, action) => {
+const fetchSubjectsSuccess = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {
         subjectData: action.subjectData,
         error: null,
@@ -50,7 +49,7 @@ const fetchSubjectsSuccess = (state, action) => {
     })
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: QueueState = initialState, action: QueueAction): QueueState => {
     switch (action.type) {
 
         //Start cases
@@ -72,10 +71,12 @@ const reducer = (state = initialState, action) => {
         //Success cases
         case actionTypes.FETCH_QUEUE_SUCCESS:
             return fetchQueueSuccess(state, action);
+
         case actionTypes.ADD_TO_QUEUE_SUCCESS:
         case actionTypes.DELETE_FROM_QUEUE_SUCCESS:
         case actionTypes.DONE_IN_QUEUE_SUCCESS:
             return addRemoveSuccess(state, action);
+
         case actionTypes.FETCH_SUBJECTS_SUCCESS:
             return fetchSubjectsSuccess(state, action);
 
