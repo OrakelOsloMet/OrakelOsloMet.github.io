@@ -12,9 +12,3 @@ interface IQueueEntity {
 interface ISubject {
     name: string;
 }
-
-interface IUser {
-    token: string | null;
-    userId: string | null;
-    roles: string[]
-}
