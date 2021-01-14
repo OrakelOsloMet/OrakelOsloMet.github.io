@@ -1,14 +1,38 @@
-import React from "react";
+import React, {MouseEventHandler} from "react";
 import {connect} from "react-redux";
-import {Navbar} from "react-bootstrap";
+import {bindActionCreators, Dispatch} from "redux";
+import {Navbar, NavbarProps as BootstrapNavProps} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
-import * as actions from "../../../store/actions/actionIndex";
+import * as actions from "../../../store/actions/ActionIndex";
 import styles from "./Navbar.module.css";
-import {USER_GUIDE_PATH} from "../../../constants/constants";
+import {USER_GUIDE_PATH} from "../../../constants/Constants";
 
 import SwalInfoModal from "../../UI/Modals/SwalModals/SwalInfoModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/SwalLoginModal";
+
+/* type NavbarProps = {
+    onLoginSubmit: Function;
+    clearLoginError: Function;
+    logoutHandler: MouseEventHandler;
+    loginFailed: string | null;
+    isAuthenticated: boolean;
+} */
+
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+        loginFailed: state.auth.error
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoginSubmit: (username, password) => dispatch(actions.auth(username, password)),
+        clearLoginError: () => dispatch(actions.clearError()),
+        logoutHandler: () => dispatch(actions.logout())
+    }
+};
 
 const navbar = (props) => {
 
@@ -34,11 +58,11 @@ const navbar = (props) => {
         hyperlinkText: "Brukerveiledning"})
 
     const swalLogin = () => {
-        SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError, errorMessage: props.logInFailed ? props.logInFailed : null})
+        SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError, errorMessage: props.loginFailed ? props.loginFailed : null})
     }
 
     const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
-    const navbarProps = props.isAuthenticated ? {bg: "warning", expand: "lg"} : {bg: "primary", variant: "dark", expand: "lg"};
+    const navbarProps = props.isAuthenticated ? {expand: "lg", bg: "warning"} : {variant: "dark", expand: "lg", bg: "primary"};
 
     const loginButton =
         <Nav.Link
@@ -47,7 +71,7 @@ const navbar = (props) => {
             {props.isAuthenticated ? "Logg Ut" : "Admin"}
         </Nav.Link>;
 
-    if (props.logInFailed) {
+    if (props.loginFailed) {
         swalLogin();
     }
 
@@ -73,21 +97,6 @@ const navbar = (props) => {
             </Navbar.Collapse>
         </Navbar>
     )
-};
-
-const mapStateToProps = state => {
-    return {
-        isAuthenticated: state.auth.token !== null,
-        logInFailed: state.auth.error
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onLoginSubmit: (username, password) => dispatch(actions.auth(username, password)),
-        clearLoginError: () => dispatch(actions.clearError()),
-        logoutHandler: () => dispatch(actions.logout())
-    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(navbar);
