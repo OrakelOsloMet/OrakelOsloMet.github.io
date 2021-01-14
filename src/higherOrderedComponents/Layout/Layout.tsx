@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Navbar from "../../components/Navigation/Navbar/Navbar";
-import Login from "../../containers/Login/Login";
+import Navbar from "../../components/Navigation/Navbar/navbar";
 
 class Layout extends Component {
 
@@ -9,7 +8,6 @@ class Layout extends Component {
             <>
                 <Navbar/>
                 <main className="mb-5">
-                    <Login/>
                     {this.props.children}
                 </main>
             </>
