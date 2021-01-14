@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actionTypes";
+import {AuthActionTypes} from "../actions/actionTypes";
 import {updateObject} from "../../utilities/objectUtilities";
 
 const initialState = {
@@ -40,11 +40,11 @@ const clearError = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionTypes.AUTH_START: return authStart(state, action);
-        case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
-        case actionTypes.AUTH_FAIL: return authFail(state, action);
-        case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-        case actionTypes.CLEAR_ERROR: return clearError(state, action);
+        case AuthActionTypes.AUTH_START: return authStart(state, action);
+        case AuthActionTypes.AUTH_SUCCESS: return authSuccess(state, action);
+        case AuthActionTypes.AUTH_FAIL: return authFail(state, action);
+        case AuthActionTypes.AUTH_LOGOUT: return authLogout(state, action);
+        case AuthActionTypes.CLEAR_ERROR: return clearError(state, action);
         default: return state;
     }
 };

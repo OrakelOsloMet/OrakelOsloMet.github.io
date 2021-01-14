@@ -7,7 +7,7 @@ interface IUser {
 }
 
 type AuthState = {
-    user: IUser;
+    user: IUser | null;
     error: string | null;
     loading: boolean;
 }

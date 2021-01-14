@@ -1,43 +1,45 @@
 import axios from "../../axiosAPI";
-import * as actionTypes from "./actionTypes";
+import {AuthActionTypes} from "./actionTypes";
 import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/constants";
+import {AuthDispatch, IUser} from "../types";
 
 const authStart = () => {
     return {
-        type: actionTypes.AUTH_START
+        type: AuthActionTypes.AUTH_START
     }
 };
 
-const authSuccess = (user) => {
+const authSuccess = (user: IUser) => {
     return {
-        type: actionTypes.AUTH_SUCCESS,
-        token: user.token,
-        userId: user.userId,
-        userRoles: user.roles
+        type: AuthActionTypes.AUTH_SUCCESS,
+        user: user
     }
 };
 
-const authFail = (error) => {
+const authFail = (error: string) => {
     return {
-        type: actionTypes.AUTH_FAIL,
+        type: AuthActionTypes.AUTH_FAIL,
         error: error
     }
 };
 
-const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
+const getCurrentUser = (): IUser | null => {
+    if (localStorage.getItem(LOCAL_STORAGE_USER)) {
+        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER)!);
+    }
+    return null;
 };
 
 export const logout = () => {
     localStorage.removeItem(LOCAL_STORAGE_USER);
 
     return {
-        type: actionTypes.AUTH_LOGOUT
+        type: AuthActionTypes.AUTH_LOGOUT
     }
 };
 
 export const checkValidAuth = () => {
-    return dispatch => {
+    return (dispatch: AuthDispatch) => {
         const user = getCurrentUser();
 
         if (user && user.token) {
@@ -54,8 +56,8 @@ export const checkValidAuth = () => {
     }
 };
 
-export const auth = (username, password) => {
-    return dispatch => {
+export const auth = (username: string, password: string) => {
+    return (dispatch: AuthDispatch) => {
         dispatch(authStart());
 
         axios.post(LOGIN_PATH, {username, password})
@@ -72,6 +74,6 @@ export const auth = (username, password) => {
 
 export const clearError = () => {
     return {
-        type: actionTypes.CLEAR_ERROR
+        type: AuthActionTypes.CLEAR_ERROR
     }
 }
