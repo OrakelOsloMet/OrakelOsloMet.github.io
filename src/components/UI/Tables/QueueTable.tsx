@@ -1,9 +1,9 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import TableHead from "./TableHead/TableHead";
-import {ConfirmButton, DeleteButton} from "../Buttons/Buttons";
+import TableHead from "./TableHead/tableHead";
+import {ConfirmButton, DeleteButton} from "../Buttons/buttons";
 
-import * as actions from "../../../store/actions/ActionIndex";
+import * as actions from "../../../store/actions/actionIndex";
 
 type QueueTableProps = {
     queueData: IQueueEntity[],

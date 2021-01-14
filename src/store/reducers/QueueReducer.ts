@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/ActionTypes";
+import * as actionTypes from "../actions/actionTypes";
 import {updateObject} from "../../utilities/objectUtilities";
 
 const initialState: QueueState = {

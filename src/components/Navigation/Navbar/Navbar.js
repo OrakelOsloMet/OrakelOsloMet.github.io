@@ -4,12 +4,12 @@ import {bindActionCreators, Dispatch} from "redux";
 import {Navbar, NavbarProps as BootstrapNavProps} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
-import * as actions from "../../../store/actions/ActionIndex";
-import styles from "./Navbar.module.css";
-import {USER_GUIDE_PATH} from "../../../constants/Constants";
+import * as actions from "../../../store/actions/actionIndex";
+import styles from "./navbar.module.css";
+import {USER_GUIDE_PATH} from "../../../constants/constants";
 
-import SwalInfoModal from "../../UI/Modals/SwalModals/SwalInfoModal";
-import SwalLoginModal from "../../UI/Modals/SwalModals/SwalLoginModal";
+import SwalInfoModal from "../../UI/Modals/SwalModals/swalInfoModal";
+import SwalLoginModal from "../../UI/Modals/SwalModals/swalLoginModal";
 
 /* type NavbarProps = {
     onLoginSubmit: Function;

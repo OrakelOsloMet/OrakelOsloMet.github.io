@@ -1,6 +1,6 @@
-import axios from "../../AxiosAPI";
-import * as actionTypes from "./ActionTypes";
-import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/Constants";
+import axios from "../../axiosAPI";
+import * as actionTypes from "./actionTypes";
+import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/constants";
 
 const authStart = () => {
     return {

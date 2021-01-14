@@ -6,9 +6,9 @@ import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 
-import App from './App';
-import authReducer from "./store/reducers/AuthReducer";
-import queueReducer from "./store/reducers/QueueReducer";
+import App from './app';
+import authReducer from "./store/reducers/authReducer";
+import queueReducer from "./store/reducers/queueReducer";
 import {objectConditionalByEnvironment} from "./utilities/objectUtilities";
 import './index.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -17,9 +17,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 const logger = store => {
     return next => {
         return action => {
-            console.log("[Middleware] Dispatching: ", action);
+            //console.log("[Middleware] Dispatching: ", action);
             const result = next(action);
-            console.log("[Middleware] next state: ", store.getState());
+            //console.log("[Middleware] next state: ", store.getState());
             return result;
         };
     };

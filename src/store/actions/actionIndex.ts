@@ -3,7 +3,7 @@ export {
     logout,
     checkValidAuth,
     clearError
-} from "./AuthActions"
+} from "./authActions"
 
 export {
     fetchQueue,
@@ -11,4 +11,4 @@ export {
     addToQueue,
     deleteFromQueue,
     doneInQueue
-} from "./QueueActions"
+} from "./queueActions"
