@@ -1,5 +1,6 @@
-import * as actionTypes from "../actions/actionTypes";
+import {QueueActionTypes} from "../actions/actionTypes";
 import {updateObject} from "../../utilities/objectUtilities";
+import {QueueAction, QueueState} from "../types";
 
 const initialState: QueueState = {
     queueData: [],
@@ -53,31 +54,31 @@ const reducer = (state: QueueState = initialState, action: QueueAction): QueueSt
     switch (action.type) {
 
         //Start cases
-        case actionTypes.FETCH_QUEUE_START:
-        case actionTypes.ADD_TO_QUEUE_START:
-        case actionTypes.DELETE_FROM_QUEUE_START:
-        case actionTypes.DONE_IN_QUEUE_START:
-        case actionTypes.FETCH_SUBJECTS_START:
+        case QueueActionTypes.FETCH_QUEUE_START:
+        case QueueActionTypes.ADD_TO_QUEUE_START:
+        case QueueActionTypes.DELETE_FROM_QUEUE_START:
+        case QueueActionTypes.DONE_IN_QUEUE_START:
+        case QueueActionTypes.FETCH_SUBJECTS_START:
             return initAction(state, action);
 
         //Fail cases
-        case actionTypes.FETCH_QUEUE_FAIL:
-        case actionTypes.ADD_TO_QUEUE_FAIL:
-        case actionTypes.DELETE_FROM_QUEUE_FAIL:
-        case actionTypes.DONE_IN_QUEUE_FAIL:
-        case actionTypes.FETCH_SUBJECTS_FAIL:
+        case QueueActionTypes.FETCH_QUEUE_FAIL:
+        case QueueActionTypes.ADD_TO_QUEUE_FAIL:
+        case QueueActionTypes.DELETE_FROM_QUEUE_FAIL:
+        case QueueActionTypes.DONE_IN_QUEUE_FAIL:
+        case QueueActionTypes.FETCH_SUBJECTS_FAIL:
             return failedAction(state, action);
 
         //Success cases
-        case actionTypes.FETCH_QUEUE_SUCCESS:
+        case QueueActionTypes.FETCH_QUEUE_SUCCESS:
             return fetchQueueSuccess(state, action);
 
-        case actionTypes.ADD_TO_QUEUE_SUCCESS:
-        case actionTypes.DELETE_FROM_QUEUE_SUCCESS:
-        case actionTypes.DONE_IN_QUEUE_SUCCESS:
+        case QueueActionTypes.ADD_TO_QUEUE_SUCCESS:
+        case QueueActionTypes.DELETE_FROM_QUEUE_SUCCESS:
+        case QueueActionTypes.DONE_IN_QUEUE_SUCCESS:
             return addRemoveSuccess(state, action);
 
-        case actionTypes.FETCH_SUBJECTS_SUCCESS:
+        case QueueActionTypes.FETCH_SUBJECTS_SUCCESS:
             return fetchSubjectsSuccess(state, action);
 
         default:
