@@ -1,44 +1,41 @@
 import {AuthActionTypes} from "../actions/actionTypes";
 import {updateObject} from "../../utilities/objectUtilities";
+import {AuthAction, AuthState} from "../types";
 
-const initialState = {
-    token: null,
-    userId: null,
-    userRoles: null,
+const initialState: AuthState = {
+    user: null,
     error: null,
     loading: false
 };
 
-const authStart = (state, action) => {
+const authStart = (state: AuthState, action: AuthAction): AuthState => {
     return updateObject(state, {error: null, loading: true});
 };
 
-const authSuccess = (state, action) => {
+const authSuccess = (state: AuthState, action: AuthAction): AuthState => {
     return updateObject(state, {
-        token: action.token,
-        userId: action.userId,
-        userRoles: action.userRoles,
+        user: action.user,
         error: null,
         loading: false
     });
 };
 
-const authFail = (state, action) => {
+const authFail = (state: AuthState, action: AuthAction): AuthState => {
     return updateObject(state, {
         error: action.error,
         loading: false
     });
 };
 
-const authLogout = (state, action) => {
+const authLogout = (state: AuthState, action: AuthAction): AuthState => {
     return updateObject(state, {token: null, userId: null, userRoles: null});
 };
 
-const clearError = (state, action) => {
+const clearError = (state: AuthState, action: AuthAction): AuthState => {
     return updateObject(state, {error: null})
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: AuthState = initialState, action: AuthAction) => {
     switch(action.type) {
         case AuthActionTypes.AUTH_START: return authStart(state, action);
         case AuthActionTypes.AUTH_SUCCESS: return authSuccess(state, action);
