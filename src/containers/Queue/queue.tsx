@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, FC} from "react";
 import {connect} from "react-redux";
 import {useForm} from "react-hook-form";
 import styles from "./queue.module.css"
@@ -10,8 +10,44 @@ import {SubmitButton} from "../../components/UI/Buttons/buttons";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
 import Input from "../../components/UI/Inputs/input"
+import {RootState} from "../../store";
+import {bindActionCreators, Dispatch} from "redux";
+import {addToQueue, deleteFromQueue, doneInQueue} from "../../store/actions/actionIndex";
 
-const Queue = (props) => {
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        isAuthenticated: state.auth.user?.token != null,
+        userRoles: state.auth.user?.roles,
+        queueData: state.queue.queueData,
+        subjects: state.queue.subjectData,
+        loading: state.queue.loading,
+        error: state.queue.error
+    }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return bindActionCreators({
+        addQueueEntity: addToQueue,
+        deleteQueueEntity: deleteFromQueue,
+        confirmDoneEntity: doneInQueue,
+    }, dispatch);
+};
+
+type Props = {
+    isAuthenticated: boolean;
+    userRoles: string[];
+    queueData: IQueueEntity[];
+    subjects: ISubject[];
+    loading: boolean;
+    error: string;
+    addQueueEntity: Function;
+    deleteQueueEntity: Function;
+    confirmDoneEntity: Function;
+}
+
+
+const Queue: FC<Props> = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
     const [formElements, setFormElements] = useState({
@@ -72,7 +108,7 @@ const Queue = (props) => {
         const subjectListUpdated = {...formElements};
 
         props.subjects.forEach(subject => {
-            subjectListUpdated.subject.inputConfig.options.push({value: subject, displayValue: subject});
+            subjectListUpdated.subject.inputConfig.options.push({value: subject.name, displayValue: subject.name});
         });
 
         setFormElements(subjectListUpdated);
@@ -105,7 +141,10 @@ const Queue = (props) => {
     const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
         {Object.values(formElements).map(formElement => {
             //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added. Do this once this file is converted to Typescript.
-            const forwardRef = formElement.name === "firstname" ? register({required: "Oppgi Fornavn", minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}}) : register
+            const forwardRef = formElement.name === "firstname" ? register({
+                required: "Oppgi Fornavn",
+                minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}
+            }) : register
 
             return (
                 <Input
@@ -127,25 +166,5 @@ const Queue = (props) => {
     );
 
 }
-
-//TODO Going to have to do a cleanup here once the file has been converted to TypeScript. Currently the admin-buttons won't show in the table due to auth.userRoles and auth.token don't exist anymore.
-const mapStateToProps = state => {
-    return {
-        isAuthenticated: state.auth.token != null,
-        userRoles: state.auth.userRoles,
-        queueData: state.queue.queueData,
-        subjects: state.queue.subjectData,
-        loading: state.queue.loading,
-        error: state.queue.error
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addQueueEntity: (queueEntity) => dispatch(actions.addToQueue(queueEntity)),
-        deleteQueueEntity: (id) => dispatch(actions.deleteFromQueue(id)),
-        confirmDoneEntity: (id) => dispatch(actions.doneInQueue(id))
-    }
-};
 
 export default withPolling(actions.fetchQueue())(connect(mapStateToProps, mapDispatchToProps)(Queue));
