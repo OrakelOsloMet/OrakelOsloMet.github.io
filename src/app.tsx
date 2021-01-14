@@ -10,19 +10,19 @@ import {bindActionCreators, Dispatch} from "redux";
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({
-        checkValidAuth,
-        fetchSubjects
+        autoLogin: checkValidAuth,
+        getSubjectData: fetchSubjects
     }, dispatch);
 };
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 const App: React.FC<Props> = (props: Props) => {
-    const {checkValidAuth, fetchSubjects} = props;
+    const {autoLogin, getSubjectData} = props;
 
     useEffect(() => {
-        checkValidAuth();
-        fetchSubjects();
+        autoLogin();
+        getSubjectData();
     },[]);
 
     let routes = (
@@ -39,7 +39,7 @@ const App: React.FC<Props> = (props: Props) => {
             </Layout>
         </div>
     );
-}
+};
 
 export default withRouter(connect(null, mapDispatchToProps)(App));
 
