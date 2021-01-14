@@ -3,8 +3,8 @@ import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkValidAuth, fetchSubjects} from "./store/actions/actionIndex";
 
-import Layout from "./higherOrderedComponents/Layout/Layout";
-import Queue from "./containers/Queue/Queue";
+import Layout from "./higherOrderedComponents/Layout/layout";
+import Queue from "./containers/Queue/queue";
 import {INDEX_ROUTE} from "./constants/constants";
 import {bindActionCreators, Dispatch} from "redux";
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import {useForm} from "react-hook-form";
-import styles from "./Queue.module.css"
+import styles from "./queue.module.css"
 
 import * as actions from "../../store/actions/actionIndex";
 import {INPUT, SELECT} from "../../constants/constants";
