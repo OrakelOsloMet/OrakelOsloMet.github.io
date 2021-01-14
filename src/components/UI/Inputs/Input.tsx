@@ -1,5 +1,5 @@
 import React, {forwardRef} from "react";
-import {ConfiguredInput} from "../../../models/InputModels";
+import {ConfiguredInput} from "../../../models/inputModels";
 import {SELECT, INPUT} from "../../../constants/constants";
 
 type InputProps = {

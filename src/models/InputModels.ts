@@ -5,14 +5,14 @@ export type ConfiguredInput = {
 }
 
 type InputConfig = {
-    options?: Array<SelectOptions>,
-    type?: string,
-    placeholder?: string
+    options?: Array<SelectOptions>;
+    type?: string;
+    placeholder?: string;
 }
 
-interface SelectOptions {
-    value: number | string | boolean,
-    displayValue: string
+type SelectOptions = {
+    value: number | string | boolean;
+    displayValue: string;
 }
 
 

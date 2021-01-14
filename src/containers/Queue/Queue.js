@@ -5,11 +5,11 @@ import styles from "./Queue.module.css"
 
 import * as actions from "../../store/actions/actionIndex";
 import {INPUT, SELECT} from "../../constants/constants";
-import Table from "../../components/UI/Tables/QueueTable";
-import {SubmitButton} from "../../components/UI/Buttons/Buttons";
+import Table from "../../components/UI/Tables/queueTable";
+import {SubmitButton} from "../../components/UI/Buttons/buttons";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
-import Input from "../../components/UI/Inputs/Input"
+import Input from "../../components/UI/Inputs/input"
 
 const Queue = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
@@ -61,7 +61,7 @@ const Queue = (props) => {
         fillSubjectSelector();
     }, [props.subjects])
 
-    //Use effect to run whenever the form is submited successfully.
+    //Use effect to run whenever the form is submitted successfully.
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset();
