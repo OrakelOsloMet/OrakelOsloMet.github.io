@@ -1,26 +1,26 @@
-import axios from "../../axios-api";
-import * as actionTypes from "./actionTypes";
-import {CONFIRM_DONE_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
-import authHeader from "../../headers/auth-header";
+import axios from "../../AxiosAPI";
+import {FetchQueueActions, AddToQueueActions, DeleteFromQueueActions, DoneInQueueActions, FetchSubjectActions} from "./ActionTypes";
+import {CONFIRM_DONE_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/Constants";
+import authHeader from "../../headers/AuthHeader";
 
 /* ----- Fetch Queue Data ----- */
 
 const fetchQueueStart = () => {
     return {
-        type: actionTypes.FETCH_QUEUE_START
+        type: FetchQueueActions.FETCH_QUEUE_START
     }
 };
 
 const fetchQueueSuccess = (queueData) => {
     return {
-        type: actionTypes.FETCH_QUEUE_SUCCESS,
+        type: FetchQueueActions.FETCH_QUEUE_SUCCESS,
         queueData: queueData
     }
 };
 
 const fetchQueueFail = (error) => {
     return {
-        type: actionTypes.FETCH_QUEUE_FAIL,
+        type: FetchQueueActions.FETCH_QUEUE_FAIL,
         error: error
     }
 };
@@ -43,19 +43,19 @@ export const fetchQueue = () => {
 
 const addToQueueStart = () => {
     return {
-        type: actionTypes.ADD_TO_QUEUE_START
+        type: AddToQueueActions.ADD_TO_QUEUE_START
     }
 };
 
 const addToQueueSuccess = () => {
     return {
-        type: actionTypes.ADD_TO_QUEUE_SUCCESS
+        type: AddToQueueActions.ADD_TO_QUEUE_SUCCESS
     }
 };
 
 const addToQueueFail = (error) => {
     return {
-        type: actionTypes.ADD_TO_QUEUE_FAIL,
+        type: AddToQueueActions.ADD_TO_QUEUE_FAIL,
         error: error
     }
 };
@@ -78,19 +78,19 @@ export const addToQueue = (queueEntity) => {
 
 const deleteFromQueueStart = () => {
     return {
-        type: actionTypes.DELETE_FROM_QUEUE_START
+        type: DeleteFromQueueActions.DELETE_FROM_QUEUE_START
     }
 };
 
 const deleteFromQueueSuccess = () => {
     return {
-        type: actionTypes.DELETE_FROM_QUEUE_SUCCESS
+        type: DeleteFromQueueActions.DELETE_FROM_QUEUE_SUCCESS
     }
 };
 
 const deleteFromQueueFail = (error) => {
     return {
-        type: actionTypes.DELETE_FROM_QUEUE_FAIL,
+        type: DeleteFromQueueActions.DELETE_FROM_QUEUE_FAIL,
         error: error
     }
 };
@@ -114,19 +114,19 @@ export const deleteFromQueue = (id) => {
 
 const doneInQueueStart = () => {
     return {
-        type: actionTypes.DONE_IN_QUEUE_START
+        type: DoneInQueueActions.DONE_IN_QUEUE_START
     }
 };
 
 const doneInQueueSuccess = () => {
     return {
-        type: actionTypes.DONE_IN_QUEUE_SUCCESS
+        type: DoneInQueueActions.DONE_IN_QUEUE_SUCCESS
     }
 };
 
 const doneInQueueFail = (error) => {
     return {
-        type: actionTypes.DONE_IN_QUEUE_FAIL,
+        type: DoneInQueueActions.DONE_IN_QUEUE_FAIL,
         error: error
     }
 };
@@ -150,20 +150,20 @@ export const doneInQueue = (id) => {
 
 const fetchSubjectsStart = () => {
     return {
-        type: actionTypes.FETCH_SUBJECTS_START
+        type: FetchSubjectActions.FETCH_SUBJECTS_START
     }
 };
 
 const fetchSubjectsSuccess = (subjectData) => {
     return {
-        type: actionTypes.FETCH_SUBJECTS_SUCCESS,
+        type: FetchSubjectActions.FETCH_SUBJECTS_SUCCESS,
         subjectData: subjectData
     }
 };
 
 const fetchSubjectsFail = (error) => {
     return {
-        type: actionTypes.FETCH_SUBJECTS_FAIL,
+        type: FetchSubjectActions.FETCH_SUBJECTS_FAIL,
         error: error
     }
 };
