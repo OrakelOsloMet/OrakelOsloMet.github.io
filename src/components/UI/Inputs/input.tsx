@@ -2,12 +2,12 @@ import React, {forwardRef} from "react";
 import {ConfiguredInput} from "../../../models/inputModels";
 import {SELECT, INPUT} from "../../../constants/constants";
 
-type InputProps = {
+type Props = {
     formElement: ConfiguredInput
     error: string
 }
 
-const Input = forwardRef((props: InputProps, ref: React.Ref<any>) => {
+const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
     const {formElement, error} = props;
     let formClasses = "form-control ml-2 mr-2 mt-2 ";
     let inputElement;

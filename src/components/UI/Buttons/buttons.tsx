@@ -1,12 +1,12 @@
 import React, {MouseEventHandler, FunctionComponent} from 'react';
 
-type ButtonProps = {
+type Props = {
     onClick?: MouseEventHandler,
     className?: string,
     disabled?: boolean,
 }
 
-export const SubmitButton: FunctionComponent<ButtonProps> = (props) =>
+export const SubmitButton: FunctionComponent<Props> = (props) =>
     <button
         type="submit"
         disabled={props.disabled}
@@ -14,21 +14,21 @@ export const SubmitButton: FunctionComponent<ButtonProps> = (props) =>
         onClick={props.onClick}>{props.children}
     </button>
 
-export const CancelButton: FunctionComponent<ButtonProps> = (props) => (
+export const CancelButton: FunctionComponent<Props> = (props) => (
     <button
         disabled={props.disabled}
         className={`btn btn-danger ${props.className}`}
         onClick={props.onClick}>{props.children}</button>
 );
 
-export const ConfirmButton: FunctionComponent<ButtonProps> = (props) => (
+export const ConfirmButton: FunctionComponent<Props> = (props) => (
     <button
         disabled={props.disabled}
         className={`btn btn-success ${props.className}`}
         onClick={props.onClick}>{props.children}</button>
 );
 
-export const DeleteButton: FunctionComponent<ButtonProps> = (props) => (
+export const DeleteButton: FunctionComponent<Props> = (props) => (
     <button
         disabled={props.disabled}
         className={`btn btn-danger ${props.className}`}

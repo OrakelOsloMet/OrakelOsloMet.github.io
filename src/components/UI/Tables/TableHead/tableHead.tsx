@@ -1,12 +1,12 @@
 import React from "react";
 
-type TableHeadProps = {
+type Props = {
     defaultColumns: string[],
     loggedInColumns: string[],
     isAuthenticated: boolean
 }
 
-const tableHead = (props: TableHeadProps) => {
+const tableHead = (props: Props) => {
 
     /* ----- Create Tables Head ----- */
 
