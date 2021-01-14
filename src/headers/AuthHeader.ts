@@ -1,4 +1,4 @@
-import {LOCAL_STORAGE_USER} from "../constants/constants";
+import {LOCAL_STORAGE_USER} from "../constants/Constants";
 
 export default function authHeader() {
 

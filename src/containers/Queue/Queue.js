@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {useForm} from "react-hook-form";
 import styles from "./Queue.module.css"
 
-import * as actions from "../../store/actions/actionIndex";
-import {INPUT, SELECT} from "../../constants/constants";
+import * as actions from "../../store/actions/ActionIndex";
+import {INPUT, SELECT} from "../../constants/Constants";
 import Table from "../../components/UI/Tables/QueueTable";
 import {SubmitButton} from "../../components/UI/Buttons/Buttons";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";

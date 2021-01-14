@@ -4,7 +4,7 @@ import withReactContent from "sweetalert2-react-content";
 type SwalLoginProps = {
     onLoginSubmit: Function,
     clearLoginError: Function,
-    errorMessage?: string
+    errorMessage?: string | null
 }
 
 const SwalLoginModal = (props: SwalLoginProps) => {

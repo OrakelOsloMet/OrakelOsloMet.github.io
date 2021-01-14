@@ -3,10 +3,10 @@ import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import './App.css';
-import * as actions from "./store/actions/actionIndex";
+import * as actions from "./store/actions/ActionIndex";
 import Layout from "./higherOrderedComponents/Layout/Layout";
 import Queue from "./containers/Queue/Queue";
-import {INDEX_ROUTE} from "./constants/constants";
+import {INDEX_ROUTE} from "./constants/Constants";
 
 class App extends Component {
 
