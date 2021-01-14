@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
+import React, {FC} from 'react';
 import {NavbarConnected} from "../../components/Navigation/Navbar/navbarConnected";
 
-class Layout extends Component {
+const Layout: FC = (props) => {
 
-    render() {
         return(
             <>
                 <NavbarConnected/>
                 <main className="mb-5">
-                    {this.props.children}
+                    {props.children}
                 </main>
             </>
         );
-    }
 }
 
 export default Layout;
