@@ -1,39 +1,42 @@
 import React, {forwardRef} from "react";
-import {ConfiguredInput} from "../../../models/inputModels";
-import {SELECT, INPUT} from "../../../constants/constants";
+import {IConfiguredInput, IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
+import {FormElementType} from "../../../constants/constants";
 
 type Props = {
-    formElement: ConfiguredInput
+    formElement: IConfiguredInput
     error: string
 }
 
 const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
     const {formElement, error} = props;
     let formClasses = "form-control ml-2 mr-2 mt-2 ";
-    let inputElement;
+    let returnInput;
+    let passedElement;
 
     switch (formElement.inputType) {
-        case(INPUT):
-
+        case(FormElementType.INPUT):
+            passedElement = formElement as IConfiguredTextInput
             //TODO: Right now, error is only passed whenever there is an error in firstname, which is the only text-input field. This will break if more textinputs are added. Fix once Queue has been converted to TS.
             if (error) {
                 formClasses += "is-invalid";
             }
 
-            inputElement = <input
-                name={formElement.name}
+            returnInput = <input
+                name={passedElement.name}
                 ref={ref}
                 className={formClasses}
-                {...formElement.inputConfig}/>;
+                {...passedElement.inputConfig}/>;
             break;
 
-        case(SELECT):
-            inputElement = <select
+        case(FormElementType.SELECT):
+            passedElement = formElement as IConfiguredSelect
+
+            returnInput = <select
                 name={formElement.name}
                 ref={ref}
                 className={formClasses}>
-                {formElement.inputConfig.options!.map(option => (
-                    <option key={option.value.toString()} value={option.value.toString()}>
+                {passedElement.inputConfig.options.map(option => (
+                    <option key={String(option.value)} value={String(option.value)}>
                         {option.displayValue}
                     </option>
                 ))}
@@ -41,13 +44,13 @@ const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
             break;
 
         default:
-            inputElement = <input
+            returnInput = <input
                 className="form-control"/>;
     }
 
     return (
         <>
-            {inputElement}
+            {returnInput}
         </>
 
     )

@@ -1,100 +1,80 @@
-import React, {useState, useEffect, FC} from "react";
-import {connect} from "react-redux";
+import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queue.module.css"
 
 import * as actions from "../../store/actions/actionIndex";
-import {INPUT, SELECT} from "../../constants/constants";
+import {FormElementType} from "../../constants/constants";
 import Table from "../../components/UI/Tables/queueTable";
 import {SubmitButton} from "../../components/UI/Buttons/buttons";
 import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
 import Input from "../../components/UI/Inputs/input"
-import {RootState} from "../../store";
-import {bindActionCreators, Dispatch} from "redux";
-import {addToQueue, deleteFromQueue, doneInQueue} from "../../store/actions/actionIndex";
-
-
-const mapStateToProps = (state: RootState) => {
-    return {
-        isAuthenticated: state.auth.user?.token != null,
-        userRoles: state.auth.user?.roles,
-        queueData: state.queue.queueData,
-        subjects: state.queue.subjectData,
-        loading: state.queue.loading,
-        error: state.queue.error
-    }
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return bindActionCreators({
-        addQueueEntity: addToQueue,
-        deleteQueueEntity: deleteFromQueue,
-        confirmDoneEntity: doneInQueue,
-    }, dispatch);
-};
+import {IConfiguredSelect, IConfiguredTextInput} from "../../models/inputModels";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/loadingSpinner";
 
 type Props = {
     isAuthenticated: boolean;
     userRoles: string[];
     queueData: IQueueEntity[];
-    subjects: ISubject[];
+    subjects: string[];
     loading: boolean;
     error: string;
     addQueueEntity: Function;
     deleteQueueEntity: Function;
     confirmDoneEntity: Function;
+    pollingFunction: Function
 }
-
 
 const Queue: FC<Props> = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [formElements, setFormElements] = useState({
-        firstname: {
-            name: "firstname",
-            inputType: INPUT,
-            inputConfig: {
-                type: "text",
-                placeholder: "Fornavn"
-            }
-        },
+    const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
+        name: "firstname",
+        inputType: FormElementType.INPUT,
+        inputConfig: {
+            type: "text",
+            placeholder: "Fornavn"
+        }
+    })
 
-        subject: {
-            name: "subject",
-            inputType: SELECT,
-            inputConfig: {
-                options: []
-            }
-        },
+    const [subjectSelect, setSubjectSelect] = useState<IConfiguredSelect>({
+        name: "subject",
+        inputType: FormElementType.SELECT,
+        inputConfig: {
+            options: [
+                {value: "Loading", displayValue: "Loading"}
+            ]
+        }
+    });
 
-        year: {
-            name: "year",
-            inputType: SELECT,
-            inputConfig: {
-                options: [
-                    {value: 1, displayValue: "1. år"},
-                    {value: 2, displayValue: "2. år"},
-                    {value: 3, displayValue: "3. år"}
-                ]
-            }
-        },
+    const [yearSelect, setYearSelect] = useState<IConfiguredSelect>({
+        name: "year",
+        inputType: FormElementType.SELECT,
+        inputConfig: {
+            options: [
+                {value: 1, displayValue: "1. år"},
+                {value: 2, displayValue: "2. år"},
+                {value: 3, displayValue: "3. år"}
+            ]
+        }
+    })
 
-        digitalConsultation: {
-            name: "digitalConsultation",
-            inputType: SELECT,
-            inputConfig: {
-                options: [
-                    {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
-                    {value: true, displayValue: "Digital Veiledning (Discord)"}
-                ]
-            }
+    const [digitalConsultationSelect, setDigitalConsultationSelect] = useState<IConfiguredSelect>({
+        name: "digitalConsultation",
+        inputType: FormElementType.SELECT,
+        inputConfig: {
+            options: [
+                {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
+                {value: true, displayValue: "Digital Veiledning (Discord)"}
+            ]
         }
     })
 
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
-        fillSubjectSelector();
+        if (props.subjects.length > 0) {
+            fillSubjectSelector();
+        }
     }, [props.subjects])
 
     //Use effect to run whenever the form is submitted successfully.
@@ -105,16 +85,17 @@ const Queue: FC<Props> = (props) => {
     }, [isSubmitSuccessful, reset])
 
     const fillSubjectSelector = () => {
-        const subjectListUpdated = {...formElements};
+        const subjectListUpdated = {...subjectSelect};
+        subjectListUpdated.inputConfig.options = [];
 
-        props.subjects.forEach(subject => {
-            subjectListUpdated.subject.inputConfig.options.push({value: subject.name, displayValue: subject.name});
+        props.subjects?.forEach(subject => {
+            subjectListUpdated.inputConfig.options.push({value: subject, displayValue: subject});
         });
 
-        setFormElements(subjectListUpdated);
+        setSubjectSelect(subjectListUpdated);
     };
 
-    const registrationHandler = (formData) => {
+    const registrationHandler = (formData: any) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
         const queueEntity = {
             name: primitiveFormData.firstname,
@@ -126,9 +107,8 @@ const Queue: FC<Props> = (props) => {
         props.addQueueEntity(queueEntity);
     };
 
-
     /* ----- Create Table ----- */
-    const table = <Table
+    let table = props.queueData === undefined ? <LoadingSpinner/> : <Table
         defaultColumns={["Plassering", "Navn", "Emne", "Arena"]}
         loggedInColumns={["Handlinger"]}
         queueData={props.queueData}
@@ -138,8 +118,11 @@ const Queue: FC<Props> = (props) => {
         deleteQueueEntity={props.deleteQueueEntity}
     />;
 
-    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
+    const formElements = {nameInput, subjectSelect, yearSelect, digitalConsultationSelect}
+    const form = <form onSubmit={handleSubmit(registrationHandler)}
+                       className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
         {Object.values(formElements).map(formElement => {
+
             //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added. Do this once this file is converted to Typescript.
             const forwardRef = formElement.name === "firstname" ? register({
                 required: "Oppgi Fornavn",
@@ -151,7 +134,7 @@ const Queue: FC<Props> = (props) => {
                     key={formElement.name}
                     formElement={formElement}
                     ref={forwardRef}
-                    error={errors.firtname}
+                    error={errors.firstname}
                 />
             )
         })}
@@ -167,4 +150,10 @@ const Queue: FC<Props> = (props) => {
 
 }
 
-export default withPolling(actions.fetchQueue())(connect(mapStateToProps, mapDispatchToProps)(Queue));
+/* This component still isn't completly disconnected from Redux while making a direct call to actions.fetchQueue here.
+   For some stupid reason the connect function in queueConnected does not accept this component unless it is exported with
+   withPolling... but in the navbar component that works just fine. Find out what is going on here.
+
+   TODO finish decoupling the Queue component from Redux and withPolling
+*/
+export default withPolling(actions.fetchQueue())(Queue)
