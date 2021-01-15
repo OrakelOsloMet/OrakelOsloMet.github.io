@@ -2,23 +2,22 @@ import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queue.module.css"
 
-import * as actions from "../../store/actions/actionIndex";
 import {FormElementType} from "../../constants/constants";
 import Table from "../../components/UI/Tables/queueTable";
 import {SubmitButton} from "../../components/UI/Buttons/buttons";
-import {withPolling} from "../../higherOrderedComponents/withPolling/withPolling";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
 import Input from "../../components/UI/Inputs/input"
 import {IConfiguredSelect, IConfiguredTextInput} from "../../models/inputModels";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/loadingSpinner";
+import useInterval from "../../hooks/useInterval";
 
 type Props = {
     isAuthenticated: boolean;
-    userRoles: string[];
-    queueData: IQueueEntity[];
-    subjects: string[];
+    userRoles: Array<string>;
+    queueData: Array<IQueueEntity>;
+    subjects: Array<string>;
     loading: boolean;
-    error: string;
+    error: string | null;
     addQueueEntity: Function;
     deleteQueueEntity: Function;
     confirmDoneEntity: Function;
@@ -27,6 +26,9 @@ type Props = {
 
 const Queue: FC<Props> = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
+
+    //Make the Queue update a 5 second interval
+    useInterval(() => {props.pollingFunction()}, 5000);
 
     const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
         name: "firstname",
@@ -150,10 +152,4 @@ const Queue: FC<Props> = (props) => {
 
 }
 
-/* This component still isn't completly disconnected from Redux while making a direct call to actions.fetchQueue here.
-   For some stupid reason the connect function in queueConnected does not accept this component unless it is exported with
-   withPolling... but in the navbar component that works just fine. Find out what is going on here.
-
-   TODO finish decoupling the Queue component from Redux and withPolling
-*/
-export default withPolling(actions.fetchQueue())(Queue)
+export default Queue
