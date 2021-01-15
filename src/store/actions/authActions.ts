@@ -60,15 +60,18 @@ export const auth = (username: string, password: string) => {
     return (dispatch: AuthDispatch) => {
         dispatch(authStart());
 
-        axios.post(LOGIN_PATH, {username, password})
+        return axios.post(LOGIN_PATH, {username, password})
             .then(response => {
                 if (response.data.token) {
                     localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(response.data));
                     dispatch(authSuccess(response.data));
+                    return true
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 dispatch(authFail(error.response.data.message))
-        });
+                return false;
+            });
     }
 };
 

@@ -13,7 +13,6 @@ type Props = {
     onLoginSubmit: Function;
     clearLoginError: Function;
     logoutHandler: MouseEventHandler;
-    loginFailed: string | null;
     isAuthenticated: boolean;
 }
 
@@ -41,7 +40,7 @@ const Navbar: React.FC<Props> = (props) => {
         hyperlinkText: "Brukerveiledning"})
 
     const swalLogin = () => {
-        SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError, errorMessage: props.loginFailed ? props.loginFailed : null})
+        SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError})
     }
 
     const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
@@ -53,10 +52,6 @@ const Navbar: React.FC<Props> = (props) => {
             onClick={props.isAuthenticated ? props.logoutHandler : swalLogin}>
             {props.isAuthenticated ? "Logg Ut" : "Admin"}
         </Nav.Link>;
-
-    if (props.loginFailed) {
-        swalLogin();
-    }
 
     return (
         <BootsrapNav {...navbarProps}>

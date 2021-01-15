@@ -4,11 +4,10 @@ import withReactContent from "sweetalert2-react-content";
 type Props = {
     onLoginSubmit: Function,
     clearLoginError: Function,
-    errorMessage?: string | null
 }
 
 const SwalLoginModal = (props: Props) => {
-    const {onLoginSubmit, clearLoginError, errorMessage} = props;
+    const {onLoginSubmit, clearLoginError} = props;
     const mySwal = withReactContent(Swal)
 
     return mySwal.fire({
@@ -21,12 +20,7 @@ const SwalLoginModal = (props: Props) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Avbryt",
         allowOutsideClick: () => !mySwal.isLoading(),
-        didOpen: () => {
-            if (errorMessage) {
-                mySwal.showValidationMessage("Ugyldig brukernavn eller passord!")
-            }
-        },
-        preConfirm: () => {
+        preConfirm: async() => {
             const usernameInput = mySwal.getPopup()!.querySelector("#login")! as HTMLInputElement
             const passwordInput = mySwal.getPopup()!.querySelector("#password")! as HTMLInputElement
 
@@ -34,11 +28,17 @@ const SwalLoginModal = (props: Props) => {
             const password = passwordInput.value.trim()
 
             if (!username || !password) {
-                mySwal.showValidationMessage("Oppgi brukernavn og passord!")
-            } else {
-                onLoginSubmit(username, password)
-                return {username: username, password: password}
+                mySwal.showValidationMessage("Oppgi brukernavn og passord!");
+                return false;
             }
+
+            const successfulLogin = await onLoginSubmit(username, password);
+            if (!successfulLogin) {
+                mySwal.showValidationMessage("Ugyldig brukernavn eller passord!");
+                return false;
+            }
+
+            return true;
         }
     }).then((result) => {
         if (result.isDismissed) {

@@ -6,8 +6,7 @@ import Navbar from "./navbar";
 
 const mapStateToProps = (state: RootState) => {
     return {
-        isAuthenticated: state.auth.user?.token !== undefined,
-        loginFailed: state.auth.error
+        isAuthenticated: state.auth.user?.token !== undefined
     }
 };
 
