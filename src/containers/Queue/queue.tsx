@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, Ref, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queue.module.css"
 
@@ -28,7 +28,9 @@ const Queue: FC<Props> = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
     //Make the Queue update a 5 second interval
-    useInterval(() => {props.pollingFunction()}, 5000);
+    useInterval(() => {
+        props.pollingFunction()
+    }, 5000);
 
     const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
         name: "firstname",
@@ -36,6 +38,10 @@ const Queue: FC<Props> = (props) => {
         inputConfig: {
             type: "text",
             placeholder: "Fornavn"
+        },
+        validation: {
+            minLength: 3,
+            errorMessage: "Vennligst oppgi et fornavn på minst 3 bokstaver"
         }
     })
 
@@ -74,6 +80,7 @@ const Queue: FC<Props> = (props) => {
 
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
+        props.pollingFunction();
         if (props.subjects.length > 0) {
             fillSubjectSelector();
         }
@@ -125,11 +132,14 @@ const Queue: FC<Props> = (props) => {
                        className={"form-inline mt-5 mb-5 " + styles.queueForm} style={{margin: "auto", width: "50%"}}>
         {Object.values(formElements).map(formElement => {
 
-            //TODO Find a dynamic solution for passing refs and errors in case more fields with input validation are added. Do this once this file is converted to Typescript.
-            const forwardRef = formElement.name === "firstname" ? register({
-                required: "Oppgi Fornavn",
-                minLength: {value: 3, message: "Navn må ha minst 3 bokstaver"}
-            }) : register
+            let forwardRef: Ref<any> = register
+            if (formElement.inputType === FormElementType.INPUT) {
+                let currentElement = formElement as IConfiguredTextInput
+                forwardRef = register({
+                    required: currentElement.validation.errorMessage,
+                    minLength: {value: currentElement.validation.minLength, message: currentElement.validation.errorMessage}
+                })
+            }
 
             return (
                 <Input
@@ -140,6 +150,7 @@ const Queue: FC<Props> = (props) => {
                 />
             )
         })}
+
         <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
     </form>
 

@@ -16,7 +16,7 @@ const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
     switch (formElement.inputType) {
         case(FormElementType.INPUT):
             passedElement = formElement as IConfiguredTextInput
-            //TODO: Right now, error is only passed whenever there is an error in firstname, which is the only text-input field. This will break if more textinputs are added. Fix once Queue has been converted to TS.
+
             if (error) {
                 formClasses += "is-invalid";
             }

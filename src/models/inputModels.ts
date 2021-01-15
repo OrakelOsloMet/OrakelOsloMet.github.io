@@ -12,6 +12,7 @@ export interface IInputConfig {
 
 export interface IConfiguredTextInput extends IConfiguredInput {
     inputConfig: ITextConfig
+    validation: IInputValidation
 }
 
 export interface IConfiguredSelect extends IConfiguredInput {
@@ -30,6 +31,11 @@ interface ITextConfig extends IInputConfig {
 interface ISelectOptions {
     value: number | string | boolean;
     displayValue: string;
+}
+
+interface IInputValidation {
+    minLength: number;
+    errorMessage: string;
 }
 
 
