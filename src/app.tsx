@@ -3,31 +3,31 @@ import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkValidAuth, fetchSubjects} from "./store/actions/actionIndex";
 
-import Layout from "./higherOrderedComponents/Layout/Layout";
-import Queue from "./containers/Queue/Queue";
+import Layout from "./higherOrderedComponents/Layout/layout";
+import QueueConnected from "./containers/Queue/queueConnected";
 import {INDEX_ROUTE} from "./constants/constants";
 import {bindActionCreators, Dispatch} from "redux";
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({
-        checkValidAuth,
-        fetchSubjects
+        autoLogin: checkValidAuth,
+        getSubjectData: fetchSubjects
     }, dispatch);
 };
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 const App: React.FC<Props> = (props: Props) => {
-    const {checkValidAuth, fetchSubjects} = props;
+    const {autoLogin, getSubjectData} = props;
 
     useEffect(() => {
-        checkValidAuth();
-        fetchSubjects();
+        autoLogin();
+        getSubjectData();
     },[]);
 
     let routes = (
         <Switch>
-            <Route path={INDEX_ROUTE} exact render={() => (<Queue/>)}/>
+            <Route path={INDEX_ROUTE} exact render={() => (<QueueConnected/>)}/>
             <Redirect to={INDEX_ROUTE}/>
         </Switch>
     );
@@ -39,7 +39,7 @@ const App: React.FC<Props> = (props: Props) => {
             </Layout>
         </div>
     );
-}
+};
 
 export default withRouter(connect(null, mapDispatchToProps)(App));
 

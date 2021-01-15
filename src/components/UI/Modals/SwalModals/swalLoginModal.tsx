@@ -1,13 +1,13 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-type SwalLoginProps = {
+type Props = {
     onLoginSubmit: Function,
     clearLoginError: Function,
     errorMessage?: string | null
 }
 
-const SwalLoginModal = (props: SwalLoginProps) => {
+const SwalLoginModal = (props: Props) => {
     const {onLoginSubmit, clearLoginError, errorMessage} = props;
     const mySwal = withReactContent(Swal)
 

@@ -2,14 +2,14 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import React from "react";
 
-type SwalInfoProps = {
+type Props = {
     title: string,
     contentText: string,
     url: string | null,
     hyperlinkText: string | null
 }
 
-const SwalInfoModal = (props: SwalInfoProps) => {
+const SwalInfoModal = (props: Props) => {
     const {title, contentText, url, hyperlinkText} = props;
     const mySwal = withReactContent(Swal)
     const hyperlinkDiv: HTMLDivElement = document.createElement("div");

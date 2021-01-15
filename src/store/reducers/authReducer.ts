@@ -28,7 +28,7 @@ const authFail = (state: AuthState, action: AuthAction): AuthState => {
 };
 
 const authLogout = (state: AuthState, action: AuthAction): AuthState => {
-    return updateObject(state, {token: null, userId: null, userRoles: null});
+    return updateObject(state, {user: null});
 };
 
 const clearError = (state: AuthState, action: AuthAction): AuthState => {

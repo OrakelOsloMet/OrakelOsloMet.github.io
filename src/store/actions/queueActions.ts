@@ -12,7 +12,7 @@ const fetchQueueStart = () => {
     }
 };
 
-const fetchQueueSuccess = (queueData: IQueueEntity[]) => {
+const fetchQueueSuccess = (queueData: Array<IQueueEntity>) => {
     return {
         type: QueueActionTypes.FETCH_QUEUE_SUCCESS,
         queueData: queueData
@@ -155,7 +155,7 @@ const fetchSubjectsStart = () => {
     }
 };
 
-const fetchSubjectsSuccess = (subjectData: ISubject[]) => {
+const fetchSubjectsSuccess = (subjectData: Array<string>) => {
     return {
         type: QueueActionTypes.FETCH_SUBJECTS_SUCCESS,
         subjectData: subjectData

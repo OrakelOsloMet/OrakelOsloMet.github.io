@@ -5,8 +5,8 @@ import {ConfirmButton, DeleteButton} from "../Buttons/buttons";
 
 import * as actions from "../../../store/actions/actionIndex";
 
-type QueueTableProps = {
-    queueData: IQueueEntity[],
+type Props = {
+    queueData: Array<IQueueEntity>,
     confirmDoneEntity: Function,
     deleteQueueEntity: Function,
     isAuthenticated: boolean,
@@ -15,7 +15,7 @@ type QueueTableProps = {
     loggedInColumns: Array<string>
 }
 
-const queueTable = (props: QueueTableProps) => {
+const queueTable = (props: Props) => {
 
     /* ----- Create Table Body ----- */
     const {queueData, confirmDoneEntity, deleteQueueEntity, isAuthenticated, userRoles, defaultColumns, loggedInColumns} = props;
