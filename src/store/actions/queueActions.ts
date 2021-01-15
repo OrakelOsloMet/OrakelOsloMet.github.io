@@ -155,7 +155,7 @@ const fetchSubjectsStart = () => {
     }
 };
 
-const fetchSubjectsSuccess = (subjectData: ISubject[]) => {
+const fetchSubjectsSuccess = (subjectData: string[]) => {
     return {
         type: QueueActionTypes.FETCH_SUBJECTS_SUCCESS,
         subjectData: subjectData

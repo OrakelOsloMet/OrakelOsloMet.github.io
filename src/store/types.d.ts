@@ -14,7 +14,7 @@ type AuthState = {
 
 type QueueState = {
     queueData: IQueueEntity[];
-    subjectData: ISubject[];
+    subjectData: string[];
     error: string | null;
     loading: boolean;
 }

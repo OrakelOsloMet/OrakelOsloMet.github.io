@@ -4,7 +4,7 @@ import {QueueAction, QueueState} from "../types";
 
 const initialState: QueueState = {
     queueData: [],
-    subjectData: [],
+    subjectData:[],
     error: null,
     loading: false
 };

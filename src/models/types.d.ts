@@ -8,7 +8,3 @@ interface IQueueEntity {
     confirmedDone: boolean;
     timeConfirmedDone: string;
 }
-
-interface ISubject {
-    name: string;
-}
