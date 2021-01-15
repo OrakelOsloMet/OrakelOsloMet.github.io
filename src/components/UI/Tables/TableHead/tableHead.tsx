@@ -1,16 +1,14 @@
 import React from "react";
 
 type Props = {
-    defaultColumns: string[],
-    loggedInColumns: string[],
+    defaultColumns: Array<string>,
+    loggedInColumns: Array<string>,
     isAuthenticated: boolean
 }
 
 const tableHead = (props: Props) => {
 
-    /* ----- Create Tables Head ----- */
-
-    let columns: JSX.Element[] = [];
+    let columns: Array<JSX.Element> = [];
     props.defaultColumns.forEach(column => {
         columns.push(<th key={`${column} Header`} scope="col">{column}</th>);
     });

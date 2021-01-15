@@ -6,7 +6,7 @@ import {ConfirmButton, DeleteButton} from "../Buttons/buttons";
 import * as actions from "../../../store/actions/actionIndex";
 
 type Props = {
-    queueData: IQueueEntity[],
+    queueData: Array<IQueueEntity>,
     confirmDoneEntity: Function,
     deleteQueueEntity: Function,
     isAuthenticated: boolean,

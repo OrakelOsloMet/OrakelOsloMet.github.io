@@ -3,7 +3,7 @@ import {AuthActionTypes, QueueActionTypes} from "./actions/actionTypes";
 interface IUser {
     token: string | null;
     userId: string | null;
-    roles: string[]
+    roles: Array<string>
 }
 
 type AuthState = {
@@ -13,16 +13,16 @@ type AuthState = {
 }
 
 type QueueState = {
-    queueData: IQueueEntity[];
-    subjectData: string[];
+    queueData: Array<IQueueEntity>;
+    subjectData: Array<string>;
     error: string | null;
     loading: boolean;
 }
 
 type QueueAction = {
     type: QueueActionTypes;
-    queueData?: IQueueEntity[];
-    subjectData?: string[]
+    queueData?: Array<IQueueEntity>;
+    subjectData?: Array<string>
     error?: string;
 }
 
