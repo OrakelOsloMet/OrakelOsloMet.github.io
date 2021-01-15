@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bc892589090df29e9815df7cdd8d6dea",
+    "revision": "13869f70d5a656ed558b4dff997ec61e",
     "url": "/Orakel_Queue_Client/index.html"
   },
   {
-    "revision": "4cd71e00c264b13c9b8d",
+    "revision": "100e0289e5d1178a727f",
     "url": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css"
   },
   {
-    "revision": "1b0a257a83d0012e2fee",
-    "url": "/Orakel_Queue_Client/static/css/main.8f2de177.chunk.css"
+    "revision": "59b3859545e74796059b",
+    "url": "/Orakel_Queue_Client/static/css/main.1c582c0c.chunk.css"
   },
   {
-    "revision": "4cd71e00c264b13c9b8d",
-    "url": "/Orakel_Queue_Client/static/js/2.041eb921.chunk.js"
+    "revision": "100e0289e5d1178a727f",
+    "url": "/Orakel_Queue_Client/static/js/2.756caea7.chunk.js"
   },
   {
     "revision": "6ec7283d9bd23c5c798f9927bcb18711",
-    "url": "/Orakel_Queue_Client/static/js/2.041eb921.chunk.js.LICENSE.txt"
+    "url": "/Orakel_Queue_Client/static/js/2.756caea7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1b0a257a83d0012e2fee",
-    "url": "/Orakel_Queue_Client/static/js/main.fea62071.chunk.js"
+    "revision": "59b3859545e74796059b",
+    "url": "/Orakel_Queue_Client/static/js/main.d8542cb1.chunk.js"
   },
   {
     "revision": "f10ea6ed42d18defce2c",

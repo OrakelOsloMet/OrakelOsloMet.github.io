@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Orakel_Queue_Client/precache-manifest.4c106028e74fb9bd2bdf0be4d86b06d5.js"
+  "/Orakel_Queue_Client/precache-manifest.4f89322d8f078828e151926ee6e783b7.js"
 );
 
 self.addEventListener('message', (event) => {
