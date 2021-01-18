@@ -1,4 +1,4 @@
-export const updateObject = (oldObject, updatedProperties) => {
+export const updateObject = (oldObject: any, updatedProperties: any) => {
     return {
         ...oldObject,
         ...updatedProperties
@@ -15,7 +15,7 @@ export const updateObject = (oldObject, updatedProperties) => {
  * @param originalObject The object which should have its string values converted to primitives.
  * @return A clone of the original object with its string values converted to primitives.
  */
-export const convertObjectStringsToPrimitives = (originalObject) => {
+export const convertObjectStringsToPrimitives = (originalObject: any) => {
     const convertedObject = {...originalObject}
 
     for (let [key, value] of Object.entries(convertedObject)) {
@@ -25,7 +25,7 @@ export const convertObjectStringsToPrimitives = (originalObject) => {
                 convertedObject[key] = (value == "true");
             }
 
-            if (!isNaN(value)) {
+            if (!isNaN(Number(value))) {
                 convertedObject[key] = parseFloat(value);
             }
         }
@@ -34,6 +34,6 @@ export const convertObjectStringsToPrimitives = (originalObject) => {
     return convertedObject;
 }
 
-export const objectConditionalByEnvironment = (devObject = null, productionObject = null) => {
+export const objectConditionalByEnvironment = (devObject: any, productionObject: any) => {
     return process.env.NODE_ENV === "production" ? productionObject : devObject;
 };
