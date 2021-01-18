@@ -1,4 +1,4 @@
-import React, {FC, Ref, useEffect, useState} from "react";
+import React, {FC, Ref, useEffect, useState, useRef} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queue.module.css"
 
@@ -6,10 +6,15 @@ import {FormElementType} from "../../constants/constants";
 import Table from "../../components/UI/Tables/queueTable";
 import {SubmitButton} from "../../components/UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
+import {jsonArrayEqual} from "../../utilities/arrayUtilities";
 import Input from "../../components/UI/Inputs/input"
 import {IConfiguredSelect, IConfiguredTextInput} from "../../models/inputModels";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/loadingSpinner";
 import useInterval from "../../hooks/useInterval";
+import usePreviousState from "../../hooks/usePreviousState";
+import useSound from "use-sound";
+
+const helloThere = require("../../assets/sounds/hellothere.mp3");
 
 type Props = {
     isAuthenticated: boolean;
@@ -26,11 +31,8 @@ type Props = {
 
 const Queue: FC<Props> = (props) => {
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
-
-    //Make the Queue update a 5 second interval
-    useInterval(() => {
-        props.pollingFunction()
-    }, 5000);
+    const [play] = useSound(helloThere)
+    const previousQueue = usePreviousState(props.queueData) as unknown as Array<IQueueEntity>
 
     const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
         name: "firstname",
@@ -92,6 +94,24 @@ const Queue: FC<Props> = (props) => {
             reset();
         }
     }, [isSubmitSuccessful, reset])
+
+    //Make the Queue update a 5 second interval
+    useInterval(() => {
+        props.pollingFunction()
+    }, 5000);
+
+    //Play a notification sound if a new person has been added to the queue
+    useEffect(() => {
+
+        //Due to the API taking a few ms to respond, previousQueue will be undefined in the first render cycle.
+        if (previousQueue) {
+            if (props.queueData.length >= previousQueue.length) {
+                if (!jsonArrayEqual(props.queueData, previousQueue)) {
+                    play();
+                }
+            }
+        }
+    }, [props.queueData])
 
     const fillSubjectSelector = () => {
         const subjectListUpdated = {...subjectSelect};
