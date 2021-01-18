@@ -1,27 +1,31 @@
 {
   "files": {
     "main.css": "/Orakel_Queue_Client/static/css/main.1c582c0c.chunk.css",
-    "main.js": "/Orakel_Queue_Client/static/js/main.d8542cb1.chunk.js",
-    "main.js.map": "/Orakel_Queue_Client/static/js/main.d8542cb1.chunk.js.map",
-    "runtime-main.js": "/Orakel_Queue_Client/static/js/runtime-main.938f9b4a.js",
-    "runtime-main.js.map": "/Orakel_Queue_Client/static/js/runtime-main.938f9b4a.js.map",
-    "static/css/2.d9ad5f5c.chunk.css": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.756caea7.chunk.js": "/Orakel_Queue_Client/static/js/2.756caea7.chunk.js",
-    "static/js/2.756caea7.chunk.js.map": "/Orakel_Queue_Client/static/js/2.756caea7.chunk.js.map",
+    "main.js": "/Orakel_Queue_Client/static/js/main.f4e90f80.chunk.js",
+    "main.js.map": "/Orakel_Queue_Client/static/js/main.f4e90f80.chunk.js.map",
+    "runtime-main.js": "/Orakel_Queue_Client/static/js/runtime-main.0e3e9d65.js",
+    "runtime-main.js.map": "/Orakel_Queue_Client/static/js/runtime-main.0e3e9d65.js.map",
+    "static/css/2.2a86faee.chunk.css": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css",
+    "static/js/2.23e02811.chunk.js": "/Orakel_Queue_Client/static/js/2.23e02811.chunk.js",
+    "static/js/2.23e02811.chunk.js.map": "/Orakel_Queue_Client/static/js/2.23e02811.chunk.js.map",
+    "static/js/3.ed54517d.chunk.js": "/Orakel_Queue_Client/static/js/3.ed54517d.chunk.js",
+    "static/js/3.ed54517d.chunk.js.map": "/Orakel_Queue_Client/static/js/3.ed54517d.chunk.js.map",
     "index.html": "/Orakel_Queue_Client/index.html",
-    "precache-manifest.4f89322d8f078828e151926ee6e783b7.js": "/Orakel_Queue_Client/precache-manifest.4f89322d8f078828e151926ee6e783b7.js",
+    "precache-manifest.a6449afb348339facea2e811691d5725.js": "/Orakel_Queue_Client/precache-manifest.a6449afb348339facea2e811691d5725.js",
     "service-worker.js": "/Orakel_Queue_Client/service-worker.js",
-    "static/css/2.d9ad5f5c.chunk.css.map": "/Orakel_Queue_Client/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/2.2a86faee.chunk.css.map": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css.map",
     "static/css/main.1c582c0c.chunk.css.map": "/Orakel_Queue_Client/static/css/main.1c582c0c.chunk.css.map",
-    "static/js/2.756caea7.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.756caea7.chunk.js.LICENSE.txt",
+    "static/js/2.23e02811.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.23e02811.chunk.js.LICENSE.txt",
+    "static/js/3.ed54517d.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/3.ed54517d.chunk.js.LICENSE.txt",
+    "static/media/hellothere.mp3": "/Orakel_Queue_Client/static/media/hellothere.be0ec76a.mp3",
     "static/media/oslomethvit.png": "/Orakel_Queue_Client/static/media/oslomethvit.2c306d99.png",
     "static/media/oslometsvart.png": "/Orakel_Queue_Client/static/media/oslometsvart.3b9b0cc3.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.938f9b4a.js",
-    "static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.756caea7.chunk.js",
+    "static/js/runtime-main.0e3e9d65.js",
+    "static/css/2.2a86faee.chunk.css",
+    "static/js/2.23e02811.chunk.js",
     "static/css/main.1c582c0c.chunk.css",
-    "static/js/main.d8542cb1.chunk.js"
+    "static/js/main.f4e90f80.chunk.js"
   ]
 }
