@@ -5,7 +5,7 @@ interface IQueueEntity {
     studyYear: string;
     digitalConsultation: boolean;
     confirmedDone: boolean;
-    timeConfirmedDone: string;
+    timeConfirmedDone: string | null;
 }
 
 interface ISubject {

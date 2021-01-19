@@ -133,11 +133,14 @@ const Queue: FC<Props> = (props) => {
             primitiveFormData.subject = "Annet"
         }
 
-        const queueEntity = {
+        const queueEntity: IQueueEntity = {
+            id: 0, //Id is set in the API
             name: primitiveFormData.firstname,
             subject: primitiveFormData.subject,
             digitalConsultation: primitiveFormData.digitalConsultation,
-            studyYear: primitiveFormData.year
+            studyYear: primitiveFormData.year,
+            confirmedDone: false,
+            timeConfirmedDone: null
         };
 
         props.addQueueEntity(queueEntity);
