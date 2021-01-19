@@ -20,7 +20,7 @@ type Props = {
     isAuthenticated: boolean;
     userRoles: Array<string>;
     queueData: Array<IQueueEntity>;
-    subjects: Array<string>;
+    subjects: Array<ISubject>;
     loading: boolean;
     error: string | null;
     addQueueEntity: Function;
@@ -118,7 +118,7 @@ const Queue: FC<Props> = (props) => {
         subjectListUpdated.inputConfig.options = [];
 
         props.subjects?.forEach(subject => {
-            subjectListUpdated.inputConfig.options.push({value: subject, displayValue: subject});
+            subjectListUpdated.inputConfig.options.push({value: subject.name, displayValue: subject.name});
         });
 
         setSubjectSelect(subjectListUpdated);
@@ -126,6 +126,13 @@ const Queue: FC<Props> = (props) => {
 
     const registrationHandler = (formData: any) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
+
+        //This is a quick fix to a current production problem.
+        //TODO Implement new logic to make sure complete IQueueEntity objects without null values are passed to the API
+        if (primitiveFormData.subject === null) {
+            primitiveFormData.subject = "Annet"
+        }
+
         const queueEntity = {
             name: primitiveFormData.firstname,
             subject: primitiveFormData.subject,
