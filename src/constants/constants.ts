@@ -24,6 +24,7 @@ export const USER_GUIDE_PATH = API_BASE_PATH + "resources/userguide";
 
 /* ----- Routing ----- */
 export const INDEX_ROUTE = "/Orakel_Queue_Client/";
+export const ADMIN_ROUTE = INDEX_ROUTE + "Admin";
 
 /* ----- Form Elements ----- */
 export enum FormElementType {
