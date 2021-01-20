@@ -70,7 +70,7 @@ export const addToQueue = (queueEntity: IQueueEntity) => {
                 dispatch(fetchQueue());
             })
             .catch(error => {
-                dispatch(addToQueueFail(error.response));
+                dispatch(addToQueueFail(error.response.data));
             });
     }
 };
