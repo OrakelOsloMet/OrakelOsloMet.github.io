@@ -3,9 +3,9 @@ import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
 import {FormElementType} from "../../constants/constants";
-import {SubmitButton} from "../../components/UI/Buttons/buttons";
+import {SubmitButton} from "../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
-import Input from "../../components/UI/Inputs/input"
+import Input from "../UI/Inputs/input"
 import {IConfiguredSelect, IConfiguredTextInput} from "../../models/inputModels";
 
 type Props = {

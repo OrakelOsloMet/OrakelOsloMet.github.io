@@ -20,7 +20,7 @@ const failedAction = (state: QueueState, action: QueueAction): QueueState => {
     })
 };
 
-/* ----- Fetch Queue Data ----- */
+/* ----- Fetch LandingPage Data ----- */
 
 const fetchQueueSuccess = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {
@@ -31,7 +31,7 @@ const fetchQueueSuccess = (state: QueueState, action: QueueAction): QueueState =
 };
 
 
-/* ----- Add, Delete and Remove in Queue ----- */
+/* ----- Add, Delete and Remove in LandingPage ----- */
 
 const addRemoveSuccess = (state: QueueState, action: QueueAction): QueueState => {
     return updateObject(state, {

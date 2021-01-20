@@ -1,8 +1,8 @@
 import React, {FC, useEffect} from "react";
 
-import Table from "../../components/UI/Tables/queueTable";
+import Table from "../UI/Tables/queueTable";
 import {jsonArrayEqual} from "../../utilities/arrayUtilities";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/loadingSpinner";
+import LoadingSpinner from "../UI/LoadingSpinner/loadingSpinner";
 import useInterval from "../../hooks/useInterval";
 import usePreviousState from "../../hooks/usePreviousState";
 import useSound from "use-sound";
@@ -29,7 +29,7 @@ const Queue: FC<Props> = (props) => {
         props.pollingFunction();
     }, [])
 
-    //Make the Queue update a 5 second interval
+    //Make the LandingPage update a 5 second interval
     useInterval(() => {
         props.pollingFunction()
     }, 5000);

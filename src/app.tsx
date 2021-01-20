@@ -2,10 +2,8 @@ import React, {useEffect} from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkValidAuth, fetchSubjects} from "./store/actions/actionIndex";
-
+import LandingPage from "./containers/LandingPage/LandingPage";
 import Layout from "./higherOrderedComponents/Layout/layout";
-import QueueConnected from "./containers/Queue/queueConnected";
-import QueueFormConnected from "./containers/QueueForm/queueFormConnected";
 import {INDEX_ROUTE} from "./constants/constants";
 import {bindActionCreators, Dispatch} from "redux";
 
@@ -28,7 +26,7 @@ const App: React.FC<Props> = (props: Props) => {
 
     let routes = (
         <Switch>
-            <Route path={INDEX_ROUTE} exact render={() => (<div><QueueFormConnected/><QueueConnected/></div>)}/>
+            <Route path={INDEX_ROUTE} render={LandingPage}/>
             <Redirect to={INDEX_ROUTE}/>
         </Switch>
     );

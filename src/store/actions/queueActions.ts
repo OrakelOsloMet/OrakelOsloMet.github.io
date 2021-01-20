@@ -4,7 +4,7 @@ import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH} from "../../consta
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
 
-/* ----- Fetch Queue Data ----- */
+/* ----- Fetch LandingPage Data ----- */
 
 const fetchQueueStart = () => {
     return {
@@ -40,7 +40,7 @@ export const fetchQueue = () => {
     }
 };
 
-/* ----- Add to Queue ----- */
+/* ----- Add to LandingPage ----- */
 
 const addToQueueStart = () => {
     return {
@@ -75,7 +75,7 @@ export const addToQueue = (queueEntity: IQueueEntity) => {
     }
 };
 
-/* ----- Delete From Queue ----- */
+/* ----- Delete From LandingPage ----- */
 
 const deleteFromQueueStart = () => {
     return {
@@ -111,7 +111,7 @@ export const deleteFromQueue = (id: string) => {
     }
 };
 
-/* ----- Done in Queue ----- */
+/* ----- Done in LandingPage ----- */
 
 const doneInQueueStart = () => {
     return {

@@ -6,7 +6,7 @@ export const LOCAL_STORAGE_USER = "user";
 /* ----- API ------ */
 export const API_BASE_PATH = objectConditionalByEnvironment("http://localhost:8080/api/", "https://orakelqueueservice.herokuapp.com/api/");
 
-//Queue
+//LandingPage
 export const QUEUE_PATH = "queue/";
 export const CONFIRM_DONE_PATH = QUEUE_PATH + "confirmdone/";
 
