@@ -127,12 +127,6 @@ const Queue: FC<Props> = (props) => {
     const registrationHandler = (formData: any) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
 
-        //This is a quick fix to a current production problem.
-        //TODO Implement new logic to make sure complete IQueueEntity objects without null values are passed to the API
-        if (primitiveFormData.subject === null) {
-            primitiveFormData.subject = "Annet"
-        }
-
         const queueEntity: IQueueEntity = {
             id: 0, //Id is set in the API
             name: primitiveFormData.firstname,
