@@ -38,14 +38,14 @@ const Queue: FC<Props> = (props) => {
     useEffect(() => {
 
         //Due to the API taking a few ms to respond, previousQueue will be undefined in the first render cycle.
-        if (previousQueue) {
+        if (previousQueue && props.isAuthenticated) {
             if (props.queueData.length >= previousQueue.length) {
                 if (!jsonArrayEqual(props.queueData, previousQueue)) {
                     play();
                 }
             }
         }
-    }, [props.queueData])
+    }, [props.queueData, props.isAuthenticated])
 
     /* ----- Create Table ----- */
     let table = props.queueData === undefined ? <LoadingSpinner/> : <Table
