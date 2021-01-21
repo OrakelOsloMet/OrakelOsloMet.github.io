@@ -5,6 +5,7 @@ import {IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputM
 import {FormElementType} from "../../../../constants/constants";
 import {convertObjectStringsToPrimitives} from "../../../../utilities/objectUtilities";
 import Input from "../Inputs/input";
+import {createUseFormRef, inputHasError} from "../../../../utilities/formUtilities";
 
 type Props = {
     subjects?: Array<ISubject>;
@@ -65,32 +66,12 @@ const SubjectForm: FC<Props> = (props) => {
               style={{width: "80%", margin: "auto"}}>
             {Object.values(formElements).map(formElement => {
 
-                let forwardRef: Ref<any> = register;
-
-                if (formElement.inputType === FormElementType.INPUT) {
-                    let currentElement = formElement as IConfiguredTextInput
-                    forwardRef = register({
-                        required: currentElement.validation.errorMessage,
-                        minLength: {
-                            value: currentElement.validation.minLength,
-                            message: currentElement.validation.errorMessage
-                        }
-                    })
-                }
-
-                let errorInInput = false;
-                for (const key of Object.entries(errors)) {
-                    if (key[0] === formElement.name) {
-                        errorInInput = true;
-                    }
-                }
-
                 return (
                     <Input
                         key={formElement.name}
                         formElement={formElement}
-                        ref={forwardRef}
-                        error={errorInInput}
+                        ref={createUseFormRef(formElement, register)}
+                        error={inputHasError(errors, formElement)}
                     />
                 )
             })}
