@@ -1,9 +1,9 @@
 import React from "react";
 import {Table} from "react-bootstrap";
 import TableHead from "../../TableHead/tableHead";
-import {ConfirmButton, DeleteButton} from "../../../Buttons/buttons";
+import {ConfirmButton, DeleteButton} from "../../../UI/Buttons/buttons";
 
-import * as actions from "../../../../../store/actions/actionIndex";
+import * as actions from "../../../../store/actions/actionIndex";
 
 type Props = {
     queueData: Array<IQueueEntity>,

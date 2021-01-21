@@ -1,11 +1,11 @@
-import React, {FC, Ref, useState} from "react";
-import {DeleteButton, SubmitButton} from "../../Buttons/buttons";
+import React, {FC, useState} from "react";
+import {DeleteButton, SubmitButton} from "../../UI/Buttons/buttons";
 import {useForm} from "react-hook-form";
-import {IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputModels";
-import {FormElementType} from "../../../../constants/constants";
-import {convertObjectStringsToPrimitives} from "../../../../utilities/objectUtilities";
+import {IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
+import {FormElementType} from "../../../constants/constants";
+import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import Input from "../Inputs/input";
-import {createUseFormRef, inputHasError} from "../../../../utilities/formUtilities";
+import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 
 type Props = {
     subjects?: Array<ISubject>;

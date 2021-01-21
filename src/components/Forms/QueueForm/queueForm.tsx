@@ -2,12 +2,12 @@ import React, {FC, Ref, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType} from "../../../../constants/constants";
-import {SubmitButton} from "../../Buttons/buttons";
-import {convertObjectStringsToPrimitives} from "../../../../utilities/objectUtilities";
+import {FormElementType} from "../../../constants/constants";
+import {SubmitButton} from "../../UI/Buttons/buttons";
+import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import Input from "../Inputs/input"
-import {IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputModels";
-import {createUseFormRef, inputHasError} from "../../../../utilities/formUtilities";
+import {IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
+import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 
 type Props = {
     subjects: Array<ISubject>;

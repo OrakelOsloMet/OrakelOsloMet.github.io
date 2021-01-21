@@ -1,13 +1,13 @@
 import React, {FC, useEffect} from "react";
 
 import Table from "./QueueTable/queueTable";
-import {jsonArrayEqual} from "../../../../utilities/arrayUtilities";
-import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
-import useInterval from "../../../../hooks/useInterval";
-import usePreviousState from "../../../../hooks/usePreviousState";
+import {jsonArrayEqual} from "../../../utilities/arrayUtilities";
+import LoadingSpinner from "../../UI/LoadingSpinner/loadingSpinner";
+import useInterval from "../../../hooks/useInterval";
+import usePreviousState from "../../../hooks/usePreviousState";
 import useSound from "use-sound";
 
-const notificationSound = require("../../../../assets/sounds/hellothere.mp3");
+const notificationSound = require("../../../assets/sounds/hellothere.mp3");
 
 type Props = {
     isAuthenticated: boolean;

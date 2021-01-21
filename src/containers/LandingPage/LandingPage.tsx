@@ -1,6 +1,6 @@
 import React from "react";
-import QueueFormConnected from "../../components/UI/Forms/QueueForm/queueFormConnected";
-import QueueConnected from "../../components/UI/Tables/Queue/queueConnected";
+import QueueFormConnected from "../../components/Forms/QueueForm/queueFormConnected";
+import QueueConnected from "../../components/Tables/Queue/queueConnected";
 
 const LandingPage = () => {
     return (

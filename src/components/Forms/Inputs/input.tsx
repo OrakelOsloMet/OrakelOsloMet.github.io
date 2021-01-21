@@ -1,6 +1,6 @@
 import React, {forwardRef} from "react";
-import {IConfiguredInput, IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputModels";
-import {FormElementType} from "../../../../constants/constants";
+import {IConfiguredInput, IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
+import {FormElementType} from "../../../constants/constants";
 
 type Props = {
     formElement: IConfiguredInput
