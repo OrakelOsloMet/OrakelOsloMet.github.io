@@ -45,7 +45,7 @@ const queueTable = (props: Props) => {
     const tableBody = <tbody>{rows}</tbody>;
 
     return (
-        <Table striped bordered hover responsive className="mb-4">{tableHead}{tableBody}</Table>
+        <Table striped bordered hover responsive className="mb-4" style={{backgroundColor: "white"}}>{tableHead}{tableBody}</Table>
     );
 };
 
