@@ -1,6 +1,5 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import styles from "./queueTable.module.css";
 import TableHead from "../TableHead/tableHead";
 import {ConfirmButton, DeleteButton} from "../../Buttons/buttons";
 
@@ -46,7 +45,7 @@ const queueTable = (props: Props) => {
     const tableBody = <tbody>{rows}</tbody>;
 
     return (
-        <Table striped bordered hover responsive className={"mb-4 " + styles.queueTable}>{tableHead}{tableBody}</Table>
+        <Table striped bordered hover responsive className={"mb-4 bg-white"}>{tableHead}{tableBody}</Table>
     );
 };
 
