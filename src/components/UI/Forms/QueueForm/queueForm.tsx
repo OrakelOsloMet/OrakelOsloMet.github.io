@@ -2,11 +2,11 @@ import React, {FC, Ref, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType} from "../../constants/constants";
-import {SubmitButton} from "../UI/Buttons/buttons";
-import {convertObjectStringsToPrimitives} from "../../utilities/objectUtilities";
-import Input from "../UI/Inputs/input"
-import {IConfiguredSelect, IConfiguredTextInput} from "../../models/inputModels";
+import {FormElementType} from "../../../../constants/constants";
+import {SubmitButton} from "../../Buttons/buttons";
+import {convertObjectStringsToPrimitives} from "../../../../utilities/objectUtilities";
+import Input from "../Inputs/input"
+import {IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputModels";
 
 type Props = {
     subjects: Array<ISubject>;
@@ -103,7 +103,7 @@ const QueueForm: FC<Props> = (props) => {
         props.addQueueEntity(queueEntity);
     };
 
-    const formElements = {nameInput, subjectSelect, yearSelect, digitalConsultationSelect}
+    const formElements = {nameInput, subjectSelect, yearSelect, digitalConsultationSelect};
     const form =
         <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
             {Object.values(formElements).map(formElement => {
@@ -121,12 +121,19 @@ const QueueForm: FC<Props> = (props) => {
                     })
                 }
 
+                let errorInInput = false;
+                for (const key of Object.entries(errors)) {
+                    if (key[0] === formElement.name) {
+                        errorInInput = true;
+                    }
+                }
+
                 return (
                     <Input
                         key={formElement.name}
                         formElement={formElement}
                         ref={forwardRef}
-                        error={errors.firstname}
+                        error={errorInInput}
                     />
                 )
             })}

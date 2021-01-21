@@ -1,25 +1,24 @@
 import React, {forwardRef} from "react";
-import {IConfiguredInput, IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
-import {FormElementType} from "../../../constants/constants";
+import {IConfiguredInput, IConfiguredSelect, IConfiguredTextInput} from "../../../../models/inputModels";
+import {FormElementType} from "../../../../constants/constants";
 
 type Props = {
     formElement: IConfiguredInput
-    error: string
+    error: boolean;
 }
 
 const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
-    const {formElement, error} = props;
-    let formClasses = "form-control ml-1 mr-1 ";
+    let formClasses = "form-control ml-1 mr-1 mt-3 mb-3 ";
     let returnInput;
     let passedElement;
 
-    switch (formElement.inputType) {
-        case(FormElementType.INPUT):
-            passedElement = formElement as IConfiguredTextInput
+    if (props.error) {
+        formClasses += "is-invalid";
+    }
 
-            if (error) {
-                formClasses += "is-invalid";
-            }
+    switch (props.formElement.inputType) {
+        case(FormElementType.INPUT):
+            passedElement = props.formElement as IConfiguredTextInput
 
             returnInput = <input
                 name={passedElement.name}
@@ -29,10 +28,10 @@ const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
             break;
 
         case(FormElementType.SELECT):
-            passedElement = formElement as IConfiguredSelect
+            passedElement = props.formElement as IConfiguredSelect
 
             returnInput = <select
-                name={formElement.name}
+                name={props.formElement.name}
                 ref={ref}
                 className={formClasses}>
                 {passedElement.inputConfig.options.map(option => (

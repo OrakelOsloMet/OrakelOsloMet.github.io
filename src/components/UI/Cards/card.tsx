@@ -1,14 +1,12 @@
-import React from "react";
-import {DeleteButton, SubmitButton} from "../Buttons/buttons";
+import React, {FC} from "react";
 
 type Props = {
     shadow: boolean;
     widthPercent: number;
     header: string;
-    content?: JSX.Element;
 }
 
-const Card = (props: Props) => {
+const Card: FC<Props> = (props) => {
 
     let styleClasses = "card mb-4 mt-4 ml-4 mr-4 ";
     const width = `${String(props.widthPercent)}%`
@@ -20,7 +18,7 @@ const Card = (props: Props) => {
     return(
         <div className={styleClasses} style={{width: width}}>
             <div className={"card-header"}><h2>{props.header}</h2></div>
-            {props.content}
+            {props.children}
         </div>
     );
 

@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
+import {RootState} from "../../../../store";
 import {bindActionCreators, Dispatch} from "redux";
-import {deleteFromQueue, doneInQueue, fetchQueue} from "../../store/actions/queueActions";
+import {deleteFromQueue, doneInQueue, fetchQueue} from "../../../../store/actions/queueActions";
 import {connect} from "react-redux";
 import Queue from "./queue";
 
