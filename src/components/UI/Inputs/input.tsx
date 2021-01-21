@@ -9,7 +9,7 @@ type Props = {
 
 const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
     const {formElement, error} = props;
-    let formClasses = "form-control ml-2 mr-2 mt-2 ";
+    let formClasses = "form-control ml-1 mr-1 ";
     let returnInput;
     let passedElement;
 

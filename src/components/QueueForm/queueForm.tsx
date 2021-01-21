@@ -131,13 +131,13 @@ const QueueForm: FC<Props> = (props) => {
                 )
             })}
 
-            <SubmitButton className={"ml-2 mr-2 mt-2"}>Registrer</SubmitButton>
+            <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
         </form>
 
     return (
-        <>
+        <div className={"bg-white pb-1 pt-1"}>
             {form}
-        </>
+        </div>
     );
 
 }
