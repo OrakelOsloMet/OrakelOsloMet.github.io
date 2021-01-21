@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {NavbarConnected} from "../../components/Navigation/Navbar/navbarConnected";
+import NavbarConnected from "../../components/Navigation/Navbar/navbarConnected";
 
 const Layout: FC = (props) => {
     return (
