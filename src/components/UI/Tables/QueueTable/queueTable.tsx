@@ -1,9 +1,10 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import TableHead from "./TableHead/tableHead";
-import {ConfirmButton, DeleteButton} from "../Buttons/buttons";
+import styles from "./queueTable.module.css";
+import TableHead from "../TableHead/tableHead";
+import {ConfirmButton, DeleteButton} from "../../Buttons/buttons";
 
-import * as actions from "../../../store/actions/actionIndex";
+import * as actions from "../../../../store/actions/actionIndex";
 
 type Props = {
     queueData: Array<IQueueEntity>,
@@ -45,7 +46,7 @@ const queueTable = (props: Props) => {
     const tableBody = <tbody>{rows}</tbody>;
 
     return (
-        <Table striped bordered hover responsive className="mb-4" style={{backgroundColor: "white"}}>{tableHead}{tableBody}</Table>
+        <Table striped bordered hover responsive className={"mb-4 " + styles.queueTable}>{tableHead}{tableBody}</Table>
     );
 };
 

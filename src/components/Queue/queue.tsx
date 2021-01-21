@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from "react";
 
-import Table from "../UI/Tables/queueTable";
+import Table from "../UI/Tables/QueueTable/queueTable";
 import {jsonArrayEqual} from "../../utilities/arrayUtilities";
 import LoadingSpinner from "../UI/LoadingSpinner/loadingSpinner";
 import useInterval from "../../hooks/useInterval";
