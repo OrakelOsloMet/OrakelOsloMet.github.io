@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkValidAuth, fetchSubjects} from "./store/actions/actionIndex";
-import LandingPage from "./containers/LandingPage/LandingPage";
+import LandingPage from "./containers/LandingPage/landingPage";
 import {ADMIN_ROUTE, INDEX_ROUTE} from "./constants/constants";
 import {bindActionCreators, Dispatch} from "redux";
-import AdminPage from "./containers/AdminPage/AdminPage";
+import AdminPageConnected from "./containers/AdminPage/adminPageConnected";
 import {RootState} from "./store";
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -41,7 +41,7 @@ const App: React.FC<Props> = (props: Props) => {
     if (props.isAuthenticated) {
         routes = (
             <Switch>
-                <Route path={ADMIN_ROUTE} render={AdminPage}/>
+                <Route path={ADMIN_ROUTE} render={() => <AdminPageConnected/>}/>
                 <Route path={INDEX_ROUTE} exact render={LandingPage}/>
                 <Redirect to={INDEX_ROUTE}/>
             </Switch>
