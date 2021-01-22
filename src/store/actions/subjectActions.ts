@@ -1,7 +1,7 @@
 import {SubjectActionTypes} from "./actionTypes";
 import {SubjectDispatch} from "../types";
 import axios from "../../axiosAPI";
-import {CURRENT_SUBJECTS_PATH, SUBJECTS_PATH} from "../../constants/constants";
+import {CURRENT_SUBJECTS_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
 
 /* ----- Fetch Subjects ----- */
 
@@ -49,36 +49,43 @@ export const fetchSubjects = (allSubjects: boolean = false) => {
 
 /* ----- Add Subject ----- */
 
-const addSubjectStart = () => {
+const addEditSubjectStart = () => {
     return {
         type: SubjectActionTypes.ADD_SUBJECT_START
     }
 };
 
-const addSubjectSuccess = () => {
+const addEditSubjectSuccess = () => {
     return {
         type: SubjectActionTypes.ADD_SUBJECT_SUCCESS,
     }
 };
 
-const addSubjectFail = (error: string) => {
+const addEditSubjectFail = (error: string) => {
     return {
         type: SubjectActionTypes.ADD_SUBJECT_FAIL,
         error: error
     }
 };
 
-export const addSubject = (subject: ISubject) => {
+export const addEditSubject = (subject: ISubject, edit: boolean = false) => {
     return (dispatch: SubjectDispatch) => {
-        dispatch(addSubjectStart());
+        dispatch(addEditSubjectStart());
 
-        axios.post(SUBJECTS_PATH, subject)
-            .then(()=> {
-                dispatch(addSubjectSuccess());
-                dispatch(fetchSubjects(true));
-            })
+
+        let apiCall;
+        if (edit) {
+            apiCall = axios.put(EDIT_SUBJECT_PATH + subject.id, subject);
+        } else {
+            apiCall = axios.post(SUBJECTS_PATH, subject);
+        }
+
+        apiCall.then(() => {
+            dispatch(addEditSubjectSuccess());
+            dispatch(fetchSubjects(true));
+        })
             .catch(error => {
-                dispatch(addSubjectFail(error.response.data));
+                dispatch(addEditSubjectFail(error.response));
             })
     }
 }

@@ -13,6 +13,7 @@ export const CONFIRM_DONE_PATH = QUEUE_PATH + "confirmdone/";
 //Subjects
 export const SUBJECTS_PATH = "subjects/";
 export const CURRENT_SUBJECTS_PATH = SUBJECTS_PATH + "current/";
+export const EDIT_SUBJECT_PATH = SUBJECTS_PATH + "edit/"
 
 //Auth
 export const AUTH_PATH = "auth/";
@@ -31,6 +32,8 @@ export enum FormElementType {
     SELECT = "select",
     INPUT = "input",
 }
+
+export const NEW_SUBJECT = "<New Subject>";
 
 
 //TODO Add all hardcoded string values to this file

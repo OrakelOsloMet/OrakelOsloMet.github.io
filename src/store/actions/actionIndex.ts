@@ -14,5 +14,5 @@ export {
 
 export {
     fetchSubjects,
-    addSubject
+    addEditSubject
 } from "./subjectActions"

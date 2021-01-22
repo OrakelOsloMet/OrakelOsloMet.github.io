@@ -1,9 +1,9 @@
 import {FormElementType} from "../constants/constants";
 
 export interface IConfiguredInput {
-    name: string,
-    inputType: FormElementType,
-    inputConfig: IInputConfig
+    name: string;
+    inputType: FormElementType;
+    inputConfig: IInputConfig;
 }
 
 export interface IInputConfig {
@@ -26,6 +26,7 @@ interface ISelectConfig extends IInputConfig {
 interface ITextConfig extends IInputConfig {
     type: string;
     placeholder: string;
+    defaultValue?: string;
 }
 
 interface ISelectOptions {
