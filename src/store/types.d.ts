@@ -1,4 +1,4 @@
-import {AuthActionTypes, QueueActionTypes} from "./actions/actionTypes";
+import {AdminActionTypes, AuthActionTypes, QueueActionTypes} from "./actions/actionTypes";
 
 interface IUser {
     token: string | null;
@@ -19,14 +19,18 @@ type QueueState = {
     loading: boolean;
 }
 
-type QueueAction = {
-    type: QueueActionTypes;
-    queueData?: Array<IQueueEntity>;
-    subjectData?: Array<string>
-    error?: string;
+type AdminState = {
+    subjectData: Array<ISubject>;
 }
 
 type FetchAction = {
+}
+
+type QueueAction = {
+    type: QueueActionTypes;
+    queueData?: Array<IQueueEntity>;
+    subjectData?: Array<ISubject>
+    error?: string;
 }
 
 type AuthAction = {
@@ -35,6 +39,12 @@ type AuthAction = {
     error?: string;
 }
 
+type AdminAction = {
+    type: AdminActionTypes;
+    subjectData?: Array<ISubject>
+}
+
 
 type QueueDispatch = (args: QueueAction | FetchAction) => QueueAction | FetchAction;
 type AuthDispatch = (args: AuthAction) => AuthAction
+type AdminDispatch = (args: AdminAction) => AdminAction | FetchAction

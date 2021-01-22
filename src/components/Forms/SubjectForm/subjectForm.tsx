@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {DeleteButton, SubmitButton} from "../../UI/Buttons/buttons";
 import {useForm} from "react-hook-form";
 import {IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
@@ -8,9 +8,9 @@ import Input from "../Inputs/input";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 
 type Props = {
-    subjects?: Array<ISubject>;
-    loading?: boolean;
-    error?: string | null;
+    subjects: Array<ISubject>;
+    loading: boolean;
+    error: string | null;
     addSubject?: Function;
     editSubject?: Function;
     deleteSubject?: Function;
@@ -54,6 +54,23 @@ const SubjectForm: FC<Props> = (props) => {
             ]
         }
     });
+
+    useEffect(() => {
+        if (props.subjects.length > 0) {
+            fillSubjectSelector();
+        }
+    }, [props.subjects])
+
+    const fillSubjectSelector = () => {
+        const subjectListUpdated = {...subjectSelect};
+        subjectListUpdated.inputConfig.options = [];
+
+        props.subjects?.forEach(subject => {
+            subjectListUpdated.inputConfig.options.push({value: subject.name, displayValue: subject.name});
+        });
+
+        setSubjectSelect(subjectListUpdated);
+    };
 
     const registrationHandler = (formData: any) => {
         const primitiveData = convertObjectStringsToPrimitives(formData);

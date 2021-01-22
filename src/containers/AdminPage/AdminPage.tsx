@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./adminPage.module.css";
 import Card from "../../components/UI/Cards/card";
-import SubjectForm from "../../components/Forms/SubjectForm/subjectForm";
+import SubjectForm from "../../components/Forms/SubjectForm/subjectFormConnected";
 
 type Props = {
     isAuthenticated: boolean

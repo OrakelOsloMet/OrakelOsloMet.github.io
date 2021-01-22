@@ -1,6 +1,6 @@
 import axios from "../../axiosAPI";
 import {QueueActionTypes} from "./actionTypes";
-import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH} from "../../constants/constants";
+import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
 
@@ -155,7 +155,7 @@ const fetchSubjectsStart = () => {
     }
 };
 
-const fetchSubjectsSuccess = (subjectData: Array<string>) => {
+const fetchSubjectsSuccess = (subjectData: Array<ISubject>) => {
     return {
         type: QueueActionTypes.FETCH_SUBJECTS_SUCCESS,
         subjectData: subjectData
@@ -169,11 +169,13 @@ const fetchSubjectsFail = (error: string) => {
     }
 };
 
-export const fetchSubjects = () => {
+export const fetchSubjects = (allSubjects: boolean) => {
     return (dispatch: QueueDispatch) => {
         dispatch(fetchSubjectsStart());
 
-        axios.get(CURRENT_SUBJECTS_PATH)
+        const path = allSubjects ? SUBJECTS_PATH : CURRENT_SUBJECTS_PATH;
+
+        axios.get(path)
             .then(response => {
                 dispatch(fetchSubjectsSuccess(response.data));
             }).catch(error => {
