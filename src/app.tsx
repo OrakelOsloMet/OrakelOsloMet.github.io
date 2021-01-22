@@ -28,7 +28,7 @@ const App: React.FC<Props> = (props: Props) => {
 
     useEffect(() => {
         autoLogin();
-        getSubjectData(false);
+        getSubjectData();
     }, []);
 
     let routes = (

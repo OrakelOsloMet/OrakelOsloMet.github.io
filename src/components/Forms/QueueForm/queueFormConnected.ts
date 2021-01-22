@@ -6,7 +6,7 @@ import QueueForm from "./queueForm";
 
 const mapStateToProps = (state: RootState) => {
     return {
-        subjects: state.queue.subjectData,
+        subjects: state.subjects.currentSubjectData,
         loading: state.queue.loading,
         error: state.queue.error
     }

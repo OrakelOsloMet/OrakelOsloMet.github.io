@@ -11,6 +11,7 @@ type Props = {
     subjects: Array<ISubject>;
     loading: boolean;
     error: string | null;
+    fetchSubjects: Function;
     addSubject?: Function;
     editSubject?: Function;
     deleteSubject?: Function;
@@ -24,11 +25,7 @@ const SubjectForm: FC<Props> = (props) => {
         name: "subject",
         inputType: FormElementType.SELECT,
         inputConfig: {
-            options: [
-                {value: "Programmering", displayValue: "Programmering"},
-                {value: "Matte1000", displayValue: "Matte1000"},
-                {value: "Apputvikling", displayValue: "Apputvikling"}
-            ]
+            options: []
         }
     });
 
@@ -58,6 +55,8 @@ const SubjectForm: FC<Props> = (props) => {
     useEffect(() => {
         if (props.subjects.length > 0) {
             fillSubjectSelector();
+        } else {
+            props.fetchSubjects(true);
         }
     }, [props.subjects])
 
