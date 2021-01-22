@@ -4,36 +4,48 @@ import {FormElementType} from "../../../constants/constants";
 
 type Props = {
     formElement: IConfiguredInput
+    onChange?: (event: any) => void
     error: boolean;
 }
 
 const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
+    const {formElement, onChange, error} = props;
     let formClasses = "form-control ml-1 mr-1 mt-3 mb-3 ";
     let returnInput;
     let passedElement;
 
-    if (props.error) {
+    if (error) {
         formClasses += "is-invalid";
     }
 
-    switch (props.formElement.inputType) {
+    const handleOnchange = (event: any) => {
+        if (onChange) {
+            onChange(event);
+        }
+    }
+
+    switch (formElement.inputType) {
         case(FormElementType.INPUT):
-            passedElement = props.formElement as IConfiguredTextInput
+            passedElement = formElement as IConfiguredTextInput
+
 
             returnInput = <input
                 name={passedElement.name}
                 ref={ref}
                 className={formClasses}
+                onChange={handleOnchange}
+                defaultValue={passedElement.inputConfig.defaultValue}
                 {...passedElement.inputConfig}/>;
             break;
 
         case(FormElementType.SELECT):
-            passedElement = props.formElement as IConfiguredSelect
+            passedElement = formElement as IConfiguredSelect
 
             returnInput = <select
-                name={props.formElement.name}
+                name={formElement.name}
                 ref={ref}
-                className={formClasses}>
+                className={formClasses}
+                onChange={handleOnchange}>
                 {passedElement.inputConfig.options.map(option => (
                     <option key={String(option.value)} value={String(option.value)}>
                         {option.displayValue}
