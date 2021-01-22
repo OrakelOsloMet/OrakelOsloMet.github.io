@@ -2,19 +2,20 @@ import React, {FC, useEffect, useState} from "react";
 import {DeleteButton, SubmitButton} from "../../UI/Buttons/buttons";
 import {useForm} from "react-hook-form";
 import {IConfiguredSelect, IConfiguredTextInput} from "../../../models/inputModels";
-import {FormElementType} from "../../../constants/constants";
+import {FormElementType, NEW_SUBJECT} from "../../../constants/constants";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import Input from "../Inputs/input";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
+import {SubjectDispatch} from "../../../store/types";
 
 type Props = {
     subjects: Array<ISubject>;
     loading: boolean;
     error: string | null;
-    fetchSubjects: Function;
-    addSubject?: Function;
-    editSubject?: Function;
-    deleteSubject?: Function;
+    fetchSubjects: (allSubjects?: boolean) => (dispatch: SubjectDispatch) => void;
+    addSubject?: Function; //TODO improve typing when implemented
+    editSubject?: Function; //TODO improve typing when implemented
+    deleteSubject?: Function; //TODO improve typing when implemented
 }
 
 const SubjectForm: FC<Props> = (props) => {
@@ -64,6 +65,7 @@ const SubjectForm: FC<Props> = (props) => {
         const subjectListUpdated = {...subjectSelect};
         subjectListUpdated.inputConfig.options = [];
 
+        subjectListUpdated.inputConfig.options.push({value: NEW_SUBJECT, displayValue: NEW_SUBJECT})
         props.subjects?.forEach(subject => {
             subjectListUpdated.inputConfig.options.push({value: subject.name, displayValue: subject.name});
         });

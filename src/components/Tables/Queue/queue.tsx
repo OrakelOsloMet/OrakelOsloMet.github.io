@@ -15,9 +15,9 @@ type Props = {
     queueData: Array<IQueueEntity>;
     loading: boolean;
     error: string | null;
-    deleteQueueEntity: Function;
-    confirmDoneEntity: Function;
-    pollingFunction: Function
+    deleteQueueEntity: (id: number) => void;
+    confirmDoneEntity: (id: number) => void;
+    pollingFunction: () => void;
 }
 
 const Queue: FC<Props> = (props) => {

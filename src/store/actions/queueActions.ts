@@ -96,7 +96,7 @@ const deleteFromQueueFail = (error: string) => {
     }
 };
 
-export const deleteFromQueue = (id: string) => {
+export const deleteFromQueue = (id: number) => {
     return (dispatch: QueueDispatch) => {
         dispatch(deleteFromQueueStart());
 
@@ -132,7 +132,7 @@ const doneInQueueFail = (error: string) => {
     }
 };
 
-export const doneInQueue = (id: string) => {
+export const doneInQueue = (id: number) => {
     return (dispatch: QueueDispatch) => {
         dispatch(doneInQueueStart());
 

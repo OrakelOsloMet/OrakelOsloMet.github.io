@@ -13,7 +13,7 @@ type Props = {
     subjects: Array<ISubject>;
     loading: boolean;
     error: string | null;
-    addQueueEntity: Function;
+    addQueueEntity: (queueEntity: IQueueEntity) => void;
 }
 
 const QueueForm: FC<Props> = (props) => {

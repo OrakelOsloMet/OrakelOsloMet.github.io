@@ -7,8 +7,8 @@ import * as actions from "../../../../store/actions/actionIndex";
 
 type Props = {
     queueData: Array<IQueueEntity>,
-    confirmDoneEntity: Function,
-    deleteQueueEntity: Function,
+    confirmDoneEntity: (id: number) => void,
+    deleteQueueEntity: (id: number) => void,
     isAuthenticated: boolean,
     userRoles: Array<string>,
     defaultColumns: Array<string>,

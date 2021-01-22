@@ -9,11 +9,12 @@ import {USER_GUIDE_PATH, ADMIN_ROUTE, INDEX_ROUTE} from "../../../constants/cons
 
 import SwalInfoModal from "../../UI/Modals/SwalModals/swalInfoModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/swalLoginModal";
+import {AuthDispatch} from "../../../store/types";
 
 type Props = {
-    onLoginSubmit: Function;
-    clearLoginError: Function;
-    logoutHandler: MouseEventHandler;
+    onLoginSubmit: (username: string, password: string) => (dispatch: AuthDispatch) => Promise<boolean | undefined>;
+    clearLoginError: () => void;
+    logoutHandler: () => void;
     isAuthenticated: boolean;
 }
 
