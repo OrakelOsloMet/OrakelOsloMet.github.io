@@ -29,7 +29,7 @@ const App: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         autoLogin();
         getSubjectData();
-    }, []);
+    }, [autoLogin, getSubjectData]);
 
     let routes = (
         <Switch>

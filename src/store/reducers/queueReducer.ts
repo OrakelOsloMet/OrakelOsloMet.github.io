@@ -39,16 +39,6 @@ const addRemoveSuccess = (state: QueueState, action: QueueAction): QueueState =>
     })
 };
 
-/* ----- Fetch Subject Data ----- */
-
-const fetchSubjectsSuccess = (state: QueueState, action: QueueAction): QueueState => {
-    return updateObject(state, {
-        subjectData: action.subjectData,
-        error: null,
-        loading: false
-    })
-};
-
 const reducer = (state: QueueState = initialState, action: QueueAction): QueueState => {
     switch (action.type) {
 

@@ -29,7 +29,7 @@ const SubjectForm: FC<Props> = (props) => {
         }
     });
 
-    const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
+    const [nameInput] = useState<IConfiguredTextInput>({
         name: "subjectName",
         inputType: FormElementType.INPUT,
         inputConfig: {
@@ -41,7 +41,7 @@ const SubjectForm: FC<Props> = (props) => {
             errorMessage: "Vennligst oppgi et emnenavn på minst 3 bokstaver"
         }
     })
-    const [semesterSelect, setSemesterSelect] = useState<IConfiguredSelect>({
+    const [semesterSelect] = useState<IConfiguredSelect>({
         name: "semester",
         inputType: FormElementType.SELECT,
         inputConfig: {
@@ -88,6 +88,7 @@ const SubjectForm: FC<Props> = (props) => {
                         formElement={formElement}
                         ref={createUseFormRef(formElement, register)}
                         error={inputHasError(errors, formElement)}
+                        onChange={(event: any) => console.log(event.target.value)}
                     />
                 )
             })}

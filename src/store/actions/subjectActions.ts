@@ -1,5 +1,5 @@
 import {SubjectActionTypes} from "./actionTypes";
-import {FetchAction, SubjectDispatch} from "../types";
+import {SubjectDispatch} from "../types";
 import axios from "../../axiosAPI";
 import {CURRENT_SUBJECTS_PATH, SUBJECTS_PATH} from "../../constants/constants";
 

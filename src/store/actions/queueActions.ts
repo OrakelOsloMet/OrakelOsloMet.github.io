@@ -1,6 +1,6 @@
 import axios from "../../axiosAPI";
 import {QueueActionTypes} from "./actionTypes";
-import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
+import {CONFIRM_DONE_PATH, QUEUE_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
 

@@ -1,4 +1,4 @@
-import React, {FC, Ref, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
@@ -17,9 +17,10 @@ type Props = {
 }
 
 const QueueForm: FC<Props> = (props) => {
+    const {subjects, addQueueEntity} = props;
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [nameInput, setNameInput] = useState<IConfiguredTextInput>({
+    const [nameInput] = useState<IConfiguredTextInput>({
         name: "firstname",
         inputType: FormElementType.INPUT,
         inputConfig: {
@@ -40,7 +41,7 @@ const QueueForm: FC<Props> = (props) => {
         }
     });
 
-    const [yearSelect, setYearSelect] = useState<IConfiguredSelect>({
+    const [yearSelect] = useState<IConfiguredSelect>({
         name: "year",
         inputType: FormElementType.SELECT,
         inputConfig: {
@@ -52,7 +53,7 @@ const QueueForm: FC<Props> = (props) => {
         }
     })
 
-    const [digitalConsultationSelect, setDigitalConsultationSelect] = useState<IConfiguredSelect>({
+    const [digitalConsultationSelect] = useState<IConfiguredSelect>({
         name: "digitalConsultation",
         inputType: FormElementType.SELECT,
         inputConfig: {
@@ -65,10 +66,10 @@ const QueueForm: FC<Props> = (props) => {
 
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
-        if (props.subjects.length > 0) {
+        if (subjects.length > 0) {
             fillSubjectSelector();
         }
-    }, [props.subjects])
+    }, [subjects])
 
     //Use effect to run whenever the form is submitted successfully.
     useEffect(() => {
@@ -81,7 +82,7 @@ const QueueForm: FC<Props> = (props) => {
         const subjectListUpdated = {...subjectSelect};
         subjectListUpdated.inputConfig.options = [];
 
-        props.subjects?.forEach(subject => {
+        subjects?.forEach(subject => {
             subjectListUpdated.inputConfig.options.push({value: subject.name, displayValue: subject.name});
         });
 
@@ -101,7 +102,7 @@ const QueueForm: FC<Props> = (props) => {
             timeConfirmedDone: null
         };
 
-        props.addQueueEntity(queueEntity);
+        addQueueEntity(queueEntity);
     };
 
     const formElements = {nameInput, subjectSelect, yearSelect, digitalConsultationSelect};
