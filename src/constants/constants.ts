@@ -12,6 +12,7 @@ export const CONFIRM_DONE_PATH = QUEUE_PATH + "confirmdone/";
 
 //Subjects
 export const SUBJECTS_PATH = "subjects/";
+export const CURRENT_SUBJECTS_PATH = SUBJECTS_PATH + "current/";
 
 //Auth
 export const AUTH_PATH = "auth/";

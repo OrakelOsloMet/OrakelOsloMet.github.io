@@ -5,6 +5,7 @@ import {checkValidAuth, fetchSubjects} from "./store/actions/actionIndex";
 
 import Layout from "./higherOrderedComponents/Layout/layout";
 import QueueConnected from "./containers/Queue/queueConnected";
+import QueueFormConnected from "./containers/QueueForm/queueFormConnected";
 import {INDEX_ROUTE} from "./constants/constants";
 import {bindActionCreators, Dispatch} from "redux";
 
@@ -27,7 +28,7 @@ const App: React.FC<Props> = (props: Props) => {
 
     let routes = (
         <Switch>
-            <Route path={INDEX_ROUTE} exact render={() => (<QueueConnected/>)}/>
+            <Route path={INDEX_ROUTE} exact render={() => (<div><QueueFormConnected/><QueueConnected/></div>)}/>
             <Redirect to={INDEX_ROUTE}/>
         </Switch>
     );

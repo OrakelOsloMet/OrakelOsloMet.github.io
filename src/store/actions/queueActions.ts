@@ -1,6 +1,6 @@
 import axios from "../../axiosAPI";
 import {QueueActionTypes} from "./actionTypes";
-import {CONFIRM_DONE_PATH, QUEUE_PATH, SUBJECTS_PATH} from "../../constants/constants";
+import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
 
@@ -70,7 +70,7 @@ export const addToQueue = (queueEntity: IQueueEntity) => {
                 dispatch(fetchQueue());
             })
             .catch(error => {
-                dispatch(addToQueueFail(error.response));
+                dispatch(addToQueueFail(error.response.data));
             });
     }
 };
@@ -173,7 +173,7 @@ export const fetchSubjects = () => {
     return (dispatch: QueueDispatch) => {
         dispatch(fetchSubjectsStart());
 
-        axios.get(SUBJECTS_PATH)
+        axios.get(CURRENT_SUBJECTS_PATH)
             .then(response => {
                 dispatch(fetchSubjectsSuccess(response.data));
             }).catch(error => {
