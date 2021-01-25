@@ -8,16 +8,16 @@ type Props = {
 
 const Card: FC<Props> = (props) => {
 
-    let styleClasses = "card mb-4 mt-4 ml-4 mr-4 ";
+    let styleClasses = "card bg-white mb-4 mt-4 ml-4 mr-4 ";
     const width = `${String(props.widthPercent)}%`
 
     if (props.shadow) {
-        styleClasses += "shadow bg-white rounded ";
+        styleClasses += "shadow rounded ";
     }
 
     return(
         <div className={styleClasses} style={{width: width}}>
-            <div className={"card-header"}><h2>{props.header}</h2></div>
+            <div className={"card-header bg-warning"}><h2><b>{props.header}</b></h2></div>
             {props.children}
         </div>
     );

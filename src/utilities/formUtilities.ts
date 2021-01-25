@@ -1,21 +1,20 @@
-import {IConfiguredInput, IConfiguredTextInput} from "../models/inputModels";
-import {FormElementType} from "../constants/constants";
+import {InputConfig} from "../models/inputModels";
 import {Ref} from "react";
 import {DeepMap, FieldError} from "react-hook-form";
+import {FormElementType} from "../constants/constants";
 
 
 //Add cases to this function if more input types in need of validation are added.
-export const createUseFormRef = <T extends IConfiguredInput>(formElement: T, register: any) => {
+export const createUseFormRef = (inputConfig: InputConfig, register: any) => {
     let forwardRef: Ref<any> = register;
 
-    switch (formElement.inputType) {
-        case FormElementType.INPUT:
-            let element = formElement as unknown as IConfiguredTextInput;
+    switch (inputConfig.type) {
+        case FormElementType.TEXT:
             forwardRef = register({
-                required: element.validation.errorMessage,
+                required: inputConfig.validation.errorMessage,
                 minLength: {
-                    value: element.validation.minLength,
-                    message: element.validation.errorMessage
+                    value: inputConfig.validation.minLength,
+                    message: inputConfig.validation.errorMessage
                 }
             })
             return forwardRef;
@@ -25,10 +24,10 @@ export const createUseFormRef = <T extends IConfiguredInput>(formElement: T, reg
     }
 }
 
-export const inputHasError = <T extends IConfiguredInput>(errors: DeepMap<Record<string, any>, FieldError>, formElement: T) => {
+export const inputHasError = (errors: DeepMap<Record<string, any>, FieldError>, inputConfig: InputConfig) => {
     let errorInInput = false;
     for (const key of Object.entries(errors)) {
-        if (key[0] === formElement.name) {
+        if (key[0] === inputConfig.name) {
             errorInInput = true;
         }
     }

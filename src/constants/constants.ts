@@ -30,7 +30,8 @@ export const ADMIN_ROUTE = INDEX_ROUTE + "Admin";
 /* ----- Form Elements ----- */
 export enum FormElementType {
     SELECT = "select",
-    INPUT = "input",
+    TEXT = "text",
+    RADIO = "radio",
 }
 
 export const NEW_SUBJECT = "<New Subject>";
