@@ -4,6 +4,7 @@ import TableHead from "../../TableHead/tableHead";
 import {ConfirmButton, DeleteButton} from "../../../UI/Buttons/buttons";
 
 import * as actions from "../../../../store/actions/actionIndex";
+import {IQueueEntity} from "../../../../models/types";
 
 type Props = {
     queueData: Array<IQueueEntity>,

@@ -15,7 +15,7 @@ const AdminPage = (props: Props) => {
         <>
             {!props.isAuthenticated ? <h1 style={{color: "red"}}>UNAUTHORIZED</h1> :
                 <div className={"d-flex flex-row " + styles.adminPage}>
-                    <Card widthPercent={25} shadow={true} header={"Emner"}>{content}</Card>
+                    <Card widthPercent={25} shadow={true} header={"Subjects"}>{content}</Card>
                 </div>
             }
         </>

@@ -6,6 +6,7 @@ import LoadingSpinner from "../../UI/LoadingSpinner/loadingSpinner";
 import useInterval from "../../../hooks/useInterval";
 import usePreviousState from "../../../hooks/usePreviousState";
 import useSound from "use-sound";
+import {IQueueEntity} from "../../../models/types";
 
 const notificationSound = require("../../../assets/sounds/hellothere.mp3");
 
