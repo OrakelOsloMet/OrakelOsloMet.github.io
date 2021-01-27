@@ -1,3 +1,5 @@
+import {Semester} from "../constants/constants";
+
 interface IQueueEntity {
     id: number;
     name: string;
@@ -11,5 +13,5 @@ interface IQueueEntity {
 interface ISubject {
     id: number;
     name: string;
-    semester: string;
+    semester: Semester;
 }

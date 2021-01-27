@@ -3,6 +3,7 @@ import {QueueActionTypes} from "./actionTypes";
 import {CONFIRM_DONE_PATH, QUEUE_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
+import {IQueueEntity} from "../../models/types";
 
 /* ----- Fetch LandingPage Data ----- */
 

@@ -34,7 +34,11 @@ export enum FormElementType {
     RADIO = "radio",
 }
 
-export const NEW_SUBJECT = "<New Subject>";
+/* ----- Semesters ----- */
+export enum Semester {
+    SPRING = "Spring",
+    AUTUMN = "Autumn",
+}
 
 
 //TODO Add all hardcoded string values to this file

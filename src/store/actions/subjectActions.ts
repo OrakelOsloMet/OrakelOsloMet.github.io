@@ -2,6 +2,7 @@ import {SubjectActionTypes} from "./actionTypes";
 import {SubjectDispatch} from "../types";
 import axios from "../../axiosAPI";
 import {CURRENT_SUBJECTS_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
+import {ISubject} from "../../models/types";
 
 /* ----- Fetch Subjects ----- */
 
