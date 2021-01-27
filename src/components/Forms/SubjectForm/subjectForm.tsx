@@ -103,7 +103,7 @@ const SubjectForm: FC<Props> = (props) => {
         reset();
     }
 
-    const registrationHandler = (formData: FormValues) => {
+    const registrationHandler = async (formData: FormValues) => {
         const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
 
         //A new subject won't have an id, set it to zero in that case
@@ -113,16 +113,31 @@ const SubjectForm: FC<Props> = (props) => {
             semester: formData.checkedSemester === "0" ? Semester.SPRING : Semester.AUTUMN,
         }
 
-        editState ? props.addEditSubject(subject, true) : props.addEditSubject(subject, false);
+        if (editState) {
+            const userConfirmation = await SwalConfirmModal({
+                title: `Confirm new details of ${selectedSubject.name}`,
+                contentText: `New name: ${subject.name}. New semester: ${subject.semester}`
+            });
+
+            if (userConfirmation) props.addEditSubject(subject, true);
+
+        } else {
+
+            const userConfirmation = await SwalConfirmModal({
+                title: `Are you sure you want to add new subject ${subject.name}?`,
+                contentText: `If you have selected the current semester as this subject's semester, it will be visible
+                to all users once it is saved`
+            });
+
+            if (userConfirmation) props.addEditSubject(subject, false);
+        }
     }
 
     const deleteHandler = async (formData: FormValues) => {
         const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
         const userConfirmation = await SwalConfirmModal({title: `Delete ${selectedSubject.name}?`, contentText: "This action is final and cannot be reverted."});
 
-        if (userConfirmation) {
-            props.deleteSubject(selectedSubject.id)
-        }
+        if (userConfirmation) props.deleteSubject(selectedSubject.id);
     };
 
     //Whenever a subject is selected, the name and semester inputs are to be updated to reflect the selected subject's name
