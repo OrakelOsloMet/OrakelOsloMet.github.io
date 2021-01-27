@@ -10,6 +10,7 @@ import {SubjectDispatch} from "../../../store/types";
 import {IRadioConfig, ISelectConfig, ITextConfig} from "../../../models/inputModels";
 import Radio from "../Inputs/radio";
 import {ISubject} from "../../../models/types";
+import SwalConfirmModal from "../../UI/Modals/SwalModals/swalConfirmModal";
 
 enum FormElements {
     SELECTED_SUBJECT = "selectedSubject",
@@ -115,9 +116,13 @@ const SubjectForm: FC<Props> = (props) => {
         editState ? props.addEditSubject(subject, true) : props.addEditSubject(subject, false);
     }
 
-    const deleteHandler = (formData: FormValues) => {
+    const deleteHandler = async (formData: FormValues) => {
         const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
-        props.deleteSubject(selectedSubject.id);
+        const userConfirmation = await SwalConfirmModal({title: `Delete ${selectedSubject.name}?`, contentText: "This action is final and cannot be reverted."});
+
+        if (userConfirmation) {
+            props.deleteSubject(selectedSubject.id)
+        }
     };
 
     //Whenever a subject is selected, the name and semester inputs are to be updated to reflect the selected subject's name
