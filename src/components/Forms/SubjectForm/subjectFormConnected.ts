@@ -2,7 +2,7 @@ import {RootState} from "../../../store";
 import {bindActionCreators, Dispatch} from "redux";
 import {connect} from "react-redux";
 import SubjectForm from "./subjectForm";
-import {addEditSubject, fetchSubjects} from "../../../store/actions/subjectActions";
+import {addEditSubject, deleteSubject, fetchSubjects} from "../../../store/actions/subjectActions";
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -15,7 +15,8 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({
         fetchSubjects: fetchSubjects,
-        addEditSubject: addEditSubject
+        addEditSubject: addEditSubject,
+        deleteSubject: deleteSubject,
     }, dispatch);
 };
 

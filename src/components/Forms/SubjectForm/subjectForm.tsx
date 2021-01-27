@@ -29,7 +29,7 @@ type Props = {
     error: string | null;
     fetchSubjects: (allSubjects?: boolean) => (dispatch: SubjectDispatch) => void;
     addEditSubject: (subject: ISubject, edit: boolean) => void;
-    deleteSubject?: Function; //TODO improve typing when implemented
+    deleteSubject: (id: number) => void;
 }
 
 const SubjectForm: FC<Props> = (props) => {
@@ -37,8 +37,8 @@ const SubjectForm: FC<Props> = (props) => {
     const NEW_SUBJECT = "<New Subject>";
 
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
-
     const [editState, setEditState] = useState<boolean>(false);
+
     const [subjectSelect, setSubjectSelect] = useState<ISelectConfig>({
         type: FormElementType.SELECT,
         name: SELECTED_SUBJECT,
@@ -65,6 +65,7 @@ const SubjectForm: FC<Props> = (props) => {
         ]
     });
 
+    //Fills the subjectselector in the first render cycle.
     useEffect(() => {
         if (props.subjects.length > 0) {
             fillSubjectSelector();
@@ -72,6 +73,13 @@ const SubjectForm: FC<Props> = (props) => {
             props.fetchSubjects(true);
         }
     }, [props.subjects])
+
+    //Used to reset the form whenever is is submitted.
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            resetForm();
+        }
+    }, [isSubmitSuccessful, reset])
 
     const fillSubjectSelector = () => {
         const subjectListUpdated = {...subjectSelect};
@@ -85,10 +93,19 @@ const SubjectForm: FC<Props> = (props) => {
         setSubjectSelect(subjectListUpdated);
     };
 
+    //Due to how nameInput's default value is set each time a subject is selected, the out of the box reset function
+    //from hook-form doesn't suffice.
+    const resetForm = () => {
+        const nameInputCleared = updateObject(nameInput, {defaultValue: ""})
+        setNameInput(nameInputCleared);
+        setEditState(false);
+        reset();
+    }
+
     const registrationHandler = (formData: FormValues) => {
         const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
 
-        //A new subject won't have an id, so set it to zero if undefined
+        //A new subject won't have an id, set it to zero in that case
         const subject = {
             id: selectedSubject.id ? selectedSubject.id : 0,
             name: formData.newSubjectName,
@@ -96,17 +113,15 @@ const SubjectForm: FC<Props> = (props) => {
         }
 
         editState ? props.addEditSubject(subject, true) : props.addEditSubject(subject, false);
-        resetForm();
     }
 
-    //Due to how nameInput's default value is set each time a subject is selected, the out of the box reset function
-    //from hook-form doesn't suffice.
-    const resetForm = () => {
-        const nameInputCleared = updateObject(nameInput, {defaultValue: ""})
-        setNameInput(nameInputCleared);
-        reset();
-    }
+    const deleteHandler = (formData: FormValues) => {
+        const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
+        props.deleteSubject(selectedSubject.id);
+    };
 
+    //Whenever a subject is selected, the name and semester inputs are to be updated to reflect the selected subject's name
+    //and semester. Reset to default values if <New Subject> is selected.
     const subjectSelectHandler = (event: React.FormEvent<HTMLInputElement>) => {
         const nameInputFilled = {...nameInput};
         const semesterCheckedUpdated = {...checkedSemester}
@@ -133,14 +148,14 @@ const SubjectForm: FC<Props> = (props) => {
         setCheckedSemester(semesterCheckedUpdated);
     }
 
-    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"mt-2 mb-2"} style={{width: "80%", margin: "auto"}}>
+    const form = <form className={"mt-2 mb-2"} style={{width: "80%", margin: "auto"}}>
         <Select ref={createUseFormRef(subjectSelect, register)} inputConfig={subjectSelect} onChange={(event) => subjectSelectHandler(event)}/>
         <Input ref={createUseFormRef(nameInput, register)} inputConfig={nameInput} error={inputHasError(errors, nameInput)}/>
         <Radio ref={createUseFormRef(checkedSemester,register)} inputConfig={checkedSemester}/>
 
         <div className={"form-group"}>
-            <SubmitButton>{editState ? "Save Edit" : "Save New"}</SubmitButton>
-            {editState ? <DeleteButton className={"ml-2"} onClick={(event) => {event.preventDefault();console.log("DELETED");}}>Delete Subject</DeleteButton> : null}
+            <SubmitButton onClick={handleSubmit(registrationHandler)}>{editState ? "Save Edit" : "Save New"}</SubmitButton>
+            {editState ? <DeleteButton className={"ml-2"} onClick={handleSubmit(deleteHandler)}>Delete Subject</DeleteButton> : null}
         </div>
     </form>
 
