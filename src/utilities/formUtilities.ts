@@ -6,18 +6,16 @@ import {FormElementType} from "../constants/constants";
 
 //Add cases to this function if more input types in need of validation are added.
 export const createUseFormRef = (inputConfig: InputConfig, register: any) => {
-    let forwardRef: Ref<any> = register;
 
     switch (inputConfig.type) {
         case FormElementType.TEXT:
-            forwardRef = register({
+            return  register({
                 required: inputConfig.validation.errorMessage,
                 minLength: {
                     value: inputConfig.validation.minLength,
                     message: inputConfig.validation.errorMessage
                 }
             })
-            return forwardRef;
 
         default:
             return register;
