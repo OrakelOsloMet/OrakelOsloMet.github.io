@@ -7,29 +7,23 @@ type Props = {
     error?: boolean;
 };
 
-const SelectInput = forwardRef((props: Props, ref: React.Ref<any>) => {
-    const {inputConfig, onChange, error} = props;
-
+const Select = forwardRef((props: Props, ref: React.Ref<any>) => {
     let classnames = "form-control ml-1 mr-1 mt-3 mb-3 ";
 
-    if (error) {
-        classnames += "is-invalid";
+    if (props.error) {
+        classnames += "is-invalid ";
     }
 
     const handleOnchange = (event: any) => {
-        if (onChange) {
-            onChange(event);
+        if (props.onChange) {
+            props.onChange(event);
         }
     }
 
     return (
         <>
-            <select
-                ref={ref}
-                className={classnames}
-                onChange={handleOnchange}
-                {...inputConfig}>
-                {inputConfig.options.map(option => {
+            <select ref={ref} className={classnames} onChange={handleOnchange} {...props.inputConfig}>
+                {props.inputConfig.options.map(option => {
 
                     //Enables use of serialized objects as values
                     const value = typeof option.value === "object" ? JSON.stringify(option.value) : String(option.value);
@@ -45,4 +39,4 @@ const SelectInput = forwardRef((props: Props, ref: React.Ref<any>) => {
     )
 })
 
-export default SelectInput;
+export default Select;

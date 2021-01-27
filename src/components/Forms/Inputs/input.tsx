@@ -7,31 +7,26 @@ type Props = {
     error: boolean;
 };
 
-const TextInput = forwardRef((props: Props, ref: React.Ref<any>) => {
-    const {inputConfig, onChange, error} = props;
-
+const Input = forwardRef((props: Props, ref: React.Ref<any>) => {
     let classnames = "form-control ml-1 mr-1 mt-3 mb-3 ";
 
-    if (error) {
-        classnames += "is-invalid";
+    if (props.error) {
+        classnames += "is-invalid ";
     }
 
     const handleOnchange = (event: any) => {
-        if (onChange) {
-            onChange(event);
+        if (props.onChange) {
+            props.onChange(event);
         }
     }
 
     return (
         <>
             <input
-                ref={ref}
-                className={classnames}
-                onChange={handleOnchange}
-                {...inputConfig}
+                ref={ref} className={classnames} onChange={handleOnchange} key={props.inputConfig.key} {...props.inputConfig}
             />
         </>
     )
 })
 
-export default TextInput;
+export default Input;

@@ -7,34 +7,31 @@ type Props = {
     error?: boolean;
 };
 
-const RadioInput = forwardRef((props: Props, ref: React.Ref<any>) => {
-    const {inputConfig, onChange, error} = props;
+const Radio = forwardRef((props: Props, ref: React.Ref<any>) => {
+    let classnames = "form-check form-check-inline ml-2 mr-2 mt-2 mb-4 ";
 
-    let classnames = "form-check form-check-inline ml-1 mr-1 mt-3 mb-3 ";
-
-    if (error) {
-        classnames += "is-invalid";
+    if (props.error) {
+        classnames += "is-invalid ";
     }
 
     const handleOnchange = (event: any) => {
-        if (onChange) {
-            onChange(event);
+        if (props.onChange) {
+            props.onChange(event);
         }
     }
 
     const radioDivs: Array<JSX.Element> = [];
-    {
-        inputConfig.buttons.forEach(button => {
+    {props.inputConfig.buttons.forEach(button => {
             radioDivs.push(
                 <div key={button.label} className={classnames}>
                     <input
-                        key={button.label + "radio"}
+                        key={`${button.key}radio${button.value}`}
                         value={button.value}
                         className={"form-check-input "}
                         ref={ref}
                         defaultChecked={button.defaultChecked}
                         onChange={handleOnchange}
-                        {...inputConfig}/>
+                        {...props.inputConfig}/>
                     <label className={"form-check-label"}>{button.label}</label>
                 </div>);
         })
@@ -47,5 +44,5 @@ const RadioInput = forwardRef((props: Props, ref: React.Ref<any>) => {
     )
 })
 
-export default RadioInput;
+export default Radio;
 

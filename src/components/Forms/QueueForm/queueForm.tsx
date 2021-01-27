@@ -7,8 +7,9 @@ import {SubmitButton} from "../../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import {ISelectConfig, ITextConfig} from "../../../models/inputModels";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
-import TextInput from "../Inputs/textInput";
-import SelectInput from "../Inputs/selectInput";
+import Input from "../Inputs/input";
+import Select from "../Inputs/select";
+import {IQueueEntity, ISubject} from "../../../models/types";
 
 enum FormElements {
     FIRSTNAME = "firstname",
@@ -106,10 +107,10 @@ const QueueForm: FC<Props> = (props) => {
 
     const form =
         <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
-            <TextInput inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
-            <SelectInput inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
-            <SelectInput inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
-            <SelectInput inputConfig={digitalConsultationSelect} ref={createUseFormRef(yearSelect, register)}/>
+            <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
+            <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
+            <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
+            <Select inputConfig={digitalConsultationSelect} ref={createUseFormRef(yearSelect, register)}/>
             <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
         </form>
 
