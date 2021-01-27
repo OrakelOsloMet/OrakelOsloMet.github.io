@@ -6,6 +6,7 @@ export type InputConfig = ITextConfig | IRadioConfig | ISelectConfig;
 
 interface IInputConfig {
     name: string;
+    key?: string;
 }
 
 /* ----- Text Input ----- */
@@ -13,6 +14,7 @@ interface IInputConfig {
 export interface ITextConfig extends IInputConfig{
     type: FormElementType.TEXT;
     placeholder: string;
+    defaultValue?: string;
     validation: IInputValidation
 }
 
@@ -31,6 +33,7 @@ export interface IRadioConfig extends IInputConfig{
 export interface IRadioButton {
     label: string;
     value: number;
+    key: string;
     defaultChecked: boolean;
 }
 
