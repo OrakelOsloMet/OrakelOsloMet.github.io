@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import Input from "../Inputs/input";
 import Select from "../Inputs/select";
 import {FormElementType, Semester} from "../../../constants/constants";
-import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
+import {convertObjectStringsToPrimitives, updateObject} from "../../../utilities/objectUtilities";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 import {SubjectDispatch} from "../../../store/types";
 import {IRadioConfig, ISelectConfig, ITextConfig} from "../../../models/inputModels";
@@ -33,9 +33,10 @@ type Props = {
 }
 
 const SubjectForm: FC<Props> = (props) => {
-    const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
     const {NEW_SUBJECT_NAME, SELECTED_SUBJECT, CHECKED_SEMESTER} = FormElements;
     const NEW_SUBJECT = "<New Subject>";
+
+    const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
     const [editState, setEditState] = useState<boolean>(false);
     const [subjectSelect, setSubjectSelect] = useState<ISelectConfig>({
@@ -95,6 +96,14 @@ const SubjectForm: FC<Props> = (props) => {
         }
 
         editState ? props.addEditSubject(subject, true) : props.addEditSubject(subject, false);
+        resetForm();
+    }
+
+    //Due to how nameInput's default value is set each time a subject is selected, the out of the box reset function
+    //from hook-form doesn't suffice.
+    const resetForm = () => {
+        const nameInputCleared = updateObject(nameInput, {defaultValue: ""})
+        setNameInput(nameInputCleared);
         reset();
     }
 
