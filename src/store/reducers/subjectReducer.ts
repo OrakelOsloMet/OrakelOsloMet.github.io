@@ -55,11 +55,13 @@ const reducer = (state: SubjectState = initialState, action: SubjectAction): Sub
         //Start cases
         case SubjectActionTypes.FETCH_SUBJECTS_START:
         case SubjectActionTypes.ADD_SUBJECT_START:
+        case SubjectActionTypes.DELETE_SUBJECT_START:
             return initAction(state, action);
 
         //Fail cases
         case SubjectActionTypes.FETCH_SUBJECTS_FAIL:
         case SubjectActionTypes.ADD_SUBJECT_FAIL:
+        case SubjectActionTypes.DELETE_SUBJECT_FAIL:
             return failedAction(state, action);
 
         //Success cases
@@ -67,6 +69,7 @@ const reducer = (state: SubjectState = initialState, action: SubjectAction): Sub
             return fetchSubjectsSuccess(state, action);
 
         case SubjectActionTypes.ADD_SUBJECT_SUCCESS:
+        case SubjectActionTypes.DELETE_SUBJECT_SUCCESS:
             return addRemoveSuccess(state, action);
 
         default:

@@ -1,8 +1,9 @@
-import {SubjectActionTypes} from "./actionTypes";
+import {QueueActionTypes, SubjectActionTypes} from "./actionTypes";
 import {SubjectDispatch} from "../types";
 import axios from "../../axiosAPI";
-import {CURRENT_SUBJECTS_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
+import {CURRENT_SUBJECTS_PATH, DELETE_SUBJECT_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
 import {ISubject} from "../../models/types";
+import authHeader from "../../httpHeaders/authHeader";
 
 /* ----- Fetch Subjects ----- */
 
@@ -76,9 +77,9 @@ export const addEditSubject = (subject: ISubject, edit: boolean = false) => {
 
         let apiCall;
         if (edit) {
-            apiCall = axios.put(EDIT_SUBJECT_PATH + subject.id, subject);
+            apiCall = axios.put(EDIT_SUBJECT_PATH + subject.id, subject, {headers: authHeader()});
         } else {
-            apiCall = axios.post(SUBJECTS_PATH, subject);
+            apiCall = axios.post(SUBJECTS_PATH, subject, {headers: authHeader()});
         }
 
         apiCall.then(() => {
@@ -90,3 +91,39 @@ export const addEditSubject = (subject: ISubject, edit: boolean = false) => {
             })
     }
 }
+
+/* ----- Delete Subject ----- */
+
+const deleteSubjectStart = () => {
+    return {
+        type: QueueActionTypes.DELETE_FROM_QUEUE_START
+    }
+};
+
+const deleteSubjectSuccess = () => {
+    return {
+        type: QueueActionTypes.DELETE_FROM_QUEUE_SUCCESS
+    }
+};
+
+const deleteSubjectFail = (error: string) => {
+    return {
+        type: QueueActionTypes.DELETE_FROM_QUEUE_FAIL,
+        error: error
+    }
+};
+
+export const deleteSubject = (id: number) => {
+    return (dispatch: SubjectDispatch) => {
+        dispatch(deleteSubjectStart());
+
+        axios.delete(DELETE_SUBJECT_PATH + id, {headers: authHeader()})
+            .then(() => {
+                dispatch(deleteSubjectSuccess());
+                dispatch(fetchSubjects(true));
+            })
+            .catch(error => {
+                dispatch(deleteSubjectFail(error.response));
+            });
+    }
+};

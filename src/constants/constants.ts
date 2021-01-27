@@ -14,6 +14,7 @@ export const CONFIRM_DONE_PATH = QUEUE_PATH + "confirmdone/";
 export const SUBJECTS_PATH = "subjects/";
 export const CURRENT_SUBJECTS_PATH = SUBJECTS_PATH + "current/";
 export const EDIT_SUBJECT_PATH = SUBJECTS_PATH + "edit/"
+export const DELETE_SUBJECT_PATH = SUBJECTS_PATH + "delete/";
 
 //Auth
 export const AUTH_PATH = "auth/";
