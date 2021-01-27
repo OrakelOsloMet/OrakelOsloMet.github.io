@@ -17,6 +17,12 @@ enum FormElements {
     CHECKED_SEMESTER = "checkedSemester",
 }
 
+type FormValues = {
+    selectedSubject: string,
+    newSubjectName: string,
+    checkedSemester: string,
+}
+
 type Props = {
     subjects: Array<ISubject>;
     loading: boolean;
@@ -78,45 +84,32 @@ const SubjectForm: FC<Props> = (props) => {
         setSubjectSelect(subjectListUpdated);
     };
 
-    const registrationHandler = (formData: any) => {
+    const registrationHandler = (formData: FormValues) => {
+        const selectedSubject = convertObjectStringsToPrimitives(JSON.parse(formData.selectedSubject));
 
-        const primitiveData = convertObjectStringsToPrimitives({
-            selectedSubject: JSON.parse(formData.selectedSubject),
-            newSubjectName: formData.newSubjectName,
-            selectedSemester: formData.checkedSemester === "0" ? Semester.SPRING : Semester.AUTUMN,
-        });
-
-        if (editState) {
-            props.subjects.forEach(subject => {
-                if (primitiveData.selectedSubject.name === subject.name) {
-                    const editedSubject = {
-                        id: subject.id,
-                        name: primitiveData.newSubjectName,
-                        semester: primitiveData.selectedSemester
-                    }
-
-                    props.addEditSubject(editedSubject, true);
-                }
-            })
-        } else {
-            const newSubject = {
-                id: 0, //Id is set in the API
-                name: primitiveData.newSubjectName,
-                semester: primitiveData.selectedSemester
-            }
-
-            props.addEditSubject(newSubject, false);
+        //A new subject won't have an id, so set it to zero if undefined
+        const subject = {
+            id: selectedSubject.id ? selectedSubject.id : 0,
+            name: formData.newSubjectName,
+            semester: formData.checkedSemester === "0" ? Semester.SPRING : Semester.AUTUMN,
         }
 
+        editState ? props.addEditSubject(subject, true) : props.addEditSubject(subject, false);
         reset();
     }
 
-    const subjectSelectHandler = (event: any) => {
+    const subjectSelectHandler = (event: React.FormEvent<HTMLInputElement>) => {
         const nameInputFilled = {...nameInput};
         const semesterCheckedUpdated = {...checkedSemester}
-        const selectedSubject: ISubject = JSON.parse(event.target.value);
+        const selectedSubject: ISubject = JSON.parse(event.currentTarget.value);
 
-        if (selectedSubject.name !== NEW_SUBJECT) {
+        if (selectedSubject.name === NEW_SUBJECT) {
+            setEditState(false);
+            nameInputFilled.placeholder = "Subject Name";
+            nameInputFilled.defaultValue = "";
+            nameInputFilled.key = NEW_SUBJECT;
+
+        } else {
             setEditState(true);
             nameInputFilled.defaultValue = selectedSubject.name;
             nameInputFilled.key = selectedSubject.name;
@@ -125,35 +118,19 @@ const SubjectForm: FC<Props> = (props) => {
                 button.key = selectedSubject.name;
                 button.defaultChecked = button.label === selectedSubject.semester;
             })
-
-        } else {
-            setEditState(false);
-            nameInputFilled.placeholder = "Subject Name";
-            nameInputFilled.defaultValue = "";
-            nameInputFilled.key = NEW_SUBJECT;
         }
 
         setNameInput(nameInputFilled);
         setCheckedSemester(semesterCheckedUpdated);
     }
 
-    const form = <form className={"mt-2 mb-2"} style={{width: "80%", margin: "auto"}}>
-        <Select
-            ref={createUseFormRef(subjectSelect, register)}
-            inputConfig={subjectSelect}
-            onChange={(event: any) => subjectSelectHandler(event)}
-        />
-
-        <Input
-            ref={createUseFormRef(nameInput, register)}
-            inputConfig={nameInput}
-            error={inputHasError(errors, nameInput)}
-        />
-
-        <Radio ref={register} inputConfig={checkedSemester}/>
+    const form = <form onSubmit={handleSubmit(registrationHandler)} className={"mt-2 mb-2"} style={{width: "80%", margin: "auto"}}>
+        <Select ref={createUseFormRef(subjectSelect, register)} inputConfig={subjectSelect} onChange={(event) => subjectSelectHandler(event)}/>
+        <Input ref={createUseFormRef(nameInput, register)} inputConfig={nameInput} error={inputHasError(errors, nameInput)}/>
+        <Radio ref={createUseFormRef(checkedSemester,register)} inputConfig={checkedSemester}/>
 
         <div className={"form-group"}>
-            <SubmitButton onClick={handleSubmit(registrationHandler)}>{editState ? "Save Edit" : "Save New"}</SubmitButton>
+            <SubmitButton>{editState ? "Save Edit" : "Save New"}</SubmitButton>
             {editState ? <DeleteButton className={"ml-2"} onClick={(event) => {event.preventDefault();console.log("DELETED");}}>Delete Subject</DeleteButton> : null}
         </div>
     </form>

@@ -3,7 +3,7 @@ import {IRadioConfig} from "../../../models/inputModels";
 
 type Props = {
     inputConfig: IRadioConfig;
-    onChange?: (event: any) => void;
+    onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
     error?: boolean;
 };
 

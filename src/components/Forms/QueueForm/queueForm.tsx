@@ -18,6 +18,13 @@ enum FormElements {
     DIGITAL = "digitalConsultation",
 }
 
+type FormValues = {
+    firstname: string,
+    subject: string,
+    year: string,
+    digital: string
+}
+
 type Props = {
     subjects: Array<ISubject>;
     loading: boolean;
@@ -89,7 +96,7 @@ const QueueForm: FC<Props> = (props) => {
         setSubjectSelect(subjectListUpdated);
     };
 
-    const registrationHandler = (formData: any) => {
+    const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
 
         const queueEntity: IQueueEntity = {

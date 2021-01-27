@@ -3,7 +3,7 @@ import {ISelectConfig} from "../../../models/inputModels";
 
 type Props = {
     inputConfig: ISelectConfig;
-    onChange?: (event: any) => void;
+    onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
     error?: boolean;
 };
 

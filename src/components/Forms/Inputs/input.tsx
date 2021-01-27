@@ -3,7 +3,7 @@ import {ITextConfig} from "../../../models/inputModels";
 
 type Props = {
     inputConfig: ITextConfig;
-    onChange?: (event: any) => void;
+    onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
     error: boolean;
 };
 
