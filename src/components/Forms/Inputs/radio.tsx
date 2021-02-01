@@ -21,21 +21,20 @@ const Radio = forwardRef((props: Props, ref: React.Ref<any>) => {
     }
 
     const radioDivs: Array<JSX.Element> = [];
-    {props.inputConfig.buttons.forEach(button => {
-            radioDivs.push(
-                <div key={button.label} className={classnames}>
-                    <input
-                        key={`${button.key}radio${button.value}`}
-                        value={button.value}
-                        className={"form-check-input "}
-                        ref={ref}
-                        defaultChecked={button.defaultChecked}
-                        onChange={handleOnchange}
-                        {...props.inputConfig}/>
-                    <label className={"form-check-label"}>{button.label}</label>
-                </div>);
-        })
-    }
+    props.inputConfig.buttons.forEach(button => {
+        radioDivs.push(
+            <div key={button.label} className={classnames}>
+                <input
+                    key={`${button.key}radio${button.value}`}
+                    value={button.value}
+                    className={"form-check-input "}
+                    ref={ref}
+                    defaultChecked={button.defaultChecked}
+                    onChange={handleOnchange}
+                    {...props.inputConfig}/>
+                <label className={"form-check-label"}>{button.label}</label>
+            </div>);
+    })
 
     return (
         <>

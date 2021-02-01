@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from "react";
+import React from "react";
 import {Navbar as BootsrapNav, NavbarProps as BootstrapNavProps} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
