@@ -1,4 +1,4 @@
-import axios from "../../axiosAPI";
+import {REST_INSTANCE as axios} from "../../axiosAPI";
 import {QueueActionTypes} from "./actionTypes";
 import {CONFIRM_DONE_PATH, QUEUE_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";

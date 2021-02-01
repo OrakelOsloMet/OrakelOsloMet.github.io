@@ -1,6 +1,6 @@
 import {QueueActionTypes, SubjectActionTypes} from "./actionTypes";
 import {SubjectDispatch} from "../types";
-import axios from "../../axiosAPI";
+import {REST_INSTANCE as axios} from "../../axiosAPI";
 import {CURRENT_SUBJECTS_PATH, DELETE_SUBJECT_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
 import {ISubject} from "../../models/types";
 import authHeader from "../../httpHeaders/authHeader";
