@@ -1,15 +1,17 @@
 import React from "react";
-import {Navbar as BootsrapNav, NavbarProps as BootstrapNavProps} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
-import Nav from "react-bootstrap/Nav";
-
-import styles from "./navbar.module.css";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import {USER_GUIDE_PATH, ADMIN_ROUTE, INDEX_ROUTE} from "../../../constants/constants";
 
 import SwalInfoModal from "../../UI/Modals/SwalModals/swalInfoModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/swalLoginModal";
 import {AuthDispatch} from "../../../store/types";
+import useStyles from "./navbarStyles";
+import {AccountCircle} from "@material-ui/icons";
+import {Button, IconButton} from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 type Props = {
     onLoginSubmit: (username: string, password: string) => (dispatch: AuthDispatch) => Promise<boolean | undefined>;
@@ -19,6 +21,8 @@ type Props = {
 }
 
 const Navbar: React.FC<Props> = (props) => {
+    const classes = useStyles();
+
 
     const showDiscordMessage = () =>
         SwalInfoModal({
@@ -48,48 +52,31 @@ const Navbar: React.FC<Props> = (props) => {
         SwalLoginModal({onLoginSubmit: props.onLoginSubmit, clearLoginError: props.clearLoginError})
     }
 
-    const linkStyle = props.isAuthenticated ? styles.authenticatedLinkText : styles.defaultLinkText;
-    const navbarProps: BootstrapNavProps = props.isAuthenticated ? {expand: "lg", bg: "warning"} : {
-        variant: "dark",
-        expand: "lg",
-        bg: "primary"
-    };
-
-    const loginButton =
-        <Nav.Link
-            className={linkStyle}
-            onClick={props.isAuthenticated ? props.logoutHandler : swalLogin}>
-            {props.isAuthenticated ? "Logg Ut" : "Logg Inn"}
-        </Nav.Link>;
-
+    const imagePath = require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png");
 
     return (
-        <BootsrapNav {...navbarProps}>
-            <BootsrapNav.Brand className={styles.invisibleOnMobile}>
-                <img
-                    className={styles.brandImage}
-                    alt="OsloMet Logo"
-                    src={require(props.isAuthenticated ? "../../../assets/images/oslometsvart.png" : "../../../assets/images/oslomethvit.png")}
-                />
-            </BootsrapNav.Brand>
-            <LinkContainer to={INDEX_ROUTE}>
-                <Nav.Link>
-                    <BootsrapNav.Brand
-                        className={props.isAuthenticated ? styles.authenticatedBrandText : styles.brandText}>Orakel
-                    </BootsrapNav.Brand>
-                </Nav.Link>
-            </LinkContainer>
-            <BootsrapNav.Toggle aria-controls="responsive-navbar-nav"/>
-            <BootsrapNav.Collapse id="responsive-navbar-nav">
-                <Nav>
-                    <Nav.Link className={linkStyle} onClick={showDiscordMessage}>Discord</Nav.Link>
-                    <Nav.Link className={linkStyle} onClick={showErrorReportingMessage}>Feilrapportering</Nav.Link>
-                    <Nav.Link className={linkStyle} onClick={showAboutMessage}>Om</Nav.Link>
-                    {props.isAuthenticated ? <LinkContainer to={ADMIN_ROUTE}><Nav.Link className={linkStyle}>Admin</Nav.Link></LinkContainer> : null}
-                    {loginButton}
-                </Nav>
-            </BootsrapNav.Collapse>
-        </BootsrapNav>
+        <div className={classes.grow}>
+            <AppBar position="static">
+                <Toolbar className={classes.toolbar}>
+                    <img className={classes.logo} src={imagePath}/>
+                    <Typography className={classes.title} variant="h2" >Orakel</Typography>
+
+                    <Button className={classes.button} component={Link} to={INDEX_ROUTE} >Hjem</Button>
+                    <Typography className={classes.title} variant="h3" >-</Typography>
+                    <Button className={classes.button} onClick={showDiscordMessage}>Discord</Button>
+                    <Typography className={classes.title} variant="h3" >-</Typography>
+                    <Button className={classes.button} onClick={showAboutMessage}>Om</Button>
+                    {props.isAuthenticated ? <Typography className={classes.title} variant="h3" >-</Typography> : null}
+                    {props.isAuthenticated ? <Button className={classes.button} component={Link} to={ADMIN_ROUTE} >Admin</Button> : null}
+
+                    <div className={classes.grow} />
+
+                    {props.isAuthenticated
+                        ? <Button className={classes.button} onClick={props.logoutHandler}>Logg ut</Button>
+                        : <IconButton className={classes.iconButton} color="inherit" onClick={swalLogin}><AccountCircle /></IconButton>}
+                </Toolbar>
+            </AppBar>
+        </div>
     );
 };
 

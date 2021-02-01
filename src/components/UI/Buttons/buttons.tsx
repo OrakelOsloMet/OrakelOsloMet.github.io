@@ -7,12 +7,12 @@ type Props = {
 }
 
 export const SubmitButton: FunctionComponent<Props> = (props) =>
-    <button
-        type="submit"
-        disabled={props.disabled}
-        className={`btn btn-primary ${props.className}`}
-        onClick={props.onClick}>{props.children}
-    </button>
+        <button
+            type="submit"
+            disabled={props.disabled}
+            className={`btn btn-primary ${props.className}`}
+            onClick={props.onClick}>{props.children}
+        </button>
 
 export const CancelButton: FunctionComponent<Props> = (props) => (
     <button
