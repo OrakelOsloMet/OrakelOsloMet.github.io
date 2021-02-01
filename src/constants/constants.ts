@@ -22,7 +22,9 @@ export const LOGIN_PATH = AUTH_PATH + "signin";
 export const CHECK_TOKEN_PATH = AUTH_PATH + "isTokenValid";
 
 //Resources
-export const USER_GUIDE_PATH = API_BASE_PATH + "resources/userguide";
+export const RESOURCES_BASE_PATH = "resources/";
+export const USER_GUIDE_PATH = API_BASE_PATH + RESOURCES_BASE_PATH + "userguide/"; //Axios-instance is configured to add API_BASE_PATH, but retrieval of the userguide is done without axios.
+export const QUEUE_EXPORT_PATH = RESOURCES_BASE_PATH + "queuedata/"
 
 /* ----- Routing ----- */
 export const INDEX_ROUTE = "/Orakel_Queue_Client/";
