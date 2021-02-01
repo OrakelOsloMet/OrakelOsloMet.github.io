@@ -1,14 +1,13 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import TableHead from "./TableHead/tableHead";
-import {ConfirmButton, DeleteButton} from "../Buttons/buttons";
-
-import * as actions from "../../../store/actions/actionIndex";
+import TableHead from "../../TableHead/tableHead";
+import {ConfirmButton, DeleteButton} from "../../../UI/Buttons/buttons";
+import {IQueueEntity} from "../../../../models/types";
 
 type Props = {
     queueData: Array<IQueueEntity>,
-    confirmDoneEntity: Function,
-    deleteQueueEntity: Function,
+    confirmDoneEntity: (id: number) => void,
+    deleteQueueEntity: (id: number) => void,
     isAuthenticated: boolean,
     userRoles: Array<string>,
     defaultColumns: Array<string>,
@@ -45,7 +44,7 @@ const queueTable = (props: Props) => {
     const tableBody = <tbody>{rows}</tbody>;
 
     return (
-        <Table striped bordered hover responsive className="mb-4">{tableHead}{tableBody}</Table>
+        <Table striped bordered hover responsive className={"mb-4 bg-white"}>{tableHead}{tableBody}</Table>
     );
 };
 

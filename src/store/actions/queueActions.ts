@@ -1,10 +1,11 @@
-import axios from "../../axiosAPI";
+import {REST_INSTANCE as axios} from "../../axiosAPI";
 import {QueueActionTypes} from "./actionTypes";
-import {CONFIRM_DONE_PATH, CURRENT_SUBJECTS_PATH, QUEUE_PATH} from "../../constants/constants";
+import {CONFIRM_DONE_PATH, QUEUE_PATH} from "../../constants/constants";
 import authHeader from "../../httpHeaders/authHeader";
 import {QueueDispatch} from "../types";
+import {IQueueEntity} from "../../models/types";
 
-/* ----- Fetch Queue Data ----- */
+/* ----- Fetch LandingPage Data ----- */
 
 const fetchQueueStart = () => {
     return {
@@ -40,7 +41,7 @@ export const fetchQueue = () => {
     }
 };
 
-/* ----- Add to Queue ----- */
+/* ----- Add to LandingPage ----- */
 
 const addToQueueStart = () => {
     return {
@@ -75,7 +76,7 @@ export const addToQueue = (queueEntity: IQueueEntity) => {
     }
 };
 
-/* ----- Delete From Queue ----- */
+/* ----- Delete From LandingPage ----- */
 
 const deleteFromQueueStart = () => {
     return {
@@ -96,7 +97,7 @@ const deleteFromQueueFail = (error: string) => {
     }
 };
 
-export const deleteFromQueue = (id: string) => {
+export const deleteFromQueue = (id: number) => {
     return (dispatch: QueueDispatch) => {
         dispatch(deleteFromQueueStart());
 
@@ -111,7 +112,7 @@ export const deleteFromQueue = (id: string) => {
     }
 };
 
-/* ----- Done in Queue ----- */
+/* ----- Done in LandingPage ----- */
 
 const doneInQueueStart = () => {
     return {
@@ -132,7 +133,7 @@ const doneInQueueFail = (error: string) => {
     }
 };
 
-export const doneInQueue = (id: string) => {
+export const doneInQueue = (id: number) => {
     return (dispatch: QueueDispatch) => {
         dispatch(doneInQueueStart());
 
@@ -144,40 +145,5 @@ export const doneInQueue = (id: string) => {
             .catch(error => {
                 dispatch(doneInQueueFail(error.response));
             });
-    }
-};
-
-/* ----- Fetch Subjects ----- */
-
-const fetchSubjectsStart = () => {
-    return {
-        type: QueueActionTypes.FETCH_SUBJECTS_START
-    }
-};
-
-const fetchSubjectsSuccess = (subjectData: Array<string>) => {
-    return {
-        type: QueueActionTypes.FETCH_SUBJECTS_SUCCESS,
-        subjectData: subjectData
-    }
-};
-
-const fetchSubjectsFail = (error: string) => {
-    return {
-        type: QueueActionTypes.FETCH_SUBJECTS_FAIL,
-        error: error
-    }
-};
-
-export const fetchSubjects = () => {
-    return (dispatch: QueueDispatch) => {
-        dispatch(fetchSubjectsStart());
-
-        axios.get(CURRENT_SUBJECTS_PATH)
-            .then(response => {
-                dispatch(fetchSubjectsSuccess(response.data));
-            }).catch(error => {
-            dispatch(fetchSubjectsFail(error.response));
-        });
     }
 };

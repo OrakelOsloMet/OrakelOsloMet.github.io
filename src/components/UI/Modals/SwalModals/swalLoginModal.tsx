@@ -1,9 +1,10 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import {AuthDispatch} from "../../../../store/types";
 
 type Props = {
-    onLoginSubmit: Function,
-    clearLoginError: Function,
+    onLoginSubmit: (username: string, password: string) => (dispatch: AuthDispatch) => Promise<boolean | undefined>;
+    clearLoginError: () => void;
 }
 
 const SwalLoginModal = (props: Props) => {
