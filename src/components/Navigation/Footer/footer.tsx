@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Copyright from "../../Elements/Copyright/Copyright";
 import PanToolRoundedIcon from '@material-ui/icons/PanToolRounded';
-import useStyles from "./useStyles";
+import useStyles from "./footerStyles";
 
 const Footer = () => {
     const classes = useStyles();
