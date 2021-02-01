@@ -7,8 +7,13 @@ export {
 
 export {
     fetchQueue,
-    fetchSubjects,
     addToQueue,
     deleteFromQueue,
     doneInQueue
 } from "./queueActions"
+
+export {
+    fetchSubjects,
+    addEditSubject,
+    deleteSubject,
+} from "./subjectActions"

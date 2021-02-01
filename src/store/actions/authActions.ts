@@ -1,4 +1,4 @@
-import axios from "../../axiosAPI";
+import {REST_INSTANCE as axios} from "../../axiosAPI";
 import {AuthActionTypes} from "./actionTypes";
 import {LOGIN_PATH, CHECK_TOKEN_PATH, LOCAL_STORAGE_USER} from "../../constants/constants";
 import {AuthDispatch, IUser} from "../types";

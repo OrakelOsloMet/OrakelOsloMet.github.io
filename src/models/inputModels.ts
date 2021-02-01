@@ -1,36 +1,21 @@
 import {FormElementType} from "../constants/constants";
 
-export interface IConfiguredInput {
-    name: string,
-    inputType: FormElementType,
-    inputConfig: IInputConfig
+export type InputConfig = ITextConfig | IRadioConfig | ISelectConfig;
+
+/* ----- Base ----- */
+
+interface IInputConfig {
+    name: string;
+    key?: string;
 }
 
-export interface IInputConfig {
+/* ----- Text Input ----- */
 
-}
-
-export interface IConfiguredTextInput extends IConfiguredInput {
-    inputConfig: ITextConfig
-    validation: IInputValidation
-}
-
-export interface IConfiguredSelect extends IConfiguredInput {
-    inputConfig: ISelectConfig
-}
-
-interface ISelectConfig extends IInputConfig {
-    options: Array<ISelectOptions>;
-}
-
-interface ITextConfig extends IInputConfig {
-    type: string;
+export interface ITextConfig extends IInputConfig{
+    type: FormElementType.TEXT;
     placeholder: string;
-}
-
-interface ISelectOptions {
-    value: number | string | boolean;
-    displayValue: string;
+    defaultValue?: string;
+    validation: IInputValidation
 }
 
 interface IInputValidation {
@@ -38,4 +23,28 @@ interface IInputValidation {
     errorMessage: string;
 }
 
+/* ----- Checkbox Input ----- */
 
+export interface IRadioConfig extends IInputConfig{
+    type: FormElementType.RADIO;
+    buttons: Array<IRadioButton>;
+}
+
+export interface IRadioButton {
+    label: string;
+    value: number;
+    key: string;
+    defaultChecked: boolean;
+}
+
+/* ----- Select ----- */
+
+export interface ISelectConfig extends IInputConfig{
+    type: FormElementType.SELECT;
+    options: Array<ISelectOptions>;
+}
+
+interface ISelectOptions {
+    value: number | string | boolean | object;
+    displayValue: string;
+}

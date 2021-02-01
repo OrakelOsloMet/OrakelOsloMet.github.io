@@ -18,4 +18,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }, dispatch);
 }
 
-export const NavbarConnected = connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
