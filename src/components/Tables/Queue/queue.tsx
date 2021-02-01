@@ -2,7 +2,7 @@ import React, {FC, useEffect} from "react";
 
 import Table from "./QueueTable/queueTable";
 import {jsonArrayEqual} from "../../../utilities/arrayUtilities";
-import LoadingSpinner from "../../UI/LoadingSpinner/loadingSpinner";
+import LoadingSpinner from "../../Elements/LoadingSpinner/loadingSpinner";
 import useInterval from "../../../hooks/useInterval";
 import usePreviousState from "../../../hooks/usePreviousState";
 import useSound from "use-sound";

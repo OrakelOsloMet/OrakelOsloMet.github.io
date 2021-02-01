@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./adminPage.module.css";
-import Card from "../../components/UI/Cards/card";
+import Card from "../../components/Elements/Cards/card";
 import SubjectForm from "../../components/Forms/SubjectForm/subjectFormConnected";
 import QueueExportForm from "../../components/Forms/QueueExportForm/queueExportForm";
 
