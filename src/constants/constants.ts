@@ -1,10 +1,9 @@
-import {objectConditionalByEnvironment} from "../utilities/objectUtilities";
 
 /* ----- Authentication ------ */
 export const LOCAL_STORAGE_USER = "user";
 
 /* ----- API ------ */
-export const API_BASE_PATH = objectConditionalByEnvironment("http://localhost:8080/api/", "https://orakelqueueservice.herokuapp.com/api/");
+export const API_BASE_PATH = "/api/"
 
 //LandingPage
 export const QUEUE_PATH = "queue/";
