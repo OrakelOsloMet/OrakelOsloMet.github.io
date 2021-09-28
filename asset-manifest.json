@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Orakel_Queue_Client/static/css/main.a134e27b.chunk.css",
-    "main.js": "/Orakel_Queue_Client/static/js/main.c65353cf.chunk.js",
-    "main.js.map": "/Orakel_Queue_Client/static/js/main.c65353cf.chunk.js.map",
+    "main.css": "/Orakel_Queue_Client/static/css/main.74b0705d.chunk.css",
+    "main.js": "/Orakel_Queue_Client/static/js/main.dd9b7ea1.chunk.js",
+    "main.js.map": "/Orakel_Queue_Client/static/js/main.dd9b7ea1.chunk.js.map",
     "runtime-main.js": "/Orakel_Queue_Client/static/js/runtime-main.81e9ca6a.js",
     "runtime-main.js.map": "/Orakel_Queue_Client/static/js/runtime-main.81e9ca6a.js.map",
     "static/css/2.2a86faee.chunk.css": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css",
-    "static/js/2.f286f872.chunk.js": "/Orakel_Queue_Client/static/js/2.f286f872.chunk.js",
-    "static/js/2.f286f872.chunk.js.map": "/Orakel_Queue_Client/static/js/2.f286f872.chunk.js.map",
+    "static/js/2.f8267811.chunk.js": "/Orakel_Queue_Client/static/js/2.f8267811.chunk.js",
+    "static/js/2.f8267811.chunk.js.map": "/Orakel_Queue_Client/static/js/2.f8267811.chunk.js.map",
     "static/js/3.a25f15b4.chunk.js": "/Orakel_Queue_Client/static/js/3.a25f15b4.chunk.js",
     "static/js/3.a25f15b4.chunk.js.map": "/Orakel_Queue_Client/static/js/3.a25f15b4.chunk.js.map",
     "index.html": "/Orakel_Queue_Client/index.html",
-    "precache-manifest.4f40380ae6e4d780daadb9f2b578ad17.js": "/Orakel_Queue_Client/precache-manifest.4f40380ae6e4d780daadb9f2b578ad17.js",
+    "precache-manifest.fe7cfa453fb3ac2d762d20541284dac3.js": "/Orakel_Queue_Client/precache-manifest.fe7cfa453fb3ac2d762d20541284dac3.js",
     "service-worker.js": "/Orakel_Queue_Client/service-worker.js",
     "static/css/2.2a86faee.chunk.css.map": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css.map",
-    "static/css/main.a134e27b.chunk.css.map": "/Orakel_Queue_Client/static/css/main.a134e27b.chunk.css.map",
-    "static/js/2.f286f872.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.f286f872.chunk.js.LICENSE.txt",
+    "static/css/main.74b0705d.chunk.css.map": "/Orakel_Queue_Client/static/css/main.74b0705d.chunk.css.map",
+    "static/js/2.f8267811.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/2.f8267811.chunk.js.LICENSE.txt",
     "static/js/3.a25f15b4.chunk.js.LICENSE.txt": "/Orakel_Queue_Client/static/js/3.a25f15b4.chunk.js.LICENSE.txt",
     "static/media/index.css": "/Orakel_Queue_Client/static/media/background.32afce38.png",
     "static/media/hellothere.mp3": "/Orakel_Queue_Client/static/media/hellothere.be0ec76a.mp3",
@@ -25,8 +25,8 @@
   "entrypoints": [
     "static/js/runtime-main.81e9ca6a.js",
     "static/css/2.2a86faee.chunk.css",
-    "static/js/2.f286f872.chunk.js",
-    "static/css/main.a134e27b.chunk.css",
-    "static/js/main.c65353cf.chunk.js"
+    "static/js/2.f8267811.chunk.js",
+    "static/css/main.74b0705d.chunk.css",
+    "static/js/main.dd9b7ea1.chunk.js"
   ]
 }
