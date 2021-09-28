@@ -1,12 +1,12 @@
-import React, {FC, useEffect} from "react";
+import React, { FC, useEffect } from "react";
 
 import Table from "./QueueTable/queueTable";
-import {jsonArrayEqual} from "../../../utilities/arrayUtilities";
+import { jsonArrayEqual } from "../../../utilities/arrayUtilities";
 import LoadingSpinner from "../../UI/LoadingSpinner/loadingSpinner";
 import useInterval from "../../../hooks/useInterval";
 import usePreviousState from "../../../hooks/usePreviousState";
 import useSound from "use-sound";
-import {IQueueEntity} from "../../../models/types";
+import { IQueueEntity } from "../../../models/types";
 
 const notificationSound = require("../../../assets/sounds/hellothere.mp3");
 
@@ -22,7 +22,7 @@ type Props = {
 }
 
 const Queue: FC<Props> = (props) => {
-    const {isAuthenticated, userRoles, queueData, deleteQueueEntity, confirmDoneEntity, pollingFunction} = props;
+    const { isAuthenticated, userRoles, queueData, deleteQueueEntity, confirmDoneEntity, pollingFunction } = props;
     const [play] = useSound(notificationSound)
     const previousQueue = usePreviousState(queueData) as unknown as Array<IQueueEntity>
 
@@ -50,8 +50,8 @@ const Queue: FC<Props> = (props) => {
     }, [queueData, isAuthenticated, play, previousQueue])
 
     /* ----- Create Table ----- */
-    let table = queueData === undefined ? <LoadingSpinner/> : <Table
-        defaultColumns={["Plassering", "Navn", "Emne", "Arena"]}
+    let table = queueData === undefined ? <LoadingSpinner /> : <Table
+        defaultColumns={["Plassering", "Navn + bordnummer", "Emne", "Arena"]}
         loggedInColumns={["Handlinger"]}
         queueData={queueData}
         isAuthenticated={isAuthenticated}

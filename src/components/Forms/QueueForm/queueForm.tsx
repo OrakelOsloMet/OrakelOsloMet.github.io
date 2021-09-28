@@ -39,7 +39,7 @@ const QueueForm: FC<Props> = (props) => {
     const [nameInput] = useState<ITextConfig>({
         type: FormElementType.TEXT,
         name: FormElements.FIRSTNAME,
-        placeholder: "Fornavn",
+        placeholder: "Fornavn + bordnummer",
         validation: {
             minLength: 3,
             errorMessage: "Vennligst oppgi et fornavn på minst 3 bokstaver"
