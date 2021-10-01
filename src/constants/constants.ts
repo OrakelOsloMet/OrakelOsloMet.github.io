@@ -3,7 +3,7 @@
 export const LOCAL_STORAGE_USER = "user";
 
 /* ----- API ------ */
-export const API_BASE_PATH = "/api/"
+export const API_BASE_PATH = "https://orakelqueueservice.herokuapp.com/api/" //"/api/"
 
 //LandingPage
 export const QUEUE_PATH = "queue/";
