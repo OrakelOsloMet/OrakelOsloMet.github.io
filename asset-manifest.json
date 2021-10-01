@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Orakel_Queue_Client/static/css/main.74b0705d.chunk.css",
-    "main.js": "/Orakel_Queue_Client/static/js/main.dd9b7ea1.chunk.js",
-    "main.js.map": "/Orakel_Queue_Client/static/js/main.dd9b7ea1.chunk.js.map",
+    "main.js": "/Orakel_Queue_Client/static/js/main.66024227.chunk.js",
+    "main.js.map": "/Orakel_Queue_Client/static/js/main.66024227.chunk.js.map",
     "runtime-main.js": "/Orakel_Queue_Client/static/js/runtime-main.81e9ca6a.js",
     "runtime-main.js.map": "/Orakel_Queue_Client/static/js/runtime-main.81e9ca6a.js.map",
     "static/css/2.2a86faee.chunk.css": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css",
@@ -11,7 +11,7 @@
     "static/js/3.a25f15b4.chunk.js": "/Orakel_Queue_Client/static/js/3.a25f15b4.chunk.js",
     "static/js/3.a25f15b4.chunk.js.map": "/Orakel_Queue_Client/static/js/3.a25f15b4.chunk.js.map",
     "index.html": "/Orakel_Queue_Client/index.html",
-    "precache-manifest.fe7cfa453fb3ac2d762d20541284dac3.js": "/Orakel_Queue_Client/precache-manifest.fe7cfa453fb3ac2d762d20541284dac3.js",
+    "precache-manifest.01ae3d355c593cc52601268db1f92473.js": "/Orakel_Queue_Client/precache-manifest.01ae3d355c593cc52601268db1f92473.js",
     "service-worker.js": "/Orakel_Queue_Client/service-worker.js",
     "static/css/2.2a86faee.chunk.css.map": "/Orakel_Queue_Client/static/css/2.2a86faee.chunk.css.map",
     "static/css/main.74b0705d.chunk.css.map": "/Orakel_Queue_Client/static/css/main.74b0705d.chunk.css.map",
@@ -27,6 +27,6 @@
     "static/css/2.2a86faee.chunk.css",
     "static/js/2.f8267811.chunk.js",
     "static/css/main.74b0705d.chunk.css",
-    "static/js/main.dd9b7ea1.chunk.js"
+    "static/js/main.66024227.chunk.js"
   ]
 }
