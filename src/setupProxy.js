@@ -1,12 +1,12 @@
-const createProxyMiddleware = require('http-proxy-middleware');
+const createProxyMiddleware = require("http-proxy-middleware");
 
 // If running local dev server, change target below to match server addr.
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
-    '/api',
+    "/api",
     createProxyMiddleware({
-      target: 'http://localhost:8080', //'https://orakelqueueservice.herokuapp.com',
+      target: "https://orakelqueueservice.herokuapp.com", //'http://localhost:8080'
       changeOrigin: true,
     })
   );
