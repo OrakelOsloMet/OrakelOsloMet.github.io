@@ -7,7 +7,7 @@ import styles from "./navbar.module.css";
 
 import {USER_GUIDE_PATH, ADMIN_ROUTE, INDEX_ROUTE} from "../../../constants/constants";
 
-import SwalInfoModal from "../../UI/Modals/SwalModals/swalInfoModal";
+import SwalMessageModal from "../../UI/Modals/SwalModals/swalMessageModal";
 import SwalLoginModal from "../../UI/Modals/SwalModals/swalLoginModal";
 import {AuthDispatch} from "../../../store/types";
 
@@ -21,24 +21,27 @@ type Props = {
 const Navbar: React.FC<Props> = (props) => {
 
     const showDiscordMessage = () =>
-        SwalInfoModal({
+        SwalMessageModal({
             title: "Discord",
+            iconType: "info",
             contentText: "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.",
             url: "https://discord.gg/jgzqYpX",
             hyperlinkText: "Orakel Discord"
         })
 
     const showErrorReportingMessage = () =>
-        SwalInfoModal({
+        SwalMessageModal({
             title: "Feilrapportering",
+            iconType: "info",
             contentText: "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :)",
             url: "https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues",
             hyperlinkText: "GitHub Repo"
         })
 
     const showAboutMessage = () =>
-        SwalInfoModal({
+        SwalMessageModal({
             title: "Om Orakels Køsystem",
+            iconType: "info",
             contentText: "Coming Soon!",
             url: USER_GUIDE_PATH,
             hyperlinkText: "Brukerveiledning"

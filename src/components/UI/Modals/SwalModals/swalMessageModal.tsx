@@ -3,13 +3,14 @@ import withReactContent from "sweetalert2-react-content";
 
 type Props = {
     title: string,
+    iconType: "info" | "error" | "warning"
     contentText: string,
     url: string | null,
     hyperlinkText: string | null
 }
 
-const SwalInfoModal = (props: Props) => {
-    const {title, contentText, url, hyperlinkText} = props;
+const SwalMessageModal = (props: Props) => {
+    const {title, contentText, url, hyperlinkText, iconType} = props;
     const mySwal = withReactContent(Swal)
     const hyperlinkDiv: HTMLDivElement = document.createElement("div");
 
@@ -21,9 +22,9 @@ const SwalInfoModal = (props: Props) => {
             title: title,
             html: contentText,
             footer: url && hyperlinkText ? hyperlinkDiv : null,
-            icon: "info",
+            icon: iconType,
             confirmButtonText: "Lukk"
     });
 };
 
-export default SwalInfoModal
+export default SwalMessageModal;
