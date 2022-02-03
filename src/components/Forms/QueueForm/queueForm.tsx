@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType, PLACEMENTS_PATH, USER_GUIDE_PATH} from "../../../constants/constants";
+import {FormElementType, PLACEMENTS_PATH} from "../../../constants/constants";
 import {SubmitButton} from "../../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import {ISelectConfig, ITextConfig, IValidatedTextConfig} from "../../../models/inputModels";
@@ -90,7 +90,7 @@ const QueueForm: FC<Props> = (props) => {
     const [commentInput] = useState<ITextConfig>({
         type: FormElementType.TEXT,
         name: FormElements.COMMENT,
-        placeholder: "Kommentar, eks: \"Har på rød lue\"",
+        placeholder: "\"Har på rød lue\"",
     });
 
     //Use effect only to be triggered when the component is first rendered.
@@ -175,24 +175,27 @@ const QueueForm: FC<Props> = (props) => {
             addQueueEntity(queueEntity);
         } else {
             showErrorMessage("Error when creating QueueEntity: Placement is undefined");
-       }
+        }
     };
 
     /* ----- JSX Layout ----- */
     const form =
-        <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
-            <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)}
-                   ref={createUseFormRef(nameInput, register)}/>
-            <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
-            <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
-            <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
-            <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)}
-                   ref={createUseFormRef(commentInput, register)}/>
+        <form onSubmit={handleSubmit(registrationHandler)} className={"mt-5 mb-5 " + styles.queueForm}>
+            <label className={"text-center"}>Navn, Emne, Plassering, Studieår og Kommentar</label>
+            <div className={"form-group form-inline"}>
+                <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
+                <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
+                <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
+                <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
+                <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)} ref={createUseFormRef(commentInput, register)}/>
+            </div>
+
             <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
         </form>
 
     return (
-        <div className={"bg-white pb-1 pt-1"}>
+        <div className={"bg-light pb-1 pt-1"}>
+            <h2 className={"mt-5 text-center font-weight-bold"}>Køregistrering</h2>
             {form}
         </div>
     );
