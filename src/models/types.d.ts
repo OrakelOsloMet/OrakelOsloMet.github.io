@@ -4,7 +4,6 @@ interface IQueueEntity {
     id: number;
     name: string;
     subject: string;
-    digitalConsultation: boolean;
     placement: IPlacement | null;
     comment: string | null;
     studyYear: string;

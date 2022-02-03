@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType, PLACEMENTS_PATH} from "../../../constants/constants";
+import {FormElementType, PLACEMENTS_PATH, USER_GUIDE_PATH} from "../../../constants/constants";
 import {SubmitButton} from "../../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
 import {ISelectConfig, ITextConfig, IValidatedTextConfig} from "../../../models/inputModels";
@@ -11,6 +11,7 @@ import Input from "../Inputs/input";
 import Select from "../Inputs/select";
 import {IPlacement, IQueueEntity, ISubject} from "../../../models/types";
 import {REST_INSTANCE as axios} from "../../../axiosAPI"
+import SwalMessageModal from "../../UI/Modals/SwalModals/swalMessageModal";
 
 enum FormElements {
     FIRSTNAME = "firstname",
@@ -137,14 +138,25 @@ const QueueForm: FC<Props> = (props) => {
         placementListUpdated.options = [];
 
         placements.forEach(placement => {
+            const displayName = placement.name === "Discord" ? "Discord" : placement.name + " " + placement.number;
+
             placementListUpdated.options.push({
                 value: placement.id,
-                displayValue: placement.name + " " + placement.number
+                displayValue: displayName
             })
         });
 
         setPlacementSelect(placementListUpdated);
     }
+
+    const showErrorMessage = (errorMessage: string) =>
+        SwalMessageModal({
+            title: "Noe har gått galt",
+            iconType: "error",
+            contentText: "Vennligst informer Orakel Koordinator via Facebook, Discord eller på Datatorget.</br></br> " + "<b>Feilmelding:</b> " + errorMessage,
+            url: "https://www.facebook.com/OrakelOsloMet",
+            hyperlinkText: "Orakels Facebookside"
+        })
 
     const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
@@ -155,24 +167,23 @@ const QueueForm: FC<Props> = (props) => {
                 id: 0, //Set in the API
                 name: primitiveFormData.firstname,
                 subject: primitiveFormData.subject,
-                digitalConsultation: primitiveFormData.digitalConsultation,
                 placement: foundPlacement,
                 comment: primitiveFormData.comment,
                 studyYear: primitiveFormData.year
             };
 
             addQueueEntity(queueEntity);
-        }
+        } else {
+            showErrorMessage("Error when creating QueueEntity: Placement is undefined");
+       }
     };
 
     /* ----- JSX Layout ----- */
-
     const form =
         <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
             <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)}
                    ref={createUseFormRef(nameInput, register)}/>
             <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
-            <Select inputConfig={digitalConsultationSelect} ref={createUseFormRef(yearSelect, register)}/>
             <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
             <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
             <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)}

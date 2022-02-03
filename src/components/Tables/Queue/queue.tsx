@@ -53,7 +53,7 @@ const Queue: FC<Props> = (props) => {
 
     /* ----- Create Table ----- */
     let table = queueData === undefined ? <LoadingSpinner /> : <Table
-        defaultColumns={["# i kø", "Navn", "Emne", "Arena", "Plassering", "Kommentar"]}
+        defaultColumns={["# i kø", "Navn", "Emne", "Plassering", "Kommentar"]}
         loggedInColumns={["Handlinger"]}
         queueData={queueData}
         isAuthenticated={isAuthenticated}
