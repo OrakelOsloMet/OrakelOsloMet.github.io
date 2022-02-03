@@ -26,6 +26,7 @@ type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateT
 const App: React.FC<Props> = (props: Props) => {
     const {autoLogin, getSubjectData} = props;
 
+    //TODO Subject data does not need to be globally fetched here. Should be done locally in components that needs them.
     useEffect(() => {
         autoLogin();
         getSubjectData();

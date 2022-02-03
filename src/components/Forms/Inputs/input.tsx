@@ -1,8 +1,8 @@
 import React, {forwardRef} from "react";
-import {ITextConfig} from "../../../models/inputModels";
+import {ITextConfig, IValidatedTextConfig} from "../../../models/inputModels";
 
 type Props = {
-    inputConfig: ITextConfig;
+    inputConfig: ITextConfig | IValidatedTextConfig;
     onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
     error: boolean;
 };

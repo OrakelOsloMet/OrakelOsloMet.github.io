@@ -7,7 +7,7 @@ import {FormElementType} from "../constants/constants";
 export const createUseFormRef = (inputConfig: InputConfig, register: any) => {
 
     switch (inputConfig.type) {
-        case FormElementType.TEXT:
+        case FormElementType.VALIDATED_TEXT:
             return  register({
                 required: inputConfig.validation.errorMessage,
                 minLength: {

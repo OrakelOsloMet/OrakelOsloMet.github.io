@@ -2,24 +2,28 @@ import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType} from "../../../constants/constants";
+import {FormElementType, PLACEMENTS_PATH} from "../../../constants/constants";
 import {SubmitButton} from "../../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
-import {ISelectConfig, ITextConfig} from "../../../models/inputModels";
+import {ISelectConfig, ITextConfig, IValidatedTextConfig} from "../../../models/inputModels";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 import Input from "../Inputs/input";
 import Select from "../Inputs/select";
-import {IQueueEntity, ISubject} from "../../../models/types";
+import {IPlacement, IQueueEntity, ISubject} from "../../../models/types";
+import {REST_INSTANCE as axios} from "../../../axiosAPI"
 
 enum FormElements {
     FIRSTNAME = "firstname",
     SUBJECT = "subject",
+    PLACEMENT = "placement",
     YEAR = "year",
     DIGITAL = "digitalConsultation",
+    COMMENT = "comment",
 }
 
 type FormValues = {
     firstname: string,
+    placement: number,
     subject: string,
     year: string,
     digital: string
@@ -33,22 +37,42 @@ type Props = {
 }
 
 const QueueForm: FC<Props> = (props) => {
+
+    /* ----- Initialize State, Subcomponents and get Props ----- */
+
     const {subjects, addQueueEntity} = props;
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [nameInput] = useState<ITextConfig>({
-        type: FormElementType.TEXT,
+    const [placements, setPlacements] = useState<IPlacement[]>([]);
+
+    const [nameInput] = useState<IValidatedTextConfig>({
+        type: FormElementType.VALIDATED_TEXT,
         name: FormElements.FIRSTNAME,
-        placeholder: "Fornavn + bordnummer",
+        placeholder: "Fornavn",
         validation: {
             minLength: 3,
             errorMessage: "Vennligst oppgi et fornavn på minst 3 bokstaver"
         }
-    })
+    });
 
     const [subjectSelect, setSubjectSelect] = useState<ISelectConfig>({
         type: FormElementType.SELECT,
         name: FormElements.SUBJECT,
+        options: []
+    });
+
+    const [digitalConsultationSelect] = useState<ISelectConfig>({
+        type: FormElementType.SELECT,
+        name: FormElements.DIGITAL,
+        options: [
+            {value: false, displayValue: "Fysisk Veiledning (Pilestredet)"},
+            {value: true, displayValue: "Digital Veiledning (Discord)"}
+        ]
+    });
+
+    const [placementSelect, setPlacementSelect] = useState<ISelectConfig>({
+        type: FormElementType.SELECT,
+        name: FormElements.PLACEMENT,
         options: []
     });
 
@@ -60,23 +84,28 @@ const QueueForm: FC<Props> = (props) => {
             {value: 2, displayValue: "2. år"},
             {value: 3, displayValue: "3. år"}
         ]
-    })
+    });
 
-    const [digitalConsultationSelect] = useState<ISelectConfig>({
-        type: FormElementType.SELECT,
-        name: FormElements.DIGITAL,
-        options: [
-            {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
-            {value: true, displayValue: "Digital Veiledning (Discord)"}
-        ]
-    })
+    const [commentInput] = useState<ITextConfig>({
+        type: FormElementType.TEXT,
+        name: FormElements.COMMENT,
+        placeholder: "Kommentar, eks: \"Har på rød lue\"",
+    });
 
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
-        if (subjects.length > 0) {
+        if (typeof subjects !== 'undefined' && subjects.length > 0) {
             fillSubjectSelector();
         }
+
+        getPlacementData().then((placementData) => {
+            setPlacements(placementData);
+            fillPlacementsSelector(placements);
+        });
+
     }, [subjects])
+
+    /* ----- Helper Functions ----- */
 
     //Use effect to run whenever the form is submitted successfully.
     useEffect(() => {
@@ -96,28 +125,58 @@ const QueueForm: FC<Props> = (props) => {
         setSubjectSelect(subjectListUpdated);
     };
 
+    const getPlacementData = (): Promise<IPlacement[]> => {
+        return axios.get(PLACEMENTS_PATH)
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    const fillPlacementsSelector = (placements: IPlacement[]) => {
+        const placementListUpdated = {...placementSelect};
+        placementListUpdated.options = [];
+
+        placements.forEach(placement => {
+            placementListUpdated.options.push({
+                value: placement.id,
+                displayValue: placement.name + " " + placement.number
+            })
+        });
+
+        setPlacementSelect(placementListUpdated);
+    }
+
     const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
+        const foundPlacement = placements.find(placement => placement.id === primitiveFormData.placement);
 
-        const queueEntity: IQueueEntity = {
-            id: 0, //Id is set in the API
-            name: primitiveFormData.firstname,
-            subject: primitiveFormData.subject,
-            digitalConsultation: primitiveFormData.digitalConsultation,
-            studyYear: primitiveFormData.year,
-            confirmedDone: false,
-            timeConfirmedDone: null
-        };
+        if (typeof foundPlacement !== 'undefined') {
+            const queueEntity: IQueueEntity = {
+                id: 0, //Set in the API
+                name: primitiveFormData.firstname,
+                subject: primitiveFormData.subject,
+                digitalConsultation: primitiveFormData.digitalConsultation,
+                placement: foundPlacement,
+                comment: primitiveFormData.comment,
+                studyYear: primitiveFormData.year
+            };
 
-        addQueueEntity(queueEntity);
+            addQueueEntity(queueEntity);
+        }
     };
+
+    /* ----- JSX Layout ----- */
 
     const form =
         <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
-            <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
+            <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)}
+                   ref={createUseFormRef(nameInput, register)}/>
             <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
-            <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
             <Select inputConfig={digitalConsultationSelect} ref={createUseFormRef(yearSelect, register)}/>
+            <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
+            <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
+            <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)}
+                   ref={createUseFormRef(commentInput, register)}/>
             <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
         </form>
 

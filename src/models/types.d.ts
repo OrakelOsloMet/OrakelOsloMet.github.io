@@ -4,10 +4,10 @@ interface IQueueEntity {
     id: number;
     name: string;
     subject: string;
-    studyYear: string;
     digitalConsultation: boolean;
-    confirmedDone: boolean;
-    timeConfirmedDone: string | null;
+    placement: IPlacement | null;
+    comment: string | null;
+    studyYear: string;
 }
 
 interface ISubject {
@@ -15,3 +15,10 @@ interface ISubject {
     name: string;
     semester: Semester;
 }
+
+interface IPlacement {
+    id: number;
+    name: string;
+    number: number;
+}
+

@@ -2,7 +2,7 @@ import React from "react";
 import {Table} from "react-bootstrap";
 import TableHead from "../../TableHead/tableHead";
 import {ConfirmButton, DeleteButton} from "../../../UI/Buttons/buttons";
-import {IQueueEntity} from "../../../../models/types";
+import {IPlacement, IQueueEntity} from "../../../../models/types";
 
 type Props = {
     queueData: Array<IQueueEntity>,
@@ -21,13 +21,19 @@ const queueTable = (props: Props) => {
     let rows = [];
 
     for (let i = 0; i < queueData.length; i++) {
-        let rowId = "row" + i;
+        const rowId = "row" + i;
+        const cells = [];
 
-        let cells = [];
+        const queueEntity = queueData[i];
+        const placement = queueEntity.placement?.name + " " + queueEntity.placement?.number;
+        const comment = queueEntity.comment === null ? "<ingen kommentar>" : queueEntity.comment
+
         cells.push(<td key={"entry" + i} id={"entry" + i}># {i + 1}</td>);
-        cells.push(<td key={"name" + i} id={"name" + i}>{queueData[i].name}</td>);
-        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueData[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{!queueData[i].digitalConsultation ? "Datatorget" : "Discord"}</td>);
+        cells.push(<td key={"name" + i} id={"name" + i}>{queueEntity.name}</td>);
+        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueEntity.subject}</td>);
+        cells.push(<td key={"arena" + i} id={"arena" + i}>{!queueEntity.digitalConsultation ? "Datatorget" : "Discord"}</td>);
+        cells.push(<td key={"placement" + i} id={"placement" + i}>{placement}</td>);
+        cells.push(<td key={"comment" + i} id={"comment" + i}>{comment}</td>);
 
         if (isAuthenticated && userRoles.includes("ROLE_ADMIN")) {
                 cells.push(<td key={"actions" + i} id={"action" + i}>{
