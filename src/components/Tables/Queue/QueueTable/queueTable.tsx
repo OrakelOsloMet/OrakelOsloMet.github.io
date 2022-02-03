@@ -2,7 +2,7 @@ import React from "react";
 import {Table} from "react-bootstrap";
 import TableHead from "../../TableHead/tableHead";
 import {ConfirmButton, DeleteButton} from "../../../UI/Buttons/buttons";
-import {IPlacement, IQueueEntity} from "../../../../models/types";
+import {IQueueEntity} from "../../../../models/types";
 
 type Props = {
     queueData: Array<IQueueEntity>,
