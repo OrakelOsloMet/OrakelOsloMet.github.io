@@ -24,18 +24,16 @@ const Navbar: React.FC<Props> = (props) => {
         SwalMessageModal({
             title: "Discord",
             iconType: "info",
-            contentText: "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste ned klienten deres i stedet for å bruke tjenesten gjennom nettleseren.",
-            url: "https://discord.gg/jgzqYpX",
-            hyperlinkText: "Orakel Discord"
+            contentText: "For digital veiledning benytter vi oss av Discord, og har vår egen server til dette. Inne på serveren setter vi pris på om du leser informasjonen i tekstkanalen kalt informasjon, og vi anbefaler alle å laste ned Discord klienten i stedet for å bruke tjenesten gjennom nettleseren.",
+            hyperlinks: [{url: "https://discord.gg/jgzqYpX", text: "Orakel Discord"}]
         })
 
     const showErrorReportingMessage = () =>
         SwalMessageModal({
             title: "Feilrapportering",
             iconType: "info",
-            contentText: "Orakels køsystem er et fritidsprosjekt som er bygget og vedlikeholdt av en person. Det er derfor en viss fare for bugs og feil. Disse kan rapporteres ved å legge inn en issue på GitHub-repoet, eller ved å ta kontakt med Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :)",
-            url: "https://github.com/OrakelOsloMet/Orakel_Queue_Client/issues",
-            hyperlinkText: "GitHub Repo"
+            contentText: "Orakels køsystem er et fritidsprosjekt som er utviklet og vedlikeholdes av en person, det er derfor en viss fare for bugs og feil. </br> </br> Problemer rapporteres til Orakeltjenesten på Facebook eller Discord, eller direkte til utvikler Fredrik Pedersen. Vi setter også pris på ønsker om tilleggsfunksjonalitet :)",
+            hyperlinks: [{url: "https://www.facebook.com/OrakelOsloMet", text: "Orakels Facebookside"}, {url: "https://github.com/FredrikPedersen", text: "Fredrik Pedersen Github"}]
         })
 
     const showAboutMessage = () =>
@@ -43,8 +41,7 @@ const Navbar: React.FC<Props> = (props) => {
             title: "Om Orakels Køsystem",
             iconType: "info",
             contentText: "Coming Soon!",
-            url: USER_GUIDE_PATH,
-            hyperlinkText: "Brukerveiledning"
+            hyperlinks: [{url: USER_GUIDE_PATH, text: "Brukerveiledning"}]
         })
 
     const swalLogin = () => {

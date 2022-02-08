@@ -24,3 +24,8 @@ interface IPlacement {
     number: number;
 }
 
+interface IHyperlink {
+    url: string;
+    text: string;
+}
+
