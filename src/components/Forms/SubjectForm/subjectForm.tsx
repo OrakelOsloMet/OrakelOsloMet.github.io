@@ -109,6 +109,7 @@ const SubjectForm: FC<Props> = (props) => {
         //A new subject won't have an id, set it to zero in that case
         const subject = {
             id: selectedSubject.id ? selectedSubject.id : 0,
+            createdDate: "",
             name: formData.newSubjectName,
             semester: formData.checkedSemester === "0" ? Semester.SPRING : Semester.AUTUMN,
         }

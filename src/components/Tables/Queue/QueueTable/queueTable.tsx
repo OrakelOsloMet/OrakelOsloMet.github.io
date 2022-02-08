@@ -31,7 +31,7 @@ const queueTable = (props: Props) => {
 
         cells.push(<td key={"entry" + i} id={"entry" + i}># {i + 1}</td>);
         cells.push(<td key={"name" + i} id={"name" + i}>{queueEntity.name}</td>);
-        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueEntity.subject}</td>);
+        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueEntity.subject.name}</td>);
         cells.push(<td key={"placement" + i} id={"placement" + i}>{placement}</td>);
         cells.push(<td key={"comment" + i} id={"comment" + i}>{comment}</td>);
 

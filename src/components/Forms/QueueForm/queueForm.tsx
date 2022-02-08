@@ -18,14 +18,13 @@ enum FormElements {
     SUBJECT = "subject",
     PLACEMENT = "placement",
     YEAR = "year",
-    DIGITAL = "digitalConsultation",
     COMMENT = "comment",
 }
 
 type FormValues = {
     firstname: string,
     placement: number,
-    subject: string,
+    subject: number,
     year: string,
     digital: string
 }
@@ -60,15 +59,6 @@ const QueueForm: FC<Props> = (props) => {
         type: FormElementType.SELECT,
         name: FormElements.SUBJECT,
         options: []
-    });
-
-    const [digitalConsultationSelect] = useState<ISelectConfig>({
-        type: FormElementType.SELECT,
-        name: FormElements.DIGITAL,
-        options: [
-            {value: false, displayValue: "Fysisk Veiledning (Pilestredet)"},
-            {value: true, displayValue: "Digital Veiledning (Discord)"}
-        ]
     });
 
     const [placementSelect, setPlacementSelect] = useState<ISelectConfig>({
@@ -120,7 +110,7 @@ const QueueForm: FC<Props> = (props) => {
         subjectListUpdated.options = [];
 
         subjects?.forEach(subject => {
-            subjectListUpdated.options.push({value: subject.name, displayValue: subject.name});
+            subjectListUpdated.options.push({value: subject.id, displayValue: subject.name});
         });
 
         setSubjectSelect(subjectListUpdated);
@@ -154,19 +144,20 @@ const QueueForm: FC<Props> = (props) => {
             title: "Noe har gått galt",
             iconType: "error",
             contentText: "Vennligst informer Orakel Koordinator via Facebook, Discord eller på Datatorget.</br></br> " + "<b>Feilmelding:</b> " + errorMessage,
-            url: "https://www.facebook.com/OrakelOsloMet",
-            hyperlinkText: "Orakels Facebookside"
+            hyperlinks: [{url: "https://www.facebook.com/OrakelOsloMet", text: "Orakels Facebookside"}]
         })
 
     const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
         const foundPlacement = placements.find(placement => placement.id === primitiveFormData.placement);
+        const foundSubject = subjects.find(subject => subject.id === primitiveFormData.subject);
 
-        if (typeof foundPlacement !== 'undefined') {
+        if (typeof foundPlacement !== 'undefined' && typeof foundSubject !== 'undefined') {
             const queueEntity: IQueueEntity = {
                 id: 0, //Set in the API
+                createdDate: "", //Set in the API
                 name: primitiveFormData.firstname,
-                subject: primitiveFormData.subject,
+                subject: foundSubject,
                 placement: foundPlacement,
                 comment: primitiveFormData.comment,
                 studyYear: primitiveFormData.year
@@ -174,7 +165,7 @@ const QueueForm: FC<Props> = (props) => {
 
             addQueueEntity(queueEntity);
         } else {
-            showErrorMessage("Error when creating QueueEntity: Placement is undefined");
+            showErrorMessage("Error when creating QueueEntity: Placement or Subject is undefined");
         }
     };
 

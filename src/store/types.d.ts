@@ -36,7 +36,7 @@ type FetchAction = {}
 type QueueAction = {
     type: QueueActionTypes;
     queueData?: Array<IQueueEntity>;
-    subjectData?: Array<ISubject>
+    subjectData?: Array<ISubject>;
     error?: string;
 }
 
