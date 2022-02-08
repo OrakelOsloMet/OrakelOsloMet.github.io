@@ -171,17 +171,18 @@ const QueueForm: FC<Props> = (props) => {
 
     /* ----- JSX Layout ----- */
     const form =
-        <form onSubmit={handleSubmit(registrationHandler)} className={"mt-5 mb-5 " + styles.queueForm}>
+        <form onSubmit={handleSubmit(registrationHandler)} className={"mt-5 mb-5"}>
             <label className={"text-center"}>Navn, Emne, Plassering, Studieår og Kommentar</label>
-            <div className={"form-group form-inline"}>
+            <div className={"form-group form-inline d-flex justify-content-center"}>
                 <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
                 <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
                 <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
                 <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
                 <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)} ref={createUseFormRef(commentInput, register)}/>
+                <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
             </div>
 
-            <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
+          
         </form>
 
     return (
