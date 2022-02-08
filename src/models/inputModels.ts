@@ -1,6 +1,6 @@
 import {FormElementType} from "../constants/constants";
 
-export type InputConfig = ITextConfig | IRadioConfig | ISelectConfig;
+export type InputConfig = ITextConfig | IValidatedTextConfig | IRadioConfig | ISelectConfig;
 
 /* ----- Base ----- */
 
@@ -11,10 +11,14 @@ interface IInputConfig {
 
 /* ----- Text Input ----- */
 
-export interface ITextConfig extends IInputConfig{
+export interface ITextConfig extends IInputConfig {
     type: FormElementType.TEXT;
-    placeholder: string;
+    placeholder?: string;
     defaultValue?: string;
+}
+
+export interface IValidatedTextConfig extends Omit<ITextConfig, 'type'> {
+    type: FormElementType.VALIDATED_TEXT
     validation: IInputValidation
 }
 
@@ -25,7 +29,7 @@ interface IInputValidation {
 
 /* ----- Checkbox Input ----- */
 
-export interface IRadioConfig extends IInputConfig{
+export interface IRadioConfig extends IInputConfig {
     type: FormElementType.RADIO;
     buttons: Array<IRadioButton>;
 }
@@ -39,7 +43,7 @@ export interface IRadioButton {
 
 /* ----- Select ----- */
 
-export interface ISelectConfig extends IInputConfig{
+export interface ISelectConfig extends IInputConfig {
     type: FormElementType.SELECT;
     options: Array<ISelectOptions>;
 }

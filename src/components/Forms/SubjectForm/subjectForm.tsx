@@ -7,7 +7,7 @@ import {FormElementType, Semester} from "../../../constants/constants";
 import {convertObjectStringsToPrimitives, updateObject} from "../../../utilities/objectUtilities";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 import {SubjectDispatch} from "../../../store/types";
-import {IRadioConfig, ISelectConfig, ITextConfig} from "../../../models/inputModels";
+import {IRadioConfig, ISelectConfig, IValidatedTextConfig} from "../../../models/inputModels";
 import Radio from "../Inputs/radio";
 import {ISubject} from "../../../models/types";
 import SwalConfirmModal from "../../UI/Modals/SwalModals/swalConfirmModal";
@@ -46,8 +46,8 @@ const SubjectForm: FC<Props> = (props) => {
         options: []
     });
 
-    const [nameInput, setNameInput] = useState<ITextConfig>({
-        type: FormElementType.TEXT,
+    const [nameInput, setNameInput] = useState<IValidatedTextConfig>({
+        type: FormElementType.VALIDATED_TEXT,
         name: NEW_SUBJECT_NAME,
         key: NEW_SUBJECT_NAME,
         placeholder: "Subject Name",
@@ -109,6 +109,7 @@ const SubjectForm: FC<Props> = (props) => {
         //A new subject won't have an id, set it to zero in that case
         const subject = {
             id: selectedSubject.id ? selectedSubject.id : 0,
+            createdDate: "",
             name: formData.newSubjectName,
             semester: formData.checkedSemester === "0" ? Semester.SPRING : Semester.AUTUMN,
         }

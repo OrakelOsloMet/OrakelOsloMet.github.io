@@ -2,25 +2,29 @@ import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./queueForm.module.css"
 
-import {FormElementType} from "../../../constants/constants";
+import {FormElementType, PLACEMENTS_PATH} from "../../../constants/constants";
 import {SubmitButton} from "../../UI/Buttons/buttons";
 import {convertObjectStringsToPrimitives} from "../../../utilities/objectUtilities";
-import {ISelectConfig, ITextConfig} from "../../../models/inputModels";
+import {ISelectConfig, ITextConfig, IValidatedTextConfig} from "../../../models/inputModels";
 import {createUseFormRef, inputHasError} from "../../../utilities/formUtilities";
 import Input from "../Inputs/input";
 import Select from "../Inputs/select";
-import {IQueueEntity, ISubject} from "../../../models/types";
+import {IPlacement, IQueueEntity, ISubject} from "../../../models/types";
+import {REST_INSTANCE as axios} from "../../../axiosAPI"
+import SwalMessageModal from "../../UI/Modals/SwalModals/swalMessageModal";
 
 enum FormElements {
     FIRSTNAME = "firstname",
     SUBJECT = "subject",
+    PLACEMENT = "placement",
     YEAR = "year",
-    DIGITAL = "digitalConsultation",
+    COMMENT = "comment",
 }
 
 type FormValues = {
     firstname: string,
-    subject: string,
+    placement: number,
+    subject: number,
     year: string,
     digital: string
 }
@@ -33,22 +37,33 @@ type Props = {
 }
 
 const QueueForm: FC<Props> = (props) => {
+
+    /* ----- Initialize State, Subcomponents and get Props ----- */
+
     const {subjects, addQueueEntity} = props;
     const {register, handleSubmit, reset, errors, formState: {isSubmitSuccessful}} = useForm();
 
-    const [nameInput] = useState<ITextConfig>({
-        type: FormElementType.TEXT,
+    const [placements, setPlacements] = useState<IPlacement[]>([]);
+
+    const [nameInput] = useState<IValidatedTextConfig>({
+        type: FormElementType.VALIDATED_TEXT,
         name: FormElements.FIRSTNAME,
-        placeholder: "Fornavn + bordnummer",
+        placeholder: "Fornavn",
         validation: {
             minLength: 3,
             errorMessage: "Vennligst oppgi et fornavn på minst 3 bokstaver"
         }
-    })
+    });
 
     const [subjectSelect, setSubjectSelect] = useState<ISelectConfig>({
         type: FormElementType.SELECT,
         name: FormElements.SUBJECT,
+        options: []
+    });
+
+    const [placementSelect, setPlacementSelect] = useState<ISelectConfig>({
+        type: FormElementType.SELECT,
+        name: FormElements.PLACEMENT,
         options: []
     });
 
@@ -60,23 +75,28 @@ const QueueForm: FC<Props> = (props) => {
             {value: 2, displayValue: "2. år"},
             {value: 3, displayValue: "3. år"}
         ]
-    })
+    });
 
-    const [digitalConsultationSelect] = useState<ISelectConfig>({
-        type: FormElementType.SELECT,
-        name: FormElements.DIGITAL,
-        options: [
-            {value: false, displayValue: "Fysisk Veiledning (Datatorget)"},
-            {value: true, displayValue: "Digital Veiledning (Discord)"}
-        ]
-    })
+    const [commentInput] = useState<ITextConfig>({
+        type: FormElementType.TEXT,
+        name: FormElements.COMMENT,
+        placeholder: "\"Har på rød lue\"",
+    });
 
     //Use effect only to be triggered when the component is first rendered.
     useEffect(() => {
-        if (subjects.length > 0) {
+        if (typeof subjects !== 'undefined' && subjects.length > 0) {
             fillSubjectSelector();
         }
+
+        getPlacementData().then((placementData) => {
+            setPlacements(placementData);
+            fillPlacementsSelector(placements);
+        });
+
     }, [subjects])
+
+    /* ----- Helper Functions ----- */
 
     //Use effect to run whenever the form is submitted successfully.
     useEffect(() => {
@@ -90,39 +110,83 @@ const QueueForm: FC<Props> = (props) => {
         subjectListUpdated.options = [];
 
         subjects?.forEach(subject => {
-            subjectListUpdated.options.push({value: subject.name, displayValue: subject.name});
+            subjectListUpdated.options.push({value: subject.id, displayValue: subject.name});
         });
 
         setSubjectSelect(subjectListUpdated);
     };
 
+    const getPlacementData = (): Promise<IPlacement[]> => {
+        return axios.get(PLACEMENTS_PATH)
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    const fillPlacementsSelector = (placements: IPlacement[]) => {
+        const placementListUpdated = {...placementSelect};
+        placementListUpdated.options = [];
+
+        placements.forEach(placement => {
+            const displayName = placement.name === "Discord" ? "Discord" : placement.name + " " + placement.number;
+
+            placementListUpdated.options.push({
+                value: placement.id,
+                displayValue: displayName
+            })
+        });
+
+        setPlacementSelect(placementListUpdated);
+    }
+
+    const showErrorMessage = (errorMessage: string) =>
+        SwalMessageModal({
+            title: "Noe har gått galt",
+            iconType: "error",
+            contentText: "Vennligst informer Orakel Koordinator via Facebook, Discord eller på Datatorget.</br></br> " + "<b>Feilmelding:</b> " + errorMessage,
+            hyperlinks: [{url: "https://www.facebook.com/OrakelOsloMet", text: "Orakels Facebookside"}]
+        })
+
     const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
+        const foundPlacement = placements.find(placement => placement.id === primitiveFormData.placement);
+        const foundSubject = subjects.find(subject => subject.id === primitiveFormData.subject);
 
-        const queueEntity: IQueueEntity = {
-            id: 0, //Id is set in the API
-            name: primitiveFormData.firstname,
-            subject: primitiveFormData.subject,
-            digitalConsultation: primitiveFormData.digitalConsultation,
-            studyYear: primitiveFormData.year,
-            confirmedDone: false,
-            timeConfirmedDone: null
-        };
+        if (typeof foundPlacement !== 'undefined' && typeof foundSubject !== 'undefined') {
+            const queueEntity: IQueueEntity = {
+                id: 0, //Set in the API
+                createdDate: "", //Set in the API
+                name: primitiveFormData.firstname,
+                subject: foundSubject,
+                placement: foundPlacement,
+                comment: primitiveFormData.comment,
+                studyYear: primitiveFormData.year
+            };
 
-        addQueueEntity(queueEntity);
+            addQueueEntity(queueEntity);
+        } else {
+            showErrorMessage("Error when creating QueueEntity: Placement or Subject is undefined");
+        }
     };
 
+    /* ----- JSX Layout ----- */
     const form =
-        <form onSubmit={handleSubmit(registrationHandler)} className={"form-inline mt-5 mb-5 " + styles.queueForm}>
-            <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
-            <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
-            <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
-            <Select inputConfig={digitalConsultationSelect} ref={createUseFormRef(yearSelect, register)}/>
+        <form onSubmit={handleSubmit(registrationHandler)} className={"mt-5 mb-5 " + styles.queueForm}>
+            <label className={"text-center"}>Navn, Emne, Plassering, Studieår og Kommentar</label>
+            <div className={"form-group form-inline"}>
+                <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
+                <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
+                <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
+                <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
+                <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)} ref={createUseFormRef(commentInput, register)}/>
+            </div>
+
             <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
         </form>
 
     return (
-        <div className={"bg-white pb-1 pt-1"}>
+        <div className={"bg-light pb-1 pt-1"}>
+            <h2 className={"mt-5 text-center font-weight-bold"}>Køregistrering</h2>
             {form}
         </div>
     );

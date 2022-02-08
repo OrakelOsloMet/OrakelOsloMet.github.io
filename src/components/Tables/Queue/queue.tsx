@@ -21,6 +21,8 @@ type Props = {
     pollingFunction: () => void;
 }
 
+//TODO Replace polling function with websockets.
+//TODO Queue data is not necessary to have in Redux, is only used in this one component.
 const Queue: FC<Props> = (props) => {
     const { isAuthenticated, userRoles, queueData, deleteQueueEntity, confirmDoneEntity, pollingFunction } = props;
     const [play] = useSound(notificationSound)
@@ -51,7 +53,7 @@ const Queue: FC<Props> = (props) => {
 
     /* ----- Create Table ----- */
     let table = queueData === undefined ? <LoadingSpinner /> : <Table
-        defaultColumns={["Plassering", "Navn + bordnummer", "Emne", "Arena"]}
+        defaultColumns={["# i kø", "Navn", "Emne", "Plassering", "Kommentar"]}
         loggedInColumns={["Handlinger"]}
         queueData={queueData}
         isAuthenticated={isAuthenticated}

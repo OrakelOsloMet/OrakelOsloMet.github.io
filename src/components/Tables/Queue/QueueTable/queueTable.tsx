@@ -21,13 +21,19 @@ const queueTable = (props: Props) => {
     let rows = [];
 
     for (let i = 0; i < queueData.length; i++) {
-        let rowId = "row" + i;
+        const rowId = "row" + i;
+        const cells = [];
 
-        let cells = [];
+        const queueEntity = queueData[i];
+        const entityPlacement = queueEntity.placement;
+        const placement = entityPlacement?.name === "Discord" ? "Discord" : entityPlacement?.name + " " + entityPlacement?.number;
+        const comment = queueEntity.comment === null ? "<ingen kommentar>" : queueEntity.comment
+
         cells.push(<td key={"entry" + i} id={"entry" + i}># {i + 1}</td>);
-        cells.push(<td key={"name" + i} id={"name" + i}>{queueData[i].name}</td>);
-        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueData[i].subject}</td>);
-        cells.push(<td key={"discord" + i} id={"discord" + i}>{!queueData[i].digitalConsultation ? "Datatorget" : "Discord"}</td>);
+        cells.push(<td key={"name" + i} id={"name" + i}>{queueEntity.name}</td>);
+        cells.push(<td key={"subject" + i} id={"subject" + i}>{queueEntity.subject.name}</td>);
+        cells.push(<td key={"placement" + i} id={"placement" + i}>{placement}</td>);
+        cells.push(<td key={"comment" + i} id={"comment" + i}>{comment}</td>);
 
         if (isAuthenticated && userRoles.includes("ROLE_ADMIN")) {
                 cells.push(<td key={"actions" + i} id={"action" + i}>{

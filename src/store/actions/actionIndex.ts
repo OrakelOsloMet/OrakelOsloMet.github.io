@@ -3,17 +3,23 @@ export {
     logout,
     checkValidAuth,
     clearError
-} from "./authActions"
+} from "./authActions";
 
 export {
     fetchQueue,
     addToQueue,
     deleteFromQueue,
     doneInQueue
-} from "./queueActions"
+} from "./queueActions";
 
 export {
     fetchSubjects,
     addEditSubject,
     deleteSubject,
-} from "./subjectActions"
+} from "./subjectActions";
+
+export {
+    fetchPlacements,
+    addEditPlacement,
+    deletePlacement,
+} from "./placementActions";

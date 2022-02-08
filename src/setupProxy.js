@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "https://orakelqueueservice.herokuapp.com", //'http://localhost:8080'
+      target:  "https://orakelqueueservice.herokuapp.com", //"http://localhost:8080"
       changeOrigin: true,
     })
   );

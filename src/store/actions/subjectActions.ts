@@ -1,4 +1,4 @@
-import {QueueActionTypes, SubjectActionTypes} from "./actionTypes";
+import {SubjectActionTypes} from "./actionTypes";
 import {SubjectDispatch} from "../types";
 import {REST_INSTANCE as axios} from "../../axiosAPI";
 import {CURRENT_SUBJECTS_PATH, DELETE_SUBJECT_PATH, EDIT_SUBJECT_PATH, SUBJECTS_PATH} from "../../constants/constants";
@@ -96,19 +96,19 @@ export const addEditSubject = (subject: ISubject, edit: boolean = false) => {
 
 const deleteSubjectStart = () => {
     return {
-        type: QueueActionTypes.DELETE_FROM_QUEUE_START
+        type: SubjectActionTypes.DELETE_SUBJECT_START
     }
 };
 
 const deleteSubjectSuccess = () => {
     return {
-        type: QueueActionTypes.DELETE_FROM_QUEUE_SUCCESS
+        type: SubjectActionTypes.DELETE_SUBJECT_SUCCESS
     }
 };
 
 const deleteSubjectFail = (error: string) => {
     return {
-        type: QueueActionTypes.DELETE_FROM_QUEUE_FAIL,
+        type: SubjectActionTypes.DELETE_SUBJECT_FAIL,
         error: error
     }
 };
