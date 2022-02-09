@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import styles from "./queueForm.module.css"
 
 import {FormElementType, PLACEMENTS_PATH} from "../../../constants/constants";
 import {SubmitButton} from "../../UI/Buttons/buttons";
