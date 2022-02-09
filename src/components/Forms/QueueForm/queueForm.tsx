@@ -144,7 +144,16 @@ const QueueForm: FC<Props> = (props) => {
             iconType: "error",
             contentText: "Vennligst informer Orakel Koordinator via Facebook, Discord eller på Datatorget.</br></br> " + "<b>Feilmelding:</b> " + errorMessage,
             hyperlinks: [{url: "https://www.facebook.com/OrakelOsloMet", text: "Orakels Facebookside"}]
-        })
+        });
+
+    //TODO This is a temporary fix, remove once Placement-loading is fixed
+    const showPlacementErrorMessage = () =>
+        SwalMessageModal({
+            title: "Innlastning av skjemaverdier feilet",
+            iconType: "error",
+            contentText: "Det er for øyeblikket problemer med innlastning av verdier til skjemaet, <b>refresh siden</b> og se om plasserings- og emnealternativer vises i dropdown-boksene. </br></br> Hvis dette ikke hjelper, vennligst informer Orakel Koordinator via Facebook, Discord eller på Datatorget.",
+            hyperlinks: [{url: "https://www.facebook.com/OrakelOsloMet", text: "Orakels Facebookside"}]
+        });
 
     const registrationHandler = (formData: FormValues) => {
         const primitiveFormData = convertObjectStringsToPrimitives(formData);
@@ -164,7 +173,10 @@ const QueueForm: FC<Props> = (props) => {
 
             addQueueEntity(queueEntity);
         } else {
-            showErrorMessage("Error when creating QueueEntity: Placement or Subject is undefined");
+
+            //TODO revert back to commented out error message when data-loading is fixed
+            //showErrorMessage("Error when creating QueueEntity: Placement or Subject is undefined");
+            showPlacementErrorMessage();
         }
     };
 
@@ -173,15 +185,17 @@ const QueueForm: FC<Props> = (props) => {
         <form onSubmit={handleSubmit(registrationHandler)} className={"mt-5 mb-5"}>
             <label className={"text-center"}>Navn, Emne, Plassering, Studieår og Kommentar</label>
             <div className={"form-group form-inline d-flex justify-content-center"}>
-                <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)} ref={createUseFormRef(nameInput, register)}/>
+                <Input inputConfig={nameInput} error={inputHasError(errors, nameInput)}
+                       ref={createUseFormRef(nameInput, register)}/>
                 <Select inputConfig={subjectSelect} ref={createUseFormRef(subjectSelect, register)}/>
                 <Select inputConfig={placementSelect} ref={createUseFormRef(placementSelect, register)}/>
                 <Select inputConfig={yearSelect} ref={createUseFormRef(yearSelect, register)}/>
-                <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)} ref={createUseFormRef(commentInput, register)}/>
+                <Input inputConfig={commentInput} error={inputHasError(errors, commentInput)}
+                       ref={createUseFormRef(commentInput, register)}/>
                 <SubmitButton className={"ml-2 mr-2"}>Registrer</SubmitButton>
             </div>
 
-          
+
         </form>
 
     return (
